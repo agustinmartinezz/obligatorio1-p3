@@ -34,6 +34,11 @@ namespace LogicaNegocio.EntidadesNegocio
         public int MaxPersonas { get; set; }
         public string Foto { get; set; }
 
+        //public Cabana(string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas)
+        //{
+
+        //}
+
         public void ValidarDatos()
         {
 
