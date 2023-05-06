@@ -1,32 +1,47 @@
+using LogicaAccesoDatos.BaseDatos;
+using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore;
+
 namespace HotelCabañas
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+public class Program
     {
-      var builder = WebApplication.CreateBuilder(args);
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-      // Add services to the container.
-      builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
 
-      var app = builder.Build();
+            ConfigurationBuilder miConfiguracion = new ConfigurationBuilder();
 
-      // Configure the HTTP request pipeline.
-      if (!app.Environment.IsDevelopment())
-      {
-        app.UseExceptionHandler("/Home/Error");
-      }
-      app.UseStaticFiles();
+            miConfiguracion.AddJsonFile("appsettings.json");
 
-      app.UseRouting();
+            string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanas");
+            builder.Services.
+                AddDbContext<HotelCabanaContext>(options => options.UseSqlServer(cadenaConexion));
 
-      app.UseAuthorization();
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
 
-      app.MapControllerRoute(
-          name: "default",
-          pattern: "{controller=Home}/{action=Index}/{id?}");
+            var app = builder.Build();
 
-      app.Run();
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+            app.UseExceptionHandler("/Home/Error");
+            }
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+        }
     }
-  }
 }
