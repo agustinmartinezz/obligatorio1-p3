@@ -33,13 +33,13 @@ namespace LogicaNegocio.EntidadesNegocio
         public void ValidarDatos()
         {
             if (string.IsNullOrWhiteSpace(Nombre))
-                throw new UsuarioExcepcion("Nombre no puede ser nulo o vacio.");
+                throw new UsuarioException("Nombre no puede ser nulo o vacio.");
 
             if (string.IsNullOrWhiteSpace(Mail))
-                throw new UsuarioExcepcion("Mail no puede ser nulo o vacio.");
+                throw new UsuarioException("Mail no puede ser nulo o vacio.");
 
             if (string.IsNullOrWhiteSpace(Contrasena))
-                throw new UsuarioExcepcion("Contrasena no puede ser nulo o vacio.");
+                throw new UsuarioException("Contrasena no puede ser nulo o vacio.");
         }
     }
 }

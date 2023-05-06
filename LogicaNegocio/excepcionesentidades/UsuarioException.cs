@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ExcepcionesEntidades
 {
-    internal class UsuarioExcepcion : Exception
+    public class UsuarioException : Exception
     {
-        public UsuarioExcepcion() :base() { }
+        public UsuarioException() :base() { }
 
-        public UsuarioExcepcion(string mensaje) : base(mensaje) { }
+        public UsuarioException(string mensaje) : base(mensaje) { }
     }
 }
