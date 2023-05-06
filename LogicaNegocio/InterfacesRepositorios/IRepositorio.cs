@@ -13,8 +13,5 @@ namespace LogicaNegocio.InterfacesRepositorios
         void Delete(int id);
         void Update(int id,T t);
         IEnumerable<T> FindAll();
-
-
-
     }
 }
