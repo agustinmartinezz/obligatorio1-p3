@@ -16,7 +16,7 @@ namespace LogicaNegocio.EntidadesNegocio
         [Key]
         public int Id { get; set; }
 
-        [Key, ForeignKey(nameof(Tipo))]
+        [ForeignKey(nameof(Tipo))]
         public int TipoId { get; set; }
         public TipoCabana Tipo { get; set; }
 
