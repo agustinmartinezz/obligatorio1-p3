@@ -22,8 +22,9 @@ namespace LogicaAccesoDatos.BaseDatos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Cabana>().HasAlternateKey(p => p.RUT);
-           
+            modelBuilder.Entity<Cabana>().HasIndex(c => c.Nombre).IsUnique();
+            modelBuilder.Entity<TipoCabana>().HasIndex(t => t.Nombre).IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
     }

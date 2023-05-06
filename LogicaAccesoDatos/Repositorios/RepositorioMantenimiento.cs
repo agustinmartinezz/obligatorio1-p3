@@ -7,10 +7,11 @@ using LogicaAccesoDatos.BaseDatos;
 using LogicaNegocio;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesEntidades;
+using LogicaNegocio.InterfacesRepositorios;
 
 namespace LogicaAccesoDatos.Repositorios
 {
-    public class RepositorioMantenimiento
+    public class RepositorioMantenimiento:IRepositorioMantenimiento
     {
         public HotelCabanaContext Contexto { get; set; }
 
@@ -20,13 +21,13 @@ namespace LogicaAccesoDatos.Repositorios
         }
 
 
-        private static List<Mantenimiento> mantenimientoes = new List<Mantenimiento>();
+        private static List<Mantenimiento> Mantenimientos = new List<Mantenimiento>();
         public void Add(Mantenimiento c)
         {
             try
             {
                 c.ValidarDatos();
-                mantenimientoes.Add(c);
+                Mantenimientos.Add(c);
             }
             catch
             {
@@ -40,7 +41,7 @@ namespace LogicaAccesoDatos.Repositorios
             Mantenimiento mantenimiento = FindById(id);
             if (mantenimiento != null)
             {
-                mantenimientos.Remove(mantenimiento);
+                Mantenimientos.Remove(mantenimiento);
             }
 
         }
@@ -49,11 +50,11 @@ namespace LogicaAccesoDatos.Repositorios
         {
             Mantenimiento mantenimiento = null;
             int i = 0;
-            while (i < mantenimientos.Count && mantenimientos == null)
+            while (i < Mantenimientos.Count && mantenimiento == null)
             {
-                if (mantenimientos[i].Id == id)
+                if (Mantenimientos[i].Id == id)
                 {
-                    mantenimiento = mantenimientoes[i];
+                    mantenimiento = Mantenimientos[i];
                 }
                 i++;
             }
@@ -64,7 +65,7 @@ namespace LogicaAccesoDatos.Repositorios
         public IEnumerable<Mantenimiento> FindAll()
         {
             // throw new NotImplementedException();
-            return mantenimientos;
+            return Mantenimientos;
         }
 
         public void Update(int id, Mantenimiento mantenimiento)
@@ -73,12 +74,21 @@ namespace LogicaAccesoDatos.Repositorios
             Mantenimiento mantenimientoBuscado = FindById(id);
             if (mantenimientoBuscado != null)
             {
-                mantenimientoBuscado.RUT = mantenimiento.RUT;
-                mantenimientoBuscado.RazonSocial = mantenimiento.RazonSocial;
+            //    mantenimientoBuscado.RUT = mantenimiento.RUT;
+            //    mantenimientoBuscado.RazonSocial = mantenimiento.RazonSocial;
             }
 
 
         }
 
+        public IEnumerable<Mantenimiento> FindByDates(int CabanaId,DateTime date1, DateTime date2)
+        {
+           return Contexto.Mantenimientos
+                .Where(m => m.Fecha >= date1)
+                .Where(m => m.Fecha <= date2)
+                .Where(m => m.CabanaId >= CabanaId)
+                .ToList();
+
+        }
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LogicaNegocio.InterfacesEntidades;
+using LogicaNegocio.ExcepcionesEntidades;
+
 
 namespace LogicaNegocio.EntidadesNegocio
 {
@@ -17,7 +19,12 @@ namespace LogicaNegocio.EntidadesNegocio
         [Key, ForeignKey(nameof(Tipo))]
         public int TipoId { get; set; }
         public TipoCabana Tipo { get; set; }
+
+        [Required]
         public string Nombre { get; set; }
+
+        [MinLength(10, ErrorMessage = "La descripción debe tener mínimo 10 caracteres")]
+        [MaxLength(500, ErrorMessage = "La descripción debe tener máximo 500 caracteres")]
         public string Descripcion { get; set; }
         public Boolean TieneJacuzzi { get; set; }
         public Boolean HabilitadaReservas { get; set; }
@@ -30,17 +37,17 @@ namespace LogicaNegocio.EntidadesNegocio
         public void ValidarDatos()
         {
 
-            if (Nombre)
+            if (Nombre=="")
             {
-              // throw new RUTException("El rut debe tener mas de 12 digitos");
+              throw new NombreException("El nombre de una Cabaña no puede estar vacio");
             }
-            if (Descripcion)
+            if (Nombre[0].Equals(" ") || Nombre[Nombre.Length-1].Equals(" "))
             {
-                // throw new RUTException("El rut debe tener mas de 12 digitos");
+                throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
-            if (Nombre)
+            if (Descripcion.Length>500 || Descripcion.Length < 10)
             {
-                // throw new RUTException("El rut debe tener mas de 12 digitos");
+                throw new DescripcionException("La descripcion debe estar entre 10 y 500 caracteres");
             }
 
         }
