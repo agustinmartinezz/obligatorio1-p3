@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Distribuidora.LogicaNegocio.InterfacesRepositorios
+namespace LogicaNegocio.InterfacesRepositorios
 {
     public  interface IRepositorio<T>
     {
@@ -13,8 +13,5 @@ namespace Distribuidora.LogicaNegocio.InterfacesRepositorios
         void Delete(int id);
         void Update(int id,T t);
         IEnumerable<T> FindAll();
-
-
-
     }
 }
