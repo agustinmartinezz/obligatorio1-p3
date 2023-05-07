@@ -1,0 +1,58 @@
+﻿@model HotelCabañas.Models.VMTiposCabana
+@using LogicaNegocio.EntidadesNegocio
+@{
+    ViewData["Title"] = "Tipos Cabaña";
+}
+
+<div class="input-group rounded">
+    <input id="strSearch" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
+    <a id="buscar" type="button" class="btn btn-primary">
+        <i class="bi bi-search"></i>
+    </a>
+</div>
+
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Costo por Huesped</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (TipoCabana tipo in Model.TiposCabana)
+        {
+            <tr>
+                <th scope="row">@tipo.Id</th>
+                <td>@tipo.Nombre</td>
+                <td>@tipo.Descripcion</td>
+                <td>@tipo.CostoxHuesped</td>
+                <td>
+                    <a asp-controller="TipoCabana" asp-action="Editar" asp-route-id="@tipo.Id">
+                        <span class="bi-pencil-square text-primary"></span>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="TipoCabana" asp-action="Eliminar" asp-route-id="@tipo.Id">
+                        <span class="bi bi-trash-fill text-danger"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('buscar').addEventListener('click', function (e) {
+        e.preventDefault(); // Evita que la etiqueta <a> recargue la página
+        let input = document.getElementById('strSearch').value; // Obtiene el valor del input
+        let url = '@Url.Action("Index", "TipoCabana")?strSearch=' + encodeURIComponent(input); // Construye la URL con el parámetro
+        window.location.href = url; // Redirige al controlador
+    });
+</script>

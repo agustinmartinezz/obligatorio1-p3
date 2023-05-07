@@ -12,8 +12,10 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
+            
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
+            builder.Services.AddScoped<IRepositorioTipoCabana, RepositorioTiposCabana>();
+            builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
 
             ConfigurationBuilder miConfiguracion = new ConfigurationBuilder();
 
@@ -27,11 +29,15 @@ public class Program
                      optional: true,
                      reloadOnChange: true);
 
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
-            
+
+            app.UseSession();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -45,7 +51,7 @@ public class Program
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Login}/{id?}");
 
             app.Run();
         }
