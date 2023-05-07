@@ -21,10 +21,7 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public string Contrasena { get; set; }
 
-        private static int ultimoId = 1;
-
         public Usuario(string nombre, string mail, string contrasena) {
-            Id = ultimoId++;
             Nombre = nombre;
             Mail = mail;
             Contrasena = contrasena;

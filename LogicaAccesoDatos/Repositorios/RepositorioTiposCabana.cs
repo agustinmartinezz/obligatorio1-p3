@@ -1,6 +1,7 @@
 ﻿using LogicaAccesoDatos.BaseDatos;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,34 +19,73 @@ namespace LogicaAccesoDatos.Repositorios
             Contexto = contexto;
         }
 
-        public void Add(Cabana t)
+        public void Add(TipoCabana tipoCabana)
         {
-            throw new NotImplementedException();
+            try
+            {
+                tipoCabana.ValidarDatos();
+
+                Contexto.TipoCabanas.Add(tipoCabana);
+                Contexto.SaveChanges();
+            } catch
+            {
+                throw;
+            }           
         }
 
-        public Cabana FindById(int id)
+        public TipoCabana FindById(int id)
         {
-            throw new NotImplementedException();
+            return Contexto.TipoCabanas.Find(id);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TipoCabana tipo = this.FindById(id);
+
+                Contexto.TipoCabanas.Remove(tipo);
+                Contexto.SaveChanges();
+            } catch
+            {
+                throw;
+            }
+            
         }
 
-        public void Update(int id, Cabana t)
+        public void Update(int id, TipoCabana cabana)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Contexto.TipoCabanas.Update(cabana);
+                Contexto.SaveChanges();
+            } catch
+            {
+                throw;
+            }
         }
 
-        public IEnumerable<Cabana> FindAll()
+        public IEnumerable<TipoCabana> FindAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Contexto.TipoCabanas.ToList();
+            } catch
+            {
+                throw;
+            }
         }
 
-        public IEnumerable<Cabana> FindByName(string nombre)
+        public IEnumerable<TipoCabana> FindByName(string nombre)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Contexto.TipoCabanas
+                    .Where(t => t.Nombre.Contains(nombre)).ToList();
+            } catch
+            {
+                throw;
+            }
         }
     }
 }
