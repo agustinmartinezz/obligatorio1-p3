@@ -12,7 +12,8 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
+            //builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
 
             ConfigurationBuilder miConfiguracion = new ConfigurationBuilder();
 

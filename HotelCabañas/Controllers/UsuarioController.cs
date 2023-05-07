@@ -1,4 +1,7 @@
 ﻿using HotelCabañas.Models;
+using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.EntidadesNegocio;
+using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,10 +9,16 @@ namespace HotelCabañas.Controllers
 {
     public class UsuarioController : Controller
     {
+        public IRepositorioUsuario repositorioUsuarios;
+
+        public UsuarioController(IRepositorioUsuario repositorio)
+        {
+            repositorioUsuarios = repositorio;
+        }
+
         // GET: UsuarioController
         public ActionResult Login()
         {
-
             return View();
         }
 
@@ -18,6 +27,8 @@ namespace HotelCabañas.Controllers
         {
             string email = vmLogin.Email;
             string contrasena = vmLogin.Contrasena;
+
+            Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasena);
             return View();
         }
 

@@ -20,12 +20,11 @@ namespace LogicaNegocio.EntidadesNegocio
         public string Descripcion { get; set; }
         public int CostoxHuesped { get; set; }
 
-        public TipoCabana(string nombre, string descripcion, int costoHuesped)
+        public TipoCabana(string nombre, string descripcion, int costoxHuesped)
         {
-            Id = ultimoId++;
             Nombre = nombre;
             Descripcion = descripcion;
-            CostoxHuesped = costoHuesped;
+            CostoxHuesped = costoxHuesped;
         }
 
         public void ValidarDatos()
