@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LogicaAccesoDatos.Repositorios
 {
-    internal class RepositorioTiposCabana : IRepositorioTipoCabana
+    public class RepositorioTiposCabana : IRepositorioTipoCabana
     {
         public HotelCabanaContext Contexto { get; set; }
 
