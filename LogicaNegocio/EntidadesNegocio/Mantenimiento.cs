@@ -21,10 +21,10 @@ namespace LogicaNegocio.EntidadesNegocio
         public string Descripcion { get; set; }
         public int Costo { get; set; }
         public string NombreReazlizo { get; set; }
-        public Cabana Cabana { get; set; }
+        public Cabania Cabania { get; set; }
 
-        [ForeignKey(nameof(Cabana))]
-        public int CabanaId { get; set; }
+        [ForeignKey(nameof(Cabania))]
+        public int CabaniaId { get; set; }
 
         public void ValidarDatos()
         {

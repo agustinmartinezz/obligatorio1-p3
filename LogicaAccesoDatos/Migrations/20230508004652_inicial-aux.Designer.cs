@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LogicaAccesoDatos.Migrations
 {
-    [DbContext(typeof(HotelCabanaContext))]
-    [Migration("20230506191517_inicial")]
-    partial class inicial
+    [DbContext(typeof(HotelCabaniaContext))]
+    [Migration("20230508004652_inicial-aux")]
+    partial class inicialaux
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace LogicaAccesoDatos.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Cabana", b =>
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Cabania", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.HasIndex("TipoId");
 
-                    b.ToTable("Cabanas");
+                    b.ToTable("Cabanias");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Mantenimiento", b =>
@@ -79,7 +79,7 @@ namespace LogicaAccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CabanaId")
+                    b.Property<int>("CabaniaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Costo")
@@ -99,12 +99,12 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CabanaId");
+                    b.HasIndex("CabaniaId");
 
                     b.ToTable("Mantenimientos");
                 });
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.TipoCabana", b =>
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.TipoCabania", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace LogicaAccesoDatos.Migrations
                     b.HasIndex("Nombre")
                         .IsUnique();
 
-                    b.ToTable("TipoCabanas");
+                    b.ToTable("TipoCabanias");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>
@@ -145,7 +145,7 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("Mail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -153,12 +153,15 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Mail")
+                        .IsUnique();
+
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Cabana", b =>
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Cabania", b =>
                 {
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.TipoCabana", "Tipo")
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.TipoCabania", "Tipo")
                         .WithMany()
                         .HasForeignKey("TipoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -169,13 +172,13 @@ namespace LogicaAccesoDatos.Migrations
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Mantenimiento", b =>
                 {
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Cabana", "Cabana")
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.Cabania", "Cabania")
                         .WithMany()
-                        .HasForeignKey("CabanaId")
+                        .HasForeignKey("CabaniaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cabana");
+                    b.Navigation("Cabania");
                 });
 #pragma warning restore 612, 618
         }

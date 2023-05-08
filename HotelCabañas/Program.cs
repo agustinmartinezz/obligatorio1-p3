@@ -13,16 +13,16 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
-            builder.Services.AddScoped<IRepositorioTipoCabana, RepositorioTiposCabana>();
-            builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTiposCabania>();
+            builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
 
             ConfigurationBuilder miConfiguracion = new();
             miConfiguracion.AddJsonFile("appsettings.json");
 
-            string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanas");
+            string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanias");
             builder.Services.
-                AddDbContext<HotelCabanaContext>(options => options.UseSqlServer(cadenaConexion));
+                AddDbContext<HotelCabaniaContext>(options => options.UseSqlServer(cadenaConexion));
 
             builder.Configuration.AddJsonFile("parametros.json",
                      optional: true,
@@ -35,10 +35,10 @@ public class Program
             builder.Services.AddControllersWithViews();
 
             /*--------- PARAMETROS JSON ---------*/
-            Parametros.MinDescTipoCabana = builder.Configuration.GetValue<int>("MinDescTipoCabana");
-            Parametros.MaxDescTipoCabana = builder.Configuration.GetValue<int>("MaxDescTipoCabana");
-            Parametros.MinDescCabana = builder.Configuration.GetValue<int>("MinDescCabana");
-            Parametros.MaxDescCabana = builder.Configuration.GetValue<int>("MaxDescCabana");
+            Parametros.MinDescTipoCabania = builder.Configuration.GetValue<int>("MinDescTipoCabania");
+            Parametros.MaxDescTipoCabania = builder.Configuration.GetValue<int>("MaxDescTipoCabania");
+            Parametros.MinDescCabania = builder.Configuration.GetValue<int>("MinDescCabania");
+            Parametros.MaxDescCabania = builder.Configuration.GetValue<int>("MaxDescCabania");
             Parametros.MinDescMantenimiento = builder.Configuration.GetValue<int>("MinDescMantenimiento");
             Parametros.MaxDescMantenimiento = builder.Configuration.GetValue<int>("MaxDescMantenimiento");
             /*-----------------------------------*/

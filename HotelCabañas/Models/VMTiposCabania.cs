@@ -2,15 +2,15 @@
 
 namespace HotelCabañas.Models
 {
-    public class VMTiposCabana
+    public class VMTiposCabania
     {
         public string StrSearch { get; set; }
-        public IEnumerable<TipoCabana> TiposCabana { get; set; }
+        public IEnumerable<TipoCabania> TiposCabania { get; set; }
 
-        public VMTiposCabana()
+        public VMTiposCabania()
         {
             StrSearch = string.Empty;
-            TiposCabana = new List<TipoCabana>();
+            TiposCabania = new List<TipoCabania>();
         }
     }
 }

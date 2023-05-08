@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.EntidadesNegocio
 {
-    public class TipoCabana:IValidar
+    public class TipoCabania:IValidar
     {
         private static int ultimoId = 1;
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int CostoxHuesped { get; set; }
-        public TipoCabana() 
+        public TipoCabania() 
         {
             Nombre = string.Empty;
             Descripcion = string.Empty;
             CostoxHuesped = 0;
         }
-        public TipoCabana(string nombre, string descripcion, int costoxHuesped)
+        public TipoCabania(string nombre, string descripcion, int costoxHuesped)
         {
             Nombre = nombre;
             Descripcion = descripcion;
@@ -40,11 +40,11 @@ namespace LogicaNegocio.EntidadesNegocio
             if (string.IsNullOrWhiteSpace(Descripcion))
                 throw new DescripcionException("La descripcion no puede estar vacia.");
 
-            if (Descripcion.Length < Parametros.MinDescTipoCabana)
-                throw new DescripcionException("La descripcion no puede tener menos de" + Parametros.MinDescTipoCabana.ToString() + " caracteres");
+            if (Descripcion.Length < Parametros.MinDescTipoCabania)
+                throw new DescripcionException("La descripcion no puede tener menos de" + Parametros.MinDescTipoCabania.ToString() + " caracteres");
 
-            if (Descripcion.Length < Parametros.MinDescTipoCabana)
-                throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabana.ToString() + " caracteres");
+            if (Descripcion.Length < Parametros.MinDescTipoCabania)
+                throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabania.ToString() + " caracteres");
 
             if (CostoxHuesped <= 0)
                 throw new DescripcionException("El costo debe ser mayor que 0");

@@ -13,9 +13,9 @@ namespace LogicaAccesoDatos.Repositorios
 {
     public class RepositorioMantenimiento:IRepositorioMantenimiento
     {
-        public HotelCabanaContext Contexto { get; set; }
+        public HotelCabaniaContext Contexto { get; set; }
 
-        public RepositorioMantenimiento(HotelCabanaContext contexto)
+        public RepositorioMantenimiento(HotelCabaniaContext contexto)
         {
             Contexto = contexto;
         }
@@ -81,12 +81,12 @@ namespace LogicaAccesoDatos.Repositorios
 
         }
 
-        public IEnumerable<Mantenimiento> FindByDates(int CabanaId,DateTime date1, DateTime date2)
+        public IEnumerable<Mantenimiento> FindByDates(int CabaniaId,DateTime date1, DateTime date2)
         {
            return Contexto.Mantenimientos
                 .Where(m => m.Fecha >= date1)
                 .Where(m => m.Fecha <= date2)
-                .Where(m => m.CabanaId >= CabanaId)
+                .Where(m => m.CabaniaId >= CabaniaId)
                 .ToList();
 
         }

@@ -1,4 +1,4 @@
-﻿@model HotelCabañas.Models.VMTiposCabana
+﻿@model HotelCabañas.Models.VMTiposCabania
 @using LogicaNegocio.EntidadesNegocio
 @{
     ViewData["Title"] = "Tipos Cabaña";
@@ -40,7 +40,7 @@
     </thead>
     <tbody>
 
-        @foreach (TipoCabana tipo in Model.TiposCabana)
+        @foreach (TipoCabania tipo in Model.TiposCabania)
         {
             <tr>
                 <th scope="row">@tipo.Id</th>
@@ -48,12 +48,12 @@
                 <td>@tipo.Descripcion</td>
                 <td>@tipo.CostoxHuesped</td>
                 <td>
-                    <a class="" asp-controller="TipoCabana" asp-action="Edit" asp-route-id="@tipo.Id">
+                    <a class="" asp-controller="TipoCabania" asp-action="Edit" asp-route-id="@tipo.Id">
                         <span class="bi-pencil-square text-primary"></span>
                     </a>
                 </td>
                 <td>
-                    <a class="delete">
+                    <a class="delete" style="cursor: pointer;">
                         <span class="bi bi-trash-fill text-danger" data-id="@tipo.Id"></span>
                     </a>
                 </td>
@@ -74,7 +74,7 @@
             let id = evento.target.getAttribute('data-id');
             if (confirm(`¿Seguro que desea eliminar este tipo de cabaña? (ID: ${id})`)) {
 
-                let url = '@Url.Action("Delete", "TipoCabana")?id=' + encodeURIComponent(id);
+                let url = '@Url.Action("Delete", "TipoCabania")?id=' + encodeURIComponent(id);
                 window.location.href = url;
             }
         });

@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace LogicaAccesoDatos.Repositorios
 {
-    public class RepositorioTiposCabana : IRepositorioTipoCabana
+    public class RepositorioTiposCabania : IRepositorioTipoCabania
     {
-        public HotelCabanaContext Contexto { get; set; }
+        public HotelCabaniaContext Contexto { get; set; }
 
-        public RepositorioTiposCabana(HotelCabanaContext contexto)
+        public RepositorioTiposCabania(HotelCabaniaContext contexto)
         {
             Contexto = contexto;
         }
 
-        public void Add(TipoCabana tipoCabana)
+        public void Add(TipoCabania tipoCabania)
         {
             try
             {
-                tipoCabana.ValidarDatos();
+                tipoCabania.ValidarDatos();
 
-                Contexto.TipoCabanas.Add(tipoCabana);
+                Contexto.TipoCabanias.Add(tipoCabania);
                 Contexto.SaveChanges();
             } catch
             {
@@ -33,23 +33,23 @@ namespace LogicaAccesoDatos.Repositorios
             }           
         }
 
-        public TipoCabana FindById(int id)
+        public TipoCabania FindById(int id)
         {
-            return Contexto.TipoCabanas.Find(id);
+            return Contexto.TipoCabanias.Find(id);
         }
 
         public void Delete(int id)
         {
             try
             {
-                TipoCabana tipo = this.FindById(id);
+                TipoCabania tipo = this.FindById(id);
 
-                Cabana? cab = Contexto.Cabanas.FirstOrDefault(c => c.TipoId == id);
+                Cabania? cab = Contexto.Cabanias.FirstOrDefault(c => c.TipoId == id);
 
                 if (cab != null)
                     throw new Exception("Existen cabañas de ese tipo.");
                 
-                Contexto.TipoCabanas.Remove(tipo);
+                Contexto.TipoCabanias.Remove(tipo);
                 Contexto.SaveChanges();
             } catch
             {
@@ -58,11 +58,11 @@ namespace LogicaAccesoDatos.Repositorios
             
         }
 
-        public void Update(int id, TipoCabana cabana)
+        public void Update(int id, TipoCabania tipoCabania)
         {
             try
             {
-                Contexto.TipoCabanas.Update(cabana);
+                Contexto.TipoCabanias.Update(tipoCabania);
                 Contexto.SaveChanges();
             } catch
             {
@@ -70,22 +70,22 @@ namespace LogicaAccesoDatos.Repositorios
             }
         }
 
-        public IEnumerable<TipoCabana> FindAll()
+        public IEnumerable<TipoCabania> FindAll()
         {
             try
             {
-                return Contexto.TipoCabanas.ToList();
+                return Contexto.TipoCabanias.ToList();
             } catch
             {
                 throw;
             }
         }
 
-        public IEnumerable<TipoCabana> FindByName(string nombre)
+        public IEnumerable<TipoCabania> FindByName(string nombre)
         {
             try
             {
-                return Contexto.TipoCabanas
+                return Contexto.TipoCabanias
                     .Where(t => t.Nombre.Contains(nombre)).ToList();
             } catch
             {

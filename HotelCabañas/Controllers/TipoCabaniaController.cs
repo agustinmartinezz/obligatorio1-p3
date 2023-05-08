@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelCabañas.Controllers
 {
-    public class TipoCabanaController : Controller
+    public class TipoCabaniaController : Controller
     {
-        IRepositorioTipoCabana repositorioTipoCabana { get; set; }
+        IRepositorioTipoCabania repositorioTipoCabania { get; set; }
 
-        public TipoCabanaController(IRepositorioTipoCabana repoTipoCabana) {
-            repositorioTipoCabana = repoTipoCabana;
+        public TipoCabaniaController(IRepositorioTipoCabania repoTipoCabania) {
+            repositorioTipoCabania = repoTipoCabania;
         }
 
         public IActionResult Index()
@@ -20,39 +20,39 @@ namespace HotelCabañas.Controllers
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            VMTiposCabana vmTipoCabana = new()
+            VMTiposCabania vmTipoCabania = new()
             {
-                TiposCabana = repositorioTipoCabana.FindAll()
+                TiposCabania = repositorioTipoCabania.FindAll()
             };
 
-            if (!vmTipoCabana.TiposCabana.Any())
+            if (!vmTipoCabania.TiposCabania.Any())
                 TempData["Error"] = "No existen tipos de cabaña ingresados.";
 
-            return View(vmTipoCabana);
+            return View(vmTipoCabania);
         }
 
         [HttpPost]
-        public IActionResult Index(VMTiposCabana vmTipoCabana)
+        public IActionResult Index(VMTiposCabania vmTipoCabania)
         {
-            string texto = vmTipoCabana.StrSearch;
+            string texto = vmTipoCabania.StrSearch;
 
             if (string.IsNullOrWhiteSpace(texto))
             {
-                vmTipoCabana.TiposCabana = repositorioTipoCabana.FindAll();
+                vmTipoCabania.TiposCabania = repositorioTipoCabania.FindAll();
 
-                if (!vmTipoCabana.TiposCabana.Any())
+                if (!vmTipoCabania.TiposCabania.Any())
                     TempData["Error"] = "No existen tipos de cabaña ingresados.";
             }
             else
             {
-                vmTipoCabana.TiposCabana = repositorioTipoCabana.FindByName(texto);
-                vmTipoCabana.StrSearch = texto;
+                vmTipoCabania.TiposCabania = repositorioTipoCabania.FindByName(texto);
+                vmTipoCabania.StrSearch = texto;
 
-                if (!vmTipoCabana.TiposCabana.Any())
+                if (!vmTipoCabania.TiposCabania.Any())
                     TempData["Error"] = "No existen tipos de cabaña con ese nombre.";
             }
             
-            return View(vmTipoCabana);
+            return View(vmTipoCabania);
         }
 
         public IActionResult Create()
@@ -66,17 +66,17 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TipoCabana tipoCabana)
+        public IActionResult Create(TipoCabania tipoCabania)
         {
             try
             {
-                tipoCabana.ValidarDatos();
+                tipoCabania.ValidarDatos();
 
-                repositorioTipoCabana.Add(tipoCabana);
+                repositorioTipoCabania.Add(tipoCabania);
                 TempData["Mensaje"] = "Tipo de cabaña ingresado con éxito.";
 
-                VMTiposCabana vmTipoCabana = new();
-                return RedirectToAction("Index", vmTipoCabana);
+                VMTiposCabania vmTipoCabania = new();
+                return RedirectToAction("Index", vmTipoCabania);
             } catch (Exception e)
             {
                 ViewBag.Error = e.Message;
@@ -87,26 +87,26 @@ namespace HotelCabañas.Controllers
 
         public IActionResult Edit(int id)
         {
-            TipoCabana tipoCabana = repositorioTipoCabana.FindById(id);
+            TipoCabania tipoCabania = repositorioTipoCabania.FindById(id);
 
-            return View(tipoCabana);
+            return View(tipoCabania);
         }
 
         [HttpPost]
-        public IActionResult Edit(TipoCabana tipoCabana)
+        public IActionResult Edit(TipoCabania tipoCabania)
         {
             try
             {
-                tipoCabana.ValidarDatos();
+                tipoCabania.ValidarDatos();
 
-                repositorioTipoCabana.Update(tipoCabana.Id, tipoCabana);
+                repositorioTipoCabania.Update(tipoCabania.Id, tipoCabania);
 
                 TempData["Mensaje"] = "Tipo de cabaña modificado correctamente.";
                 return RedirectToAction("Index");
             } catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                return View(tipoCabana);
+                return View(tipoCabania);
             }
         }
 
@@ -114,12 +114,12 @@ namespace HotelCabañas.Controllers
         {
             try
             {
-                repositorioTipoCabana.Delete(id);
+                repositorioTipoCabania.Delete(id);
 
                 TempData["Mensaje"] = "Tipo de cabaña eliminado correctamente.";
 
-                VMTiposCabana vmTipoCabana = new();
-                return RedirectToAction("Index", vmTipoCabana);
+                VMTiposCabania vmTipoCabania = new();
+                return RedirectToAction("Index", vmTipoCabania);
             } catch (Exception e)
             {
                 ViewBag.Error = e.Message;

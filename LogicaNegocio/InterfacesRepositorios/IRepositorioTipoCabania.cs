@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.InterfacesRepositorios
 {
-    public interface IRepositorioTipoCabana : IRepositorio<TipoCabana>
+    public interface IRepositorioTipoCabania : IRepositorio<TipoCabania>
     {
-        public IEnumerable<TipoCabana> FindByName(string nombre);
+        public IEnumerable<TipoCabania> FindByName(string nombre);
     }
 }
