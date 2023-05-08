@@ -3,6 +3,7 @@ using LogicaAccesoDatos.Repositorios;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace HotelCabañas
 {
@@ -16,6 +17,8 @@ public class Program
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
             builder.Services.AddScoped<IRepositorioTipoCabana, RepositorioTiposCabana>();
             builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
+            builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
+
 
             ConfigurationBuilder miConfiguracion = new ConfigurationBuilder();
 
@@ -24,6 +27,10 @@ public class Program
             string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanas");
             builder.Services.
                 AddDbContext<HotelCabanaContext>(options => options.UseSqlServer(cadenaConexion));
+
+
+            //builder.Services.AddDbContext<HotelCabanaContext>(options =>
+            //options.UseSqlServer(builder.Configuration.GetConnectionString("HotelCabanas")));
 
             builder.Configuration.AddJsonFile("parametros.json",
                      optional: true,
