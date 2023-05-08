@@ -14,24 +14,30 @@ namespace LogicaNegocio.EntidadesNegocio
     public class Cabania: IValidar
     {
         [Key]
+        [Required]
         public int Id { get; set; }
-
+        [Required]
         [ForeignKey(nameof(Tipo))]
         public int TipoId { get; set; }
+        [Required]
         public TipoCabania Tipo { get; set; }
-
         [Required]
         public string Nombre { get; set; }
-
+        [Required]
         [MinLength(10, ErrorMessage = "La descripción debe tener mínimo 10 caracteres")]
         [MaxLength(500, ErrorMessage = "La descripción debe tener máximo 500 caracteres")]
         public string Descripcion { get; set; }
+        [Required]
         public Boolean TieneJacuzzi { get; set; }
+        [Required]
         public Boolean HabilitadaReservas { get; set; }
+        [Required]
         public int NumeroHabitacion { get; set; }
+        [Required]
         public static int UltimoNumHab { get; set; }
-
+        [Required]
         public int MaxPersonas { get; set; }
+        [Required]
         public string Foto { get; set; }
 
         public void ValidarDatos()

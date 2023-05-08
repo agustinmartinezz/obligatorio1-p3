@@ -1,0 +1,66 @@
+﻿@model HotelCabañas.Models.VMCabania
+@using LogicaNegocio.EntidadesNegocio
+@{
+    ViewData["Title"] = "Cabañas";
+}
+
+<div class="input-group rounded">
+    <form method="POST" action="Index">
+        <input id="strSearchCabania" name="strSearchCabania" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
+        <select name="searchTypeCabania">
+            <option value="1">By Name</option>
+            <option value="2">By Type</option>
+            <option value="3">By People</option>
+            <option value="4">Only Available</option>
+        </select>
+
+        <input id="strSearch" type="submit" value="Search" />
+    </form> 
+</div>
+
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Tiene Jacuzzi</th>
+            <th scope="col">Habilitada Reservas</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Maximo de Personas</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Mantenimientos Realizados</th>
+            <th scope="col">Realizar</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Cabanias)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Nombre</td>
+                <td>@item.Descripcion</td>
+                <td>@item.TieneJacuzzi</td>
+                <td>@item.HabilitadaReservas</td>
+                <td>@item.Tipo.Nombre  $@item.Tipo.CostoxHuesped</td>
+                <td>@item.MaxPersonas</td>
+                <td>@item.Foto</td>
+
+                <td>
+                    <a asp-controller="Mantenimiento" asp-action="Create" asp-route-id="@item.Id">
+                        <span class="bi-pencil-square text-primary"></span>
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Mantenimiento" asp-action="Index" asp-route-id="@item.Id">
+                        <span class="bi bi-trash-fill text-danger"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
