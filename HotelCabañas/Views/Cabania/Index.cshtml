@@ -1,4 +1,4 @@
-﻿@model HotelCabañas.Models.VMCabana
+﻿@model HotelCabañas.Models.VMCabania
 @using LogicaNegocio.EntidadesNegocio
 @{
     ViewData["Title"] = "Cabañas";
@@ -6,8 +6,8 @@
 
 <div class="input-group rounded">
     <form method="POST" action="Index">
-        <input id="strSearchCabana" name="strSearchCabana" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
-        <select name="searchTypeCabana">
+        <input id="strSearchCabania" name="strSearchCabania" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
+        <select name="searchTypeCabania">
             <option value="1">By Name</option>
             <option value="2">By Type</option>
             <option value="3">By People</option>
@@ -38,7 +38,7 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model.Cabanas)
+        @foreach (var item in Model.Cabanias)
         {
             <tr>
                 <th scope="row">@item.Id</th>

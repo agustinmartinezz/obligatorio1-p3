@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace HotelCabañas.Models
 {
-    public class VMCabana {
+    public class VMCabania
+    {
         public int TipoId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
@@ -16,13 +17,11 @@ namespace HotelCabañas.Models
         public int MaxPersonas { get; set; }
         public IFormFile Foto { get; set; }
 
-        public Cabana? Cabana { get; set; }
+        public Cabania? Cabania { get; set; }
 
-        public String? strSearchCabana { get; set; }
-        public int? searchTypeCabana { get; set; }
-        public IEnumerable<TipoCabana>? Tipos { get; set; }
-        public IEnumerable<Cabana>? Cabanas { get; set; }
-        
-    
+        public String? strSearchCabania { get; set; }
+        public int? searchTypeCabania { get; set; }
+        public IEnumerable<TipoCabania>? Tipos { get; set; }
+        public IEnumerable<Cabania>? Cabanias { get; set; }
     }
 }

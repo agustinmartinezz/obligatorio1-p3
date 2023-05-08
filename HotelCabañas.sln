@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelCabañas", "HotelCabañas\HotelCabañas.csproj", "{9C54FC9C-7B56-4D9A-83D5-587042748A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelCabañas", "HotelCabañas\HotelCabañas.csproj", "{9C54FC9C-7B56-4D9A-83D5-587042748A81}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4} = {4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}
 		{9B025F85-FF9C-4311-A014-D4A6CCA35AE3} = {9B025F85-FF9C-4311-A014-D4A6CCA35AE3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{9B025F85-FF9C-4311-A014-D4A6CCA35AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{9B025F85-FF9C-4311-A014-D4A6CCA35AE3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4} = {4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}
 	EndProjectSection

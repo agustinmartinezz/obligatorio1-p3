@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LogicaAccesoDatos.Repositorios
 {
-    public class RepositorioUsuarios : IRepositorioUsuario
+    public class RepositorioUsuario : IRepositorioUsuario
     {
-        public HotelCabanaContext Contexto { get; set; }
+        public HotelCabaniaContext Contexto { get; set; }
 
-        public RepositorioUsuarios(HotelCabanaContext contexto)
+        public RepositorioUsuario(HotelCabaniaContext contexto)
         {
             Contexto = contexto;
         }
@@ -52,7 +52,7 @@ namespace LogicaAccesoDatos.Repositorios
 
         }
 
-        public void Update(int id, Usuario t)
+        public void Update(int id, Usuario usuario)
         {
             throw new NotImplementedException();
         }

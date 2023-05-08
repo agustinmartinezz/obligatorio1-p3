@@ -11,7 +11,7 @@ using LogicaNegocio.ExcepcionesEntidades;
 
 namespace LogicaNegocio.EntidadesNegocio
 {
-    public class Cabana: IValidar
+    public class Cabania: IValidar
     {
         [Key]
         [Required]
@@ -20,8 +20,7 @@ namespace LogicaNegocio.EntidadesNegocio
         [ForeignKey(nameof(Tipo))]
         public int TipoId { get; set; }
         [Required]
-        public TipoCabana Tipo { get; set; }
-
+        public TipoCabania Tipo { get; set; }
         [Required]
         public string Nombre { get; set; }
         [Required]

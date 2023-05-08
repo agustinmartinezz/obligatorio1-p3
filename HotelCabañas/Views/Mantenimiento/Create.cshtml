@@ -20,9 +20,9 @@
                 <input type="number" asp-for="CostoxHuesped" placeholder="Costo por Huesped" class="form-control" />
 
 
-                <label asp-for="Cabana" class="control-label"></label>
+                <label asp-for="Cabania" class="control-label"></label>
                 <select name="tipo">
-                    @foreach (var item in Model.Cabanas)
+                    @foreach (var item in Model.Cabanias)
                     {
                         <option value="@item.Id">@item.Nombre</option>
                     }

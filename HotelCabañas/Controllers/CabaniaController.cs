@@ -11,95 +11,95 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HotelCabañas.Controllers
 {
-    public class CabanaController : Controller
+    public class CabaniaController : Controller
     {
-        public IRepositorioCabana repositorioCabana { get; set; }
-        public IRepositorioTipoCabana repositorioTipoCabana { get; set; }
+        public IRepositorioCabania repositorioCabania { get; set; }
+        public IRepositorioTipoCabania repositorioTipoCabania { get; set; }
       
 
-        public CabanaController(IRepositorioCabana repoCabana,IRepositorioTipoCabana repoTipoCabana)
+        public CabaniaController(IRepositorioCabania repoCabania,IRepositorioTipoCabania repoTipoCabania)
         {
-            repositorioCabana = repoCabana;
-            repositorioTipoCabana = repoTipoCabana;
+            repositorioCabania = repoCabania;
+            repositorioTipoCabania = repoTipoCabania;
         }
 
-        // GET: CabanaController
+        // GET: CabaniaController
 
         [HttpGet]
         public ActionResult Index()
         {
-            VMCabana vmCabana = new VMCabana();
-            vmCabana.Cabanas = repositorioCabana.FindAll();
-            return View(vmCabana);
+            VMCabania vmCabania = new VMCabania();
+            vmCabania.Cabanias = repositorioCabania.FindAll();
+            return View(vmCabania);
         }
 
         [HttpPost]
-        public ActionResult Index(VMCabana vmCabana)
+        public ActionResult Index(VMCabania vmCabania)
         {
-            string? searchText = vmCabana.strSearchCabana;
+            string? searchText = vmCabania.strSearchCabania;
             int intSearch = Int32.Parse(searchText);
 
-            switch (vmCabana.searchTypeCabana)
+            switch (vmCabania.searchTypeCabania)
             {
                 case 1:
-                    vmCabana.Cabanas = repositorioCabana.FindByName(searchText);
+                    vmCabania.Cabanias = repositorioCabania.FindByName(searchText);
                     break;
                 case 2:
-                    vmCabana.Cabanas = repositorioCabana.FindByTypo(intSearch);
+                    vmCabania.Cabanias = repositorioCabania.FindByTypo(intSearch);
                     break;
                 case 3:
-                    vmCabana.Cabanas = repositorioCabana.FindByMaxPeople(intSearch);
+                    vmCabania.Cabanias = repositorioCabania.FindByMaxPeople(intSearch);
                     break;
                 case 4:
-                    vmCabana.Cabanas = repositorioCabana.FindHabilitadas();
+                    vmCabania.Cabanias = repositorioCabania.FindHabilitadas();
                     break;
 
             }
 
-            return View(vmCabana.Cabanas);
+            return View(vmCabania.Cabanias);
         }
 
-        // GET: CabanaController/Details/5
+        // GET: CabaniaController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CabanaController/Create
+        // GET: CabaniaController/Create
         [HttpGet]
         public ActionResult Create()
         {
-            VMCabana vmCabana = new VMCabana();
-            vmCabana.Tipos = repositorioTipoCabana.FindAll();
-            return View(vmCabana);
+            VMCabania vmCabania = new VMCabania();
+            vmCabania.Tipos = repositorioTipoCabania.FindAll();
+            return View(vmCabania);
         }
 
-        // POST: CabanaController/Create
+        // POST: CabaniaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int Id,VMCabana vmCabana)
+        public ActionResult Create(int Id,VMCabania vmCabania)
         {
             try
             {
-                Cabana c = vmCabana.Cabana;
-                repositorioCabana.Add(c); 
+                Cabania c = vmCabania.Cabania;
+                repositorioCabania.Add(c); 
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception e)
             {
                 ViewBag.Mensaje = e.Message;
-                vmCabana.Tipos = repositorioTipoCabana.FindAll();
-                return View(vmCabana);
+                vmCabania.Tipos = repositorioTipoCabania.FindAll();
+                return View(vmCabania);
             }
         }
 
-        // GET: CabanaController/Edit/5
+        // GET: CabaniaController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: CabanaController/Edit/5
+        // POST: CabaniaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -114,13 +114,13 @@ namespace HotelCabañas.Controllers
             }
         }
 
-        // GET: CabanaController/Delete/5
+        // GET: CabaniaController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: CabanaController/Delete/5
+        // POST: CabaniaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

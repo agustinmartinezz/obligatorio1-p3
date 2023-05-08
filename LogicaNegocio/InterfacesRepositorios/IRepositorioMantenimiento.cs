@@ -9,7 +9,7 @@ namespace LogicaNegocio.InterfacesRepositorios
 {
     public interface IRepositorioMantenimiento: IRepositorio<Mantenimiento>
     {
-        IEnumerable<Mantenimiento> FindByDates(int CabanaId, DateTime date1,DateTime date2);
+        IEnumerable<Mantenimiento> FindByDates(int CabaniaId, DateTime date1,DateTime date2);
     }
 }
 

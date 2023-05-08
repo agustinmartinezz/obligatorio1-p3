@@ -10,13 +10,13 @@ namespace HotelCabañas.Controllers
 
     {
 
-        public IRepositorioCabana repositorioCabana { get; set; }
+        public IRepositorioCabania repositorioCabania { get; set; }
         public IRepositorioMantenimiento repositorioMantenimiento { get; set; }
 
 
-        public MantenimientoController(IRepositorioCabana repoCabana, IRepositorioMantenimiento repoMantenimiento)
+        public MantenimientoController(IRepositorioCabania repoCabania, IRepositorioMantenimiento repoMantenimiento)
         {
-            repositorioCabana = repoCabana;
+            repositorioCabania = repoCabania;
             repositorioMantenimiento = repoMantenimiento;
         }
 
@@ -24,7 +24,7 @@ namespace HotelCabañas.Controllers
         // GET: MantenimientoController
         public ActionResult Index(VMMantenimiento vmMantenimiento)
         {
-            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabana.Id,vmMantenimiento.date1, vmMantenimiento.date2);
+            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id,vmMantenimiento.date1, vmMantenimiento.date2);
 
             return View(vmMantenimiento.Mantenimiento);
         }
