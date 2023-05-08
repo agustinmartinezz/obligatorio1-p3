@@ -13,22 +13,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LogicaAccesoDatos.Repositorios
 {
-    public class RepositorioCabana:IRepositorioCabana
+    public class RepositorioCabania:IRepositorioCabania
     {
-        public HotelCabanaContext Contexto { get; set; }
+        public HotelCabaniaContext Contexto { get; set; }
 
-        public RepositorioCabana(HotelCabanaContext contexto)
+        public RepositorioCabania(HotelCabaniaContext contexto)
         {
             Contexto = contexto;
         }
 
-        private static List<Cabana> cabanas = new List<Cabana>();
-        public void Add(Cabana c)
+        private static List<Cabania> Cabanias = new List<Cabania>();
+        public void Add(Cabania c)
         {
             try
             {
                 c.ValidarDatos();
-                cabanas.Add(c);
+                Cabanias.Add(c);
             }
             catch
             {
@@ -39,41 +39,41 @@ namespace LogicaAccesoDatos.Repositorios
         public void Delete(int id)
         {
 
-            Cabana cabana = FindById(id);
-            if (cabana != null)
+            Cabania Cabania = FindById(id);
+            if (Cabania != null)
             {
-                cabanas.Remove(cabana);
+                Cabanias.Remove(Cabania);
             }
 
         }
 
-        public Cabana FindById(int id)
+        public Cabania FindById(int id)
         {
-            Cabana cabana = null;
+            Cabania Cabania = null;
             int i = 0;
-            while (i < cabanas.Count && cabanas == null)
+            while (i < Cabanias.Count && Cabanias == null)
             {
-                if (cabanas[i].Id == id)
+                if (Cabanias[i].Id == id)
                 {
-                    cabana = cabanas[i];
+                    Cabania = Cabanias[i];
                 }
                 i++;
             }
-            return cabana;
+            return Cabania;
 
         }
 
-        public IEnumerable<Cabana> FindAll()
+        public IEnumerable<Cabania> FindAll()
         {
             // throw new NotImplementedException();
-            return cabanas;
+            return Cabanias;
         }
 
-        public void Update(int id, Cabana cabana)
+        public void Update(int id, Cabania Cabania)
         {
 
-            Cabana cabanaBuscado = FindById(id);
-            if (cabanaBuscado != null)
+            Cabania CabaniaBuscado = FindById(id);
+            if (CabaniaBuscado != null)
             {
                 //corregir lo que corresponda
             }
@@ -81,30 +81,30 @@ namespace LogicaAccesoDatos.Repositorios
 
         }
 
-        public IEnumerable<Cabana> FindByName(string nombre)
+        public IEnumerable<Cabania> FindByName(string nombre)
         {
-            return Contexto.Cabanas
+            return Contexto.Cabanias
                 .Where(c => c.Nombre.ToLower().Contains(nombre.ToLower()))
                 .ToList();
         }
 
-        public IEnumerable<Cabana> FindByTypo(int tipoId)
+        public IEnumerable<Cabania> FindByTypo(int tipoId)
         {
-            return Contexto.Cabanas
+            return Contexto.Cabanias
                 .Where(c => c.TipoId==tipoId)
                 .ToList();
         }
 
-        public IEnumerable<Cabana> FindByMaxPeople(int maxPeople)
+        public IEnumerable<Cabania> FindByMaxPeople(int maxPeople)
         {
-            return Contexto.Cabanas
+            return Contexto.Cabanias
               .Where(c => c.MaxPersonas >= maxPeople)
               .ToList();
         }
 
-        public IEnumerable<Cabana> FindHabilitadas()
+        public IEnumerable<Cabania> FindHabilitadas()
         {
-            return Contexto.Cabanas
+            return Contexto.Cabanias
              .Where(c => c.HabilitadaReservas)
              .ToList();
         }

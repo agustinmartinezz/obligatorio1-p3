@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class inicialaux : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TipoCabanas",
+                name: "TipoCabanias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace LogicaAccesoDatos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoCabanas", x => x.Id);
+                    table.PrimaryKey("PK_TipoCabanias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,7 +33,7 @@ namespace LogicaAccesoDatos.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Mail = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace LogicaAccesoDatos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cabanas",
+                name: "Cabanias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -58,11 +58,11 @@ namespace LogicaAccesoDatos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cabanas", x => x.Id);
+                    table.PrimaryKey("PK_Cabanias", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cabanas_TipoCabanas_TipoId",
+                        name: "FK_Cabanias_TipoCabanias_TipoId",
                         column: x => x.TipoId,
-                        principalTable: "TipoCabanas",
+                        principalTable: "TipoCabanias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -77,39 +77,45 @@ namespace LogicaAccesoDatos.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Costo = table.Column<int>(type: "int", nullable: false),
                     NombreReazlizo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CabanaId = table.Column<int>(type: "int", nullable: false)
+                    CabaniaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Mantenimientos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mantenimientos_Cabanas_CabanaId",
-                        column: x => x.CabanaId,
-                        principalTable: "Cabanas",
+                        name: "FK_Mantenimientos_Cabanias_CabaniaId",
+                        column: x => x.CabaniaId,
+                        principalTable: "Cabanias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cabanas_Nombre",
-                table: "Cabanas",
+                name: "IX_Cabanias_Nombre",
+                table: "Cabanias",
                 column: "Nombre",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cabanas_TipoId",
-                table: "Cabanas",
+                name: "IX_Cabanias_TipoId",
+                table: "Cabanias",
                 column: "TipoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mantenimientos_CabanaId",
+                name: "IX_Mantenimientos_CabaniaId",
                 table: "Mantenimientos",
-                column: "CabanaId");
+                column: "CabaniaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TipoCabanas_Nombre",
-                table: "TipoCabanas",
+                name: "IX_TipoCabanias_Nombre",
+                table: "TipoCabanias",
                 column: "Nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Mail",
+                table: "Usuarios",
+                column: "Mail",
                 unique: true);
         }
 
@@ -123,10 +129,10 @@ namespace LogicaAccesoDatos.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Cabanas");
+                name: "Cabanias");
 
             migrationBuilder.DropTable(
-                name: "TipoCabanas");
+                name: "TipoCabanias");
         }
     }
 }

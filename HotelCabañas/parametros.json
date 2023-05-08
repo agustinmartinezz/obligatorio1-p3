@@ -1,8 +1,8 @@
 ﻿{
-  "MinDescTipoCabana": 10,
-  "MaxDescTipoCabana": 200,
-  "MinDescCabana": 10,
-  "MaxDescCabana": 500,
+  "MinDescTipoCabania": 10,
+  "MaxDescTipoCabania": 200,
+  "MinDescCabania": 10,
+  "MaxDescCabania": 500,
   "MinDescMantenimiento": 10,
   "MaxDescMantenimiento": 200
 }

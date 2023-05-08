@@ -1,6 +1,6 @@
 ﻿namespace HotelCabañas.Models
 {
-    public class VMCabana
+    public class VMCabania
     {
     }
 }
