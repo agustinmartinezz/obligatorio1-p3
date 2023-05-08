@@ -14,12 +14,14 @@ namespace LogicaNegocio.EntidadesNegocio
         private static int ultimoId = 1;
         public int Id { get; set; }
         public string Nombre { get; set; }
-
-        [MinLength(10, ErrorMessage = "La descripcion no puede tener menos de 10 caracteres")]
-        [MaxLength(200, ErrorMessage = "La descripcion no puede tener mas de 200 caracteres")]
         public string Descripcion { get; set; }
         public int CostoxHuesped { get; set; }
-
+        public TipoCabana() 
+        {
+            Nombre = string.Empty;
+            Descripcion = string.Empty;
+            CostoxHuesped = 0;
+        }
         public TipoCabana(string nombre, string descripcion, int costoxHuesped)
         {
             Nombre = nombre;
@@ -37,6 +39,15 @@ namespace LogicaNegocio.EntidadesNegocio
 
             if (string.IsNullOrWhiteSpace(Descripcion))
                 throw new DescripcionException("La descripcion no puede estar vacia.");
+
+            if (Descripcion.Length < Parametros.MinDescTipoCabana)
+                throw new DescripcionException("La descripcion no puede tener menos de" + Parametros.MinDescTipoCabana.ToString() + " caracteres");
+
+            if (Descripcion.Length < Parametros.MinDescTipoCabana)
+                throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabana.ToString() + " caracteres");
+
+            if (CostoxHuesped <= 0)
+                throw new DescripcionException("El costo debe ser mayor que 0");
         }
     }
 }

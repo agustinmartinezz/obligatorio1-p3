@@ -15,20 +15,116 @@ namespace HotelCabañas.Controllers
 
         public IActionResult Index()
         {
-            VMTiposCabana vmTipos = new();
-            vmTipos.TiposCabana = repositorioTipoCabana.FindAll();
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
 
-            return View(vmTipos);
+            VMTiposCabana vmTipoCabana = new()
+            {
+                TiposCabana = repositorioTipoCabana.FindAll()
+            };
+
+            if (!vmTipoCabana.TiposCabana.Any())
+                TempData["Error"] = "No existen tipos de cabaña ingresados.";
+
+            return View(vmTipoCabana);
         }
 
         [HttpPost]
-        public IActionResult Index(string strSearch)
+        public IActionResult Index(VMTiposCabana vmTipoCabana)
         {
-            VMTiposCabana vmTipos = new();
-            vmTipos.TiposCabana = repositorioTipoCabana.FindByName(strSearch);
+            string texto = vmTipoCabana.StrSearch;
 
-            return View(strSearch);
+            if (string.IsNullOrWhiteSpace(texto))
+            {
+                vmTipoCabana.TiposCabana = repositorioTipoCabana.FindAll();
+
+                if (!vmTipoCabana.TiposCabana.Any())
+                    TempData["Error"] = "No existen tipos de cabaña ingresados.";
+            }
+            else
+            {
+                vmTipoCabana.TiposCabana = repositorioTipoCabana.FindByName(texto);
+                vmTipoCabana.StrSearch = texto;
+
+                if (!vmTipoCabana.TiposCabana.Any())
+                    TempData["Error"] = "No existen tipos de cabaña con ese nombre.";
+            }
+            
+            return View(vmTipoCabana);
         }
-        
+
+        public IActionResult Create()
+        {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(TipoCabana tipoCabana)
+        {
+            try
+            {
+                tipoCabana.ValidarDatos();
+
+                repositorioTipoCabana.Add(tipoCabana);
+                TempData["Mensaje"] = "Tipo de cabaña ingresado con éxito.";
+
+                VMTiposCabana vmTipoCabana = new();
+                return RedirectToAction("Index", vmTipoCabana);
+            } catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View();
+            }
+            
+        }
+
+        public IActionResult Edit(int id)
+        {
+            TipoCabana tipoCabana = repositorioTipoCabana.FindById(id);
+
+            return View(tipoCabana);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TipoCabana tipoCabana)
+        {
+            try
+            {
+                tipoCabana.ValidarDatos();
+
+                repositorioTipoCabana.Update(tipoCabana.Id, tipoCabana);
+
+                TempData["Mensaje"] = "Tipo de cabaña modificado correctamente.";
+                return RedirectToAction("Index");
+            } catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View(tipoCabana);
+            }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                repositorioTipoCabana.Delete(id);
+
+                TempData["Mensaje"] = "Tipo de cabaña eliminado correctamente.";
+
+                VMTiposCabana vmTipoCabana = new();
+                return RedirectToAction("Index", vmTipoCabana);
+            } catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return View();
+            }
+        }
     }
 }

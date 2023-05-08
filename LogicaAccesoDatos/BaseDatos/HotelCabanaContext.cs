@@ -17,7 +17,6 @@ namespace LogicaAccesoDatos.BaseDatos
 
         public DbSet<Mantenimiento> Mantenimientos { get; set; }
 
-
         public HotelCabanaContext(DbContextOptions options):base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

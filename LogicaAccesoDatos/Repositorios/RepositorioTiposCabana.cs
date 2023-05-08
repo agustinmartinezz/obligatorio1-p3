@@ -44,6 +44,11 @@ namespace LogicaAccesoDatos.Repositorios
             {
                 TipoCabana tipo = this.FindById(id);
 
+                Cabana? cab = Contexto.Cabanas.FirstOrDefault(c => c.TipoId == id);
+
+                if (cab != null)
+                    throw new Exception("Existen cabañas de ese tipo.");
+                
                 Contexto.TipoCabanas.Remove(tipo);
                 Contexto.SaveChanges();
             } catch

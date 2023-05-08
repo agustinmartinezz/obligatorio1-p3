@@ -1,5 +1,6 @@
 using LogicaAccesoDatos.BaseDatos;
 using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,13 +13,11 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
             builder.Services.AddScoped<IRepositorioTipoCabana, RepositorioTiposCabana>();
             builder.Services.AddScoped<IRepositorioCabana, RepositorioCabana>();
 
-            ConfigurationBuilder miConfiguracion = new ConfigurationBuilder();
-
+            ConfigurationBuilder miConfiguracion = new();
             miConfiguracion.AddJsonFile("appsettings.json");
 
             string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanas");
@@ -34,6 +33,15 @@ public class Program
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            /*--------- PARAMETROS JSON ---------*/
+            Parametros.MinDescTipoCabana = builder.Configuration.GetValue<int>("MinDescTipoCabana");
+            Parametros.MaxDescTipoCabana = builder.Configuration.GetValue<int>("MaxDescTipoCabana");
+            Parametros.MinDescCabana = builder.Configuration.GetValue<int>("MinDescCabana");
+            Parametros.MaxDescCabana = builder.Configuration.GetValue<int>("MaxDescCabana");
+            Parametros.MinDescMantenimiento = builder.Configuration.GetValue<int>("MinDescMantenimiento");
+            Parametros.MaxDescMantenimiento = builder.Configuration.GetValue<int>("MaxDescMantenimiento");
+            /*-----------------------------------*/
 
             var app = builder.Build();
 

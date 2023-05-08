@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LogicaNegocio.EntidadesNegocio
@@ -36,7 +37,22 @@ namespace LogicaNegocio.EntidadesNegocio
                 throw new UsuarioException("Mail no puede ser nulo o vacio.");
 
             if (string.IsNullOrWhiteSpace(Contrasena))
-                throw new UsuarioException("Contrasena no puede ser nulo o vacio.");
+                throw new UsuarioException("Contraseña no puede ser nulo o vacio.");
+
+            if (!ValidacionesContrasenia(Contrasena))
+                throw new UsuarioException("Contraseña debe tener al menos 6 caracteres e incluir minúscula, mayúscula y número.");
+        }
+
+        private bool ValidacionesContrasenia(string contrasena)
+        {
+            bool mayus = Regex.IsMatch(contrasena, @"[A-Z]");
+            bool minus = Regex.IsMatch(contrasena, @"[a-z]");
+            bool num   = Regex.IsMatch(contrasena, @"\d");
+
+            if (mayus && minus && num && contrasena.Length >= 6)
+                return true;
+
+            return false;
         }
     }
 }

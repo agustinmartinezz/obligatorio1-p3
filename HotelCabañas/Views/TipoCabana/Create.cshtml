@@ -1,0 +1,43 @@
+﻿@model LogicaNegocio.EntidadesNegocio.TipoCabana;
+@{
+    ViewData["Title"] = "Agregar Tipo";
+}
+
+<section class="vh-70 gradient-custom">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-primary bg-gradient text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <div class="mb-md-5 mt-md-4">
+                            <form asp-action="Create">
+
+                                <h3 class="fw-bold mb-2">Agregar Tipo de Cabaña</h3>
+
+                                <div class="form-outline form-white mb-4">
+                                    <input asp-for="Nombre" type="text" class="form-control form-control-lg" />
+                                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <input asp-for="Descripcion" type="text" class="form-control form-control-lg" />
+                                    <label asp-for="Descripcion" class="form-label">Descripcion</label>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <input asp-for="CostoxHuesped" type="number" class="form-control form-control-lg" />
+                                    <label asp-for="CostoxHuesped" class="form-label">Costo por Huesped</label>
+                                </div>
+
+                                <input type="submit" value="Agregar" class="btn btn-outline-light btn-lg px-5" />
+
+                            </form>
+                            <h5 class="text-warning mt-5 fw-bold">@ViewBag.Error</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
