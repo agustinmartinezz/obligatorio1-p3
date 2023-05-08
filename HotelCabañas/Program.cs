@@ -14,7 +14,7 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
             
-            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarios>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTiposCabania>();
             builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
             builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
