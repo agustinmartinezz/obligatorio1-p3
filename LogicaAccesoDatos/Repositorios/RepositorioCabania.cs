@@ -23,12 +23,13 @@ namespace LogicaAccesoDatos.Repositorios
         }
 
         private static List<Cabania> Cabanias = new List<Cabania>();
-        public void Add(Cabania c)
+        public void Add(Cabania cabania)
         {
             try
             {
-                c.ValidarDatos();
-                Cabanias.Add(c);
+                cabania.ValidarDatos();
+                Contexto.Cabanias.Add(cabania);
+                Contexto.SaveChanges();
             }
             catch
             {
@@ -36,50 +37,61 @@ namespace LogicaAccesoDatos.Repositorios
             }
         }
 
-        public void Delete(int id)
-        {
-
-            Cabania Cabania = FindById(id);
-            if (Cabania != null)
-            {
-                Cabanias.Remove(Cabania);
-            }
-
-        }
-
         public Cabania FindById(int id)
         {
-            Cabania Cabania = null;
-            int i = 0;
-            while (i < Cabanias.Count && Cabanias == null)
+            return Contexto.Cabanias.Find(id);
+        }
+
+        public void Delete(int id)
+        {
+            try
             {
-                if (Cabanias[i].Id == id)
+                Cabania cabania = this.FindById(id);
+
+                IEnumerable<Mantenimiento>? m = Contexto.Mantenimientos
+                    .Where(m => m.CabaniaId == cabania.Id)
+                    .ToList();
+
+                foreach (Mantenimiento man in m)
                 {
-                    Cabania = Cabanias[i];
+                    Contexto.Mantenimientos.Remove(man);
                 }
-                i++;
+
+                Contexto.Cabanias.Remove(cabania);
+                Contexto.SaveChanges();
             }
-            return Cabania;
+            catch
+            {
+                throw;
+            }
 
         }
 
         public IEnumerable<Cabania> FindAll()
         {
-            // throw new NotImplementedException();
-            return Cabanias;
-        }
-
-        public void Update(int id, Cabania Cabania)
-        {
-
-            Cabania CabaniaBuscado = FindById(id);
-            if (CabaniaBuscado != null)
+            try
             {
-                //corregir lo que corresponda
+                return Contexto.Cabanias.ToList();
             }
-
-
+            catch
+            {
+                throw;
+            }
         }
+
+        public void Update(int id, Cabania cabania)
+        {
+            try
+            {
+                Contexto.Cabanias.Update(cabania);
+                Contexto.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         public IEnumerable<Cabania> FindByName(string nombre)
         {
@@ -111,3 +123,9 @@ namespace LogicaAccesoDatos.Repositorios
     } 
     
 }
+
+
+
+
+
+

@@ -5,9 +5,6 @@ using LogicaAccesoDatos.Repositorios;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
 using HotelCabañas.Models;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HotelCabañas.Controllers
 {
@@ -15,12 +12,13 @@ namespace HotelCabañas.Controllers
     {
         public IRepositorioCabania repositorioCabania { get; set; }
         public IRepositorioTipoCabania repositorioTipoCabania { get; set; }
-      
 
-        public CabaniaController(IRepositorioCabania repoCabania,IRepositorioTipoCabania repoTipoCabania)
+        private readonly IWebHostEnvironment _env;
+        public CabaniaController(IRepositorioCabania repoCabania,IRepositorioTipoCabania repoTipoCabania, IWebHostEnvironment env)
         {
             repositorioCabania = repoCabania;
             repositorioTipoCabania = repoTipoCabania;
+            _env = env;
         }
 
         // GET: CabaniaController
@@ -77,12 +75,26 @@ namespace HotelCabañas.Controllers
         // POST: CabaniaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int Id,VMCabania vmCabania)
+        public ActionResult Create(VMCabania vmCabania)
         {
             try
             {
                 Cabania c = vmCabania.Cabania;
-                repositorioCabania.Add(c); 
+                if(vmCabania.TieneJacuzzi=="0") c.TieneJacuzzi=false; else c.TieneJacuzzi = true;
+                if(vmCabania.HabilitadaReservas=="0") c.HabilitadaReservas = false; else c.HabilitadaReservas = true;
+
+
+                if (vmCabania.Foto != null)
+                {
+                    var fileName = Path.GetFileName(vmCabania.Foto.FileName);
+                    //()
+                    var path = Path.Combine(_env.WebRootPath, "~/Imagenes/Cabanias/", fileName);
+                    //vmCabania.Foto.SaveAs(path);
+
+                    // Guarda la ruta de la imagen en la base de datos
+                    //c.Foto = "/Imagenes/Cabanias/" + fileName;
+                }
+               // repositorioCabania.Add(c); 
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception e)
