@@ -22,11 +22,21 @@ namespace HotelCabañas.Controllers
 
 
         // GET: MantenimientoController
+        public ActionResult Index(int idCabania)
+        {
+            VMMantenimiento vmMantenimiento = new();
+
+            vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
+
+            return View(vmMantenimiento);
+        }
+
+        [HttpPost]
         public ActionResult Index(VMMantenimiento vmMantenimiento)
         {
-            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id,vmMantenimiento.date1, vmMantenimiento.date2);
+            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.date1, vmMantenimiento.date2);
 
-            return View(vmMantenimiento.Mantenimiento);
+            return View( vmMantenimiento);
         }
 
         // GET: MantenimientoController/Details/5
