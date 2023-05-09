@@ -7,14 +7,15 @@ namespace HotelCabañas.Models
 {
     public class VMCabania
     {
-        public int TipoId { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public Boolean TieneJacuzzi { get; set; }
-        public Boolean HabilitadaReservas { get; set; }
-        public int NumeroHabitacion { get; set; }
-        public static int UltimoNumHab { get; set; }
-        public int MaxPersonas { get; set; }
+
+        //public int TipoId { get; set; }
+        //public string Nombre { get; set; }
+        //public string Descripcion { get; set; }
+        public string TieneJacuzzi { get; set; }
+        public string HabilitadaReservas { get; set; }
+        //public int NumeroHabitacion { get; set; }
+        //public static int UltimoNumHab { get; set; }
+        //public int MaxPersonas { get; set; }
         public IFormFile Foto { get; set; }
 
         public Cabania? Cabania { get; set; }

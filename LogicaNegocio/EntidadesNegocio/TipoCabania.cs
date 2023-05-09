@@ -11,7 +11,7 @@ namespace LogicaNegocio.EntidadesNegocio
 {
     public class TipoCabania:IValidar
     {
-        private static int ultimoId = 1;
+        [Key]
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
@@ -43,7 +43,7 @@ namespace LogicaNegocio.EntidadesNegocio
             if (Descripcion.Length < Parametros.MinDescTipoCabania)
                 throw new DescripcionException("La descripcion no puede tener menos de" + Parametros.MinDescTipoCabania.ToString() + " caracteres");
 
-            if (Descripcion.Length < Parametros.MinDescTipoCabania)
+            if (Descripcion.Length > Parametros.MaxDescTipoCabania)
                 throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabania.ToString() + " caracteres");
 
             if (CostoxHuesped <= 0)

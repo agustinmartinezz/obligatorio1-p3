@@ -40,20 +40,43 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         public string Foto { get; set; }
 
+        public Cabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas, string foto)
+        {
+            UltimoNumHab++;
+            TipoId = tipoId;
+            Nombre = nombre;
+            Descripcion = descripcion;
+            TieneJacuzzi = tieneJacuzzi;
+            HabilitadaReservas = habilitadaReservas;
+            NumeroHabitacion = UltimoNumHab;
+            MaxPersonas = maxPersonas;
+            Foto = foto;
+            UltimoNumHab++;
+        }
+
+        public Cabania()
+        {
+            UltimoNumHab++;
+        }
+
         public void ValidarDatos()
         {
 
-            if (Nombre=="")
+            if (string.IsNullOrWhiteSpace(Nombre))
             {
               throw new NombreException("El nombre de una Cabaña no puede estar vacio");
             }
-            if (Nombre[0].Equals(" ") || Nombre[Nombre.Length-1].Equals(" "))
+            if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
             {
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
             if (Descripcion.Length>500 || Descripcion.Length < 10)
             {
                 throw new DescripcionException("La descripcion debe estar entre 10 y 500 caracteres");
+            }
+            if (string.IsNullOrWhiteSpace(Foto))
+            {
+                throw new FotoException("Una Cabaña debe tener una foto");
             }
 
         }
