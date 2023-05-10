@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LogicaNegocio.EntidadesNegocio
@@ -36,6 +37,9 @@ namespace LogicaNegocio.EntidadesNegocio
 
             if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios.");
+
+            if (!Regex.IsMatch(Nombre, @"^[a-zA-Z ]+$"))
+                throw new DescripcionException("El nombre no puede tener caracteres no alfabéticos.");
 
             if (string.IsNullOrWhiteSpace(Descripcion))
                 throw new DescripcionException("La descripcion no puede estar vacia.");
