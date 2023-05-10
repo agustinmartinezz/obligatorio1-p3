@@ -9,10 +9,8 @@ namespace HotelCabañas.Controllers
     public class MantenimientoController : Controller
 
     {
-
         public IRepositorioCabania repositorioCabania { get; set; }
         public IRepositorioMantenimiento repositorioMantenimiento { get; set; }
-
 
         public MantenimientoController(IRepositorioCabania repoCabania, IRepositorioMantenimiento repoMantenimiento)
         {
@@ -23,26 +21,43 @@ namespace HotelCabañas.Controllers
 
         // GET: MantenimientoController
         public ActionResult Index(int idCabania)
+        
         {
             VMMantenimiento vmMantenimiento = new();
 
+            vmMantenimiento.IdCabania = idCabania;
             vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
-
+            
             return View(vmMantenimiento);
         }
 
         [HttpPost]
         public ActionResult Index(VMMantenimiento vmMantenimiento)
         {
-            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.date1, vmMantenimiento.date2);
+            try
+            {
+                int idCabania = vmMantenimiento.IdCabania;
+                vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
 
-            return View( vmMantenimiento);
-        }
+                if (vmMantenimiento.Fecha1 <= vmMantenimiento.Fecha2)
+                {
+                    vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.Fecha1, vmMantenimiento.Fecha2);
+                    
+                    if (!vmMantenimiento.Mantenimientos.Any())
+                    {
+                        ViewBag.Error = "No se encontraron mantenimientos para las fechas dadas.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "La fecha desde debe ser menor o igual a la fecha hasta";
+                }
+            } catch (Exception e)
+            {
+                ViewBag.Error = e;
+            }
 
-        // GET: MantenimientoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            return View(vmMantenimiento);
         }
 
         // GET: MantenimientoController/Create
@@ -55,48 +70,6 @@ namespace HotelCabañas.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MantenimientoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MantenimientoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MantenimientoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MantenimientoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

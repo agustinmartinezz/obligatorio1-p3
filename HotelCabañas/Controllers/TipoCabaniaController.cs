@@ -32,8 +32,14 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(VMTiposCabania vmTipoCabania)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             string texto = vmTipoCabania.StrSearch;
 
             if (string.IsNullOrWhiteSpace(texto))
@@ -66,8 +72,14 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(TipoCabania tipoCabania)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 tipoCabania.ValidarDatos();
@@ -87,14 +99,25 @@ namespace HotelCabañas.Controllers
 
         public IActionResult Edit(int id)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             TipoCabania tipoCabania = repositorioTipoCabania.FindById(id);
 
             return View(tipoCabania);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(TipoCabania tipoCabania)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 tipoCabania.ValidarDatos();
@@ -112,6 +135,11 @@ namespace HotelCabañas.Controllers
 
         public IActionResult Delete(int id)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 repositorioTipoCabania.Delete(id);
@@ -122,8 +150,11 @@ namespace HotelCabañas.Controllers
                 return RedirectToAction("Index", vmTipoCabania);
             } catch (Exception e)
             {
-                ViewBag.Error = e.Message;
-                return View();
+                TempData["Error"] = e.Message;
+                
+                VMTiposCabania vmTipoCabania = new();
+
+                return RedirectToAction("Index", vmTipoCabania);
             }
         }
     }
