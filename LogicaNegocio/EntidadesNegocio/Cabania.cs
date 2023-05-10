@@ -19,7 +19,6 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         [ForeignKey(nameof(Tipo))]
         public int TipoId { get; set; }
-        [Required]
         public TipoCabania Tipo { get; set; }
         [Required]
         public string Nombre { get; set; }
@@ -31,9 +30,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public Boolean TieneJacuzzi { get; set; }
         [Required]
         public Boolean HabilitadaReservas { get; set; }
-        [Required]
         public int NumeroHabitacion { get; set; }
-        [Required]
         public static int UltimoNumHab { get; set; }
         [Required]
         public int MaxPersonas { get; set; }
@@ -51,7 +48,6 @@ namespace LogicaNegocio.EntidadesNegocio
             NumeroHabitacion = UltimoNumHab;
             MaxPersonas = maxPersonas;
             Foto = foto;
-            UltimoNumHab++;
         }
 
         public Cabania()
