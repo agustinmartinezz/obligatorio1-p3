@@ -25,6 +25,7 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(VMLogin vmLogin)
         {
             string email = vmLogin.Email;

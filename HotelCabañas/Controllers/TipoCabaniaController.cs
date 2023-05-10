@@ -32,6 +32,7 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(VMTiposCabania vmTipoCabania)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
@@ -71,6 +72,7 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(TipoCabania tipoCabania)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
@@ -108,6 +110,7 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(TipoCabania tipoCabania)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)

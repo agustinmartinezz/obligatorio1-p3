@@ -20,14 +20,13 @@ namespace LogicaAccesoDatos.Repositorios
             Contexto = contexto;
         }
 
-
-        private static List<Mantenimiento> Mantenimientos = new List<Mantenimiento>();
-        public void Add(Mantenimiento c)
+        public void Add(Mantenimiento m)
         {
             try
             {
-                c.ValidarDatos();
-                Mantenimientos.Add(c);
+                m.ValidarDatos();
+                Contexto.Mantenimientos.Add(m);
+                Contexto.SaveChanges();
             }
             catch
             {
@@ -37,58 +36,41 @@ namespace LogicaAccesoDatos.Repositorios
 
         public void Delete(int id)
         {
-
-            Mantenimiento mantenimiento = FindById(id);
-            if (mantenimiento != null)
+            try
             {
-                Mantenimientos.Remove(mantenimiento);
-            }
+                Mantenimiento m = FindById(id);
 
+                Contexto.Mantenimientos.Remove(m);
+                Contexto.SaveChanges();
+            } catch {
+                throw;
+            }
         }
 
         public Mantenimiento FindById(int id)
         {
-            Mantenimiento mantenimiento = null;
-            int i = 0;
-            while (i < Mantenimientos.Count && mantenimiento == null)
-            {
-                if (Mantenimientos[i].Id == id)
-                {
-                    mantenimiento = Mantenimientos[i];
-                }
-                i++;
-            }
-            return mantenimiento;
+            return Contexto.Mantenimientos.Find(id);
+        }
 
+        public IEnumerable<Mantenimiento> FindByDates(int CabaniaId,DateTime fecha1, DateTime fecha2)
+        {
+           return Contexto.Mantenimientos
+                .Where(m => m.Fecha.Date >= fecha1.Date)
+                .Where(m => m.Fecha.Date <= fecha2.Date)
+                .Where(m => m.CabaniaId >= CabaniaId)
+                .OrderByDescending(m => m.Costo)
+                .ToList();
+
+        }
+
+        public void Update(int id, Mantenimiento m)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Mantenimiento> FindAll()
         {
-            // throw new NotImplementedException();
-            return Mantenimientos;
-        }
-
-        public void Update(int id, Mantenimiento mantenimiento)
-        {
-
-            Mantenimiento mantenimientoBuscado = FindById(id);
-            if (mantenimientoBuscado != null)
-            {
-            //    mantenimientoBuscado.RUT = mantenimiento.RUT;
-            //    mantenimientoBuscado.RazonSocial = mantenimiento.RazonSocial;
-            }
-
-
-        }
-
-        public IEnumerable<Mantenimiento> FindByDates(int CabaniaId,DateTime date1, DateTime date2)
-        {
-           return Contexto.Mantenimientos
-                .Where(m => m.Fecha >= date1)
-                .Where(m => m.Fecha <= date2)
-                .Where(m => m.CabaniaId >= CabaniaId)
-                .ToList();
-
+            throw new NotImplementedException();
         }
     }
 }
