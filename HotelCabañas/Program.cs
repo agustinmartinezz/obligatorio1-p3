@@ -4,6 +4,7 @@ using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace HotelCabañas
 {
@@ -12,10 +13,11 @@ public class Program
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTiposCabania>();
             builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
+            builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
 
             ConfigurationBuilder miConfiguracion = new();
             miConfiguracion.AddJsonFile("appsettings.json");
