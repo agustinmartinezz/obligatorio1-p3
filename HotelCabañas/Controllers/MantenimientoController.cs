@@ -23,6 +23,11 @@ namespace HotelCabañas.Controllers
         public ActionResult Index(int idCabania)
         
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             VMMantenimiento vmMantenimiento = new();
 
             vmMantenimiento.IdCabania = idCabania;
@@ -32,8 +37,14 @@ namespace HotelCabañas.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(VMMantenimiento vmMantenimiento)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 int idCabania = vmMantenimiento.IdCabania;
@@ -63,6 +74,11 @@ namespace HotelCabañas.Controllers
         // GET: MantenimientoController/Create
         public ActionResult Create()
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             return View();
         }
 
@@ -71,6 +87,11 @@ namespace HotelCabañas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 return RedirectToAction(nameof(Index));

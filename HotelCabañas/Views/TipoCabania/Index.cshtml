@@ -5,7 +5,8 @@
 }
 
 <div class="input-group rounded">
-    <form method="POST" action="Index" class="d-flex w-100 rounded">
+    <form method="POST" action="Index" class="d-flex w-100">
+        @Html.AntiForgeryToken()
         <input id="strSearch" name="StrSearch" type="search" class="form-control rounded flex-grow-1" placeholder="Buscar" value="@Model.StrSearch" />
 
         <button type="submit" class="btn btn-primary ms-2">
