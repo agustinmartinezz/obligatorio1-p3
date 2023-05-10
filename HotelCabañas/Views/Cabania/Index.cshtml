@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
         <input id="strSearchCabania" name="strSearchCabania" type="text" value="@Model.strSearchCabania" class="form-control rounded flex-grow-1" placeholder="Buscar" />
         
-        <select name="searchTypeCabania" class="form-control rounded ms-2 flex-grow-1">
+        <select name="searchTypeCabania" class="form-select rounded ms-2 flex-grow-1">
             <option value="1">Nombre</option>
             <option value="2">Tipo</option>
             <option value="3">Cant. Personas</option>
@@ -34,6 +34,8 @@
 
 <br />
 
+<p class="text-success">@TempData["Message"]</p>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -55,7 +57,7 @@
         @foreach (var item in Model.Cabanias)
         {
             <tr>
-                <td>@item.Foto</td>
+                <td><img src="@Url.Content("~/Imagenes/Cabania_Prueba_2_001.jpg")" /></td>
                 <th scope="row">@item.Id</th>
                 <td>@item.Nombre</td>
                 <td>@item.Descripcion</td>

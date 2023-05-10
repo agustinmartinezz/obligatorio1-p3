@@ -8,6 +8,7 @@ using LogicaNegocio;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesEntidades;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace LogicaAccesoDatos.Repositorios
 {
@@ -20,12 +21,23 @@ namespace LogicaAccesoDatos.Repositorios
             Contexto = contexto;
         }
 
-        public void Add(Mantenimiento m)
+        public void Add(Mantenimiento man)
         {
             try
             {
-                m.ValidarDatos();
-                Contexto.Mantenimientos.Add(m);
+                man.ValidarDatos();
+
+                int cntMantenimientosDia = Contexto.Mantenimientos
+                    .Where(m => m.CabaniaId == man.CabaniaId)
+                    .Where(m => m.Fecha.Date == man.Fecha.Date)
+                    .Count();
+
+                if (cntMantenimientosDia >= 3)
+                {
+                    throw new Exception("Esta cabaña ya cuenta con 3 mantenimientos para el dia ingresado.");
+                }
+
+                Contexto.Mantenimientos.Add(man);
                 Contexto.SaveChanges();
             }
             catch
@@ -57,7 +69,7 @@ namespace LogicaAccesoDatos.Repositorios
            return Contexto.Mantenimientos
                 .Where(m => m.Fecha.Date >= fecha1.Date)
                 .Where(m => m.Fecha.Date <= fecha2.Date)
-                .Where(m => m.CabaniaId >= CabaniaId)
+                .Where(m => m.CabaniaId == CabaniaId)
                 .OrderByDescending(m => m.Costo)
                 .ToList();
 

@@ -118,23 +118,29 @@ namespace HotelCabañas.Controllers
 
             try
             {
-                Cabania c = vmCabania.Cabania;
-                string nombreImagen = vmCabania.Foto.FileName;
+                Cabania cab = vmCabania.Cabania;
+
+                string nombreImagen = cab.GetNombreFoto() + Path.GetExtension(vmCabania.Foto.FileName);
+
                 string ruta = Path.Combine(WebHost.WebRootPath, "Imagenes");
                 string rutaArchivo = Path.Combine(ruta, nombreImagen);
-                //string rutaArchivo = Path.Combine(ruta, "Imagenes");
 
                 FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
+
+                cab.Tipo = repositorioTipoCabania.FindById(cab.TipoId);
+                cab.Foto = nombreImagen;
+
+                repositorioCabania.Add(cab);
+
                 vmCabania.Foto.CopyTo(foto);
-                c.Tipo = repositorioTipoCabania.FindById(c.TipoId);
-                c.Foto = nombreImagen;
-                repositorioCabania.Add(c);
+
+                ViewData["Message"] = "Cabaña ingresada correctamente.";
                 return RedirectToAction(nameof(Index));
             }
 
             catch (Exception e)
             {
-                ViewBag.Mensaje = e.Message;
+                ViewBag.Error = e.Message;
                 vmCabania.Tipos = repositorioTipoCabania.FindAll();
                 return View(vmCabania);
             }
