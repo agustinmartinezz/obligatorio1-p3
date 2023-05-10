@@ -18,6 +18,12 @@
     </form> 
 </div>
 
+<div class="w-100">
+    <form action="Create" class="d-flex w-100">
+        <input type="submit" class="btn btn-success btn-lg w-100" value="Agregar Cabaña">
+    </form>
+</div>
+
 <br />
 
 <table class="table table-striped">
@@ -46,21 +52,43 @@
                 <td>@item.Descripcion</td>
                 <td>@item.TieneJacuzzi</td>
                 <td>@item.HabilitadaReservas</td>
-                @*<td>@item.Tipo.Nombre  $@item.Tipo.CostoxHuesped</td>*@
+               @* <td>@item.Tipo.Nombre  @item.Tipo.CostoxHuesped</td>*@
                 <td>@item.MaxPersonas</td>
                 <td>@item.Foto</td>
 
                 <td>
-                    <a asp-controller="Mantenimiento" asp-action="Create" asp-route-id="@item.Id">
+                    <a asp-controller="Cabania" asp-action="Create" asp-route-id="@item.Id">
                         <span class="bi-pencil-square text-primary"></span>
                     </a>
                 </td>
                 <td>
-                    <a asp-controller="Mantenimiento" asp-action="Index" asp-route-id="@item.Id">
-                        <span class="bi bi-trash-fill text-danger"></span>
-                    </a>
+                    @using (Html.BeginForm("Delete", "CabaniaController", new { id = item.Id }, FormMethod.Post))
+                    {
+                        <button type="submit"><span class="bi bi-trash-fill text-danger"></span</button>
+                    }
+                    
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@*<script>
+    document.getElementById('strSearchCabania').focus();
+
+    let btnsDelete = document.querySelectorAll('.delete');
+
+
+    btnsDelete.forEach(function (btn) {
+        btn.addEventListener('click', function (evento) {
+
+            let id = evento.target.getAttribute('data-id');
+            if (confirm(`¿Seguro que desea eliminar esta cabaña? (ID: ${id})`)) {
+
+                let url = '@Url.Action("Delete", "Cabania")?id=' + encodeURIComponent(id);
+                window.location.href = url;
+            }
+        });
+    });
+</script>
+*@
