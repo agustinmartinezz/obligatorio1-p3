@@ -1,11 +1,7 @@
 ﻿using LogicaNegocio.InterfacesRepositorios;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using LogicaAccesoDatos.Repositorios;
 using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
 using HotelCabañas.Models;
-using Microsoft.AspNetCore;
 
 namespace HotelCabañas.Controllers
 {
@@ -27,36 +23,66 @@ namespace HotelCabañas.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             VMCabania vmCabania = new VMCabania();
             vmCabania.Cabanias = repositorioCabania.FindAll();
             return View(vmCabania);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(VMCabania vmCabania)
         {
-            string? searchText = vmCabania.strSearchCabania;
-            
-
-            switch (vmCabania.searchTypeCabania)
+            if (HttpContext.Session.GetString("EMAIL") == null)
             {
-                case 1:
-                    vmCabania.Cabanias = repositorioCabania.FindByName(searchText);
-                    break;
-                case 2:
-                    int intSearch = Int32.Parse(searchText);
-                    vmCabania.Cabanias = repositorioCabania.FindByTypo(intSearch);
-                    break;
-                case 3:
-                    int intSearch2 = Int32.Parse(searchText);
-                    vmCabania.Cabanias = repositorioCabania.FindByMaxPeople(intSearch2);
-                    break;
-                case 4:
-                    vmCabania.Cabanias = repositorioCabania.FindHabilitadas();
-                    break;
-
+                return View("~/Views/Shared/LoginError.cshtml");
             }
 
+            string searchText = "";
+
+            if (!string.IsNullOrWhiteSpace(vmCabania.strSearchCabania))
+            {
+                searchText = vmCabania.strSearchCabania;
+            }                
+
+            try
+            {
+                switch (vmCabania.searchTypeCabania)
+                {
+                    case 1:
+                        vmCabania.Cabanias = repositorioCabania.FindByName(searchText);
+                        break;
+                    case 2:
+                        int intSearch = Int32.Parse(searchText);
+                        vmCabania.Cabanias = repositorioCabania.FindByTypo(intSearch);
+                        break;
+                    case 3:
+                        int intSearch2 = Int32.Parse(searchText);
+                        vmCabania.Cabanias = repositorioCabania.FindByMaxPeople(intSearch2);
+                        break;
+                    case 4:
+                        vmCabania.Cabanias = repositorioCabania.FindHabilitadas();
+                        break;
+
+                }
+
+                if (!vmCabania.Cabanias.Any())
+                {
+                    ViewBag.Error = "No existen cabañas ingresadas según el criterio utilizado.";
+                } else
+                {
+                    vmCabania.strSearchCabania = searchText;
+                }
+            } catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                vmCabania.Cabanias = repositorioCabania.FindAll();
+            }
+            
             return View(vmCabania);
         }
 
@@ -70,6 +96,11 @@ namespace HotelCabañas.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             VMCabania vmCabania = new VMCabania();
             vmCabania.Tipos = repositorioTipoCabania.FindAll();
             return View(vmCabania);
@@ -80,6 +111,11 @@ namespace HotelCabañas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(VMCabania vmCabania)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
                 Cabania c = vmCabania.Cabania;
