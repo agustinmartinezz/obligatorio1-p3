@@ -82,8 +82,6 @@ namespace HotelCabañas.Controllers
 
             try
             {
-                tipoCabania.ValidarDatos();
-
                 repositorioTipoCabania.Add(tipoCabania);
                 TempData["Mensaje"] = "Tipo de cabaña ingresado con éxito.";
 

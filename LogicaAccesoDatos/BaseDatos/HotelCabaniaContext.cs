@@ -13,6 +13,7 @@ namespace LogicaAccesoDatos.BaseDatos
         public DbSet<Cabania> Cabanias { get; set; }
 
         public DbSet<TipoCabania> TipoCabanias { get; set; }
+
         public DbSet<Usuario> Usuarios { get; set; }
 
         public DbSet<Mantenimiento> Mantenimientos { get; set; }

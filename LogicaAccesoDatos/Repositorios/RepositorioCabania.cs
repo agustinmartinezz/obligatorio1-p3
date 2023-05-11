@@ -71,7 +71,9 @@ namespace LogicaAccesoDatos.Repositorios
         {
             try
             {
-                return Contexto.Cabanias.ToList();
+                return Contexto.Cabanias
+                    .Include(c => c.Tipo)
+                    .ToList();
             }
             catch
             {

@@ -1,5 +1,6 @@
 ﻿using HotelCabañas.Models;
 using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -72,20 +73,23 @@ namespace HotelCabañas.Controllers
         }
 
         // GET: MantenimientoController/Create
-        public ActionResult Create()
+        public ActionResult Create(int idCabania)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
             {
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            return View();
+            VMAltaMantenimiento vmAltaMan = new VMAltaMantenimiento();
+            vmAltaMan.CabaniaId = idCabania;
+
+            return View(vmAltaMan);
         }
 
         // POST: MantenimientoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(VMAltaMantenimiento vmAltaMan)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
             {
@@ -94,11 +98,21 @@ namespace HotelCabañas.Controllers
 
             try
             {
-                return RedirectToAction(nameof(Index));
+                vmAltaMan.Mantenimiento.CabaniaId = vmAltaMan.CabaniaId;
+                vmAltaMan.Mantenimiento.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
+                
+                repositorioMantenimiento.Add(vmAltaMan.Mantenimiento);
+
+                VMCabania vmCabania = new VMCabania();
+                vmCabania.Cabanias = repositorioCabania.FindAll();
+
+                TempData["Message"] = "Mantenimiento ingresado con exito.";
+                return RedirectToAction("Index", "Cabania");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                return View(vmAltaMan);
             }
         }
     }

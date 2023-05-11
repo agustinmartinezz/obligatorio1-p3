@@ -1,7 +1,7 @@
 ﻿@model VMCabania
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Agregar Cabaña";
 }
 
 <section class="vh-70 gradient-custom">
@@ -12,27 +12,79 @@
                     <div class="card-body p-5 text-center">
 
                         <div class="mb-md-5 mt-md-4">
+                            <form asp-action="Create" enctype="multipart/form-data">
+
+                                <h3 class="fw-bold mb-2">Agregar Cabaña</h3>
+
+                                <div class="form-outline form-white mb-4">
+                                    <select asp-for="Cabania.TipoId" class="form-select form-select-lg">
+                                        @foreach (var item in Model.Tipos)
+                                        {
+                                            <option value="@item.Id">@item.Nombre</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="Cabania.TipoId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Cabania.Nombre" class="form-label"></label>
+                                    <input asp-for="Cabania.Nombre" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Cabania.Nombre" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Cabania.Descripcion" class="form-label"></label>
+                                    <input asp-for="Cabania.Descripcion" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Cabania.Descripcion" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-check-label">
+                                        Tiene Jacuzzi 
+                                        <input class="form-check-input" asp-for="Cabania.TieneJacuzzi" />
+                                    </label>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label class="form-check-label">
+                                        Habilitada Reservas
+                                        <input class="form-check-input" asp-for="Cabania.HabilitadaReservas" />
+                                    </label>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Cabania.MaxPersonas" class="form-label"></label>
+                                    <input asp-for="Cabania.MaxPersonas" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Cabania.MaxPersonas" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Foto" class="control-label"></label>
+                                    <input asp-for="Foto" class="form-control" accept=".jpg,.png" />
+                                    <span asp-validation-for="Foto" class="text-danger"></span>
+                                </div>
+
+                                <input type="submit" value="Agregar" class="btn btn-outline-light btn-lg px-5" />
+
+                            </form>
+                            <h5 class="text-warning mt-5 fw-bold">@ViewBag.Error</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*<section class="vh-70 gradient-custom">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-primary bg-gradient text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <div class="mb-md-5 mt-md-4">
                         <form asp-action="Create" enctype="multipart/form-data">
-                           @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-                            <div class="form-group">
-                                <select asp-for="Cabania.TipoId" class="control-label">
-                                @foreach (var item in Model.Tipos)
-                                {
-                                    <option value="@item.Id">@item.Nombre</option>
-                                }
-                                </select>
-                                <span asp-validation-for="Cabania.TipoId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Cabania.Nombre" class="control-label"></label>
-                                <input asp-for="Cabania.Nombre" class="form-control" />
-                                <span asp-validation-for="Cabania.Nombre" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Cabania.Descripcion" class="control-label"></label>
-                                <input asp-for="Cabania.Descripcion" class="form-control" />
-                                <span asp-validation-for="Cabania.Descripcion" class="text-danger"></span>
-                            </div>
+
                             <div class="form-group form-check">
                                 <label class="form-check-label">
                                     <input class="form-check-input" asp-for="Cabania.TieneJacuzzi" /> @Html.DisplayNameFor(model => model.TieneJacuzzi)
@@ -50,7 +102,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Foto" class="control-label"></label>
-                                <input asp-for="Foto" class="form-control" />
+                                <input asp-for="Foto" class="form-control" accept=".jpg,.png" />
                                 <span asp-validation-for="Foto" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -63,10 +115,9 @@
             </div>
         </div>
     </div>
-</section>
-
-<a asp-action="Index">Back to List</a>
+</section>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
