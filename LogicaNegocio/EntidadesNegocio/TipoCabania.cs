@@ -38,7 +38,7 @@ namespace LogicaNegocio.EntidadesNegocio
             if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios.");
 
-            if (!Regex.IsMatch(Nombre, @"^[a-zA-Z ]+$"))
+            if (!Regex.IsMatch(Nombre, @"^[a-zA-ZñÑ ]+$"))
                 throw new DescripcionException("El nombre no puede tener caracteres no alfabéticos.");
 
             if (string.IsNullOrWhiteSpace(Descripcion))
