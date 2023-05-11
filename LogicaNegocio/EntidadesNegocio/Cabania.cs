@@ -23,8 +23,6 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         public string Nombre { get; set; }
         [Required]
-        [MinLength(10, ErrorMessage = "La descripción debe tener mínimo 10 caracteres")]
-        [MaxLength(500, ErrorMessage = "La descripción debe tener máximo 500 caracteres")]
         public string Descripcion { get; set; }
         [Required]
         public Boolean TieneJacuzzi { get; set; }
@@ -52,7 +50,10 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Cabania()
         {
-            UltimoNumHab++;
+            Nombre = "";
+            Descripcion = "";
+            Foto = "";
+            Tipo = new();
         }
 
         public void ValidarDatos()
@@ -60,21 +61,27 @@ namespace LogicaNegocio.EntidadesNegocio
 
             if (string.IsNullOrWhiteSpace(Nombre))
             {
-              throw new NombreException("El nombre de una Cabaña no puede estar vacio");
+              throw new NombreException("El nombre de una Cabaña no puede estar vacio.");
             }
             if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
             {
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
-            if (Descripcion.Length>500 || Descripcion.Length < 10)
+            if (Descripcion.Length>Parametros.MaxDescCabania || Descripcion.Length < Parametros.MinDescCabania)
             {
-                throw new DescripcionException("La descripcion debe estar entre 10 y 500 caracteres");
+                throw new DescripcionException("La descripcion debe estar entre " + Parametros.MinDescCabania + " y " + Parametros.MaxDescCabania + " caracteres.");
             }
             if (string.IsNullOrWhiteSpace(Foto))
             {
-                throw new FotoException("Una Cabaña debe tener una foto");
+                throw new FotoException("La Cabaña debe tener una foto.");
             }
 
+        }
+
+        public string GetNombreFoto()
+        {
+            string nombre = Nombre.Trim().Replace(" ", "_") + "_001";
+            return nombre;
         }
     }
 }

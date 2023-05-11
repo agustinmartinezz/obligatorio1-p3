@@ -1,5 +1,6 @@
 ﻿using HotelCabañas.Models;
 using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,8 @@ namespace HotelCabañas.Controllers
     public class MantenimientoController : Controller
 
     {
-
         public IRepositorioCabania repositorioCabania { get; set; }
         public IRepositorioMantenimiento repositorioMantenimiento { get; set; }
-
 
         public MantenimientoController(IRepositorioCabania repoCabania, IRepositorioMantenimiento repoMantenimiento)
         {
@@ -23,88 +22,98 @@ namespace HotelCabañas.Controllers
 
         // GET: MantenimientoController
         public ActionResult Index(int idCabania)
+        
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             VMMantenimiento vmMantenimiento = new();
 
+            vmMantenimiento.IdCabania = idCabania;
             vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
-
+            
             return View(vmMantenimiento);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(VMMantenimiento vmMantenimiento)
         {
-            vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.date1, vmMantenimiento.date2);
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
 
-            return View( vmMantenimiento);
-        }
+            try
+            {
+                int idCabania = vmMantenimiento.IdCabania;
+                vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
 
-        // GET: MantenimientoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+                if (vmMantenimiento.Fecha1 <= vmMantenimiento.Fecha2)
+                {
+                    vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.Fecha1, vmMantenimiento.Fecha2);
+                    
+                    if (!vmMantenimiento.Mantenimientos.Any())
+                    {
+                        ViewBag.Error = "No se encontraron mantenimientos para las fechas dadas.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = "La fecha desde debe ser menor o igual a la fecha hasta";
+                }
+            } catch (Exception e)
+            {
+                ViewBag.Error = e;
+            }
+
+            return View(vmMantenimiento);
         }
 
         // GET: MantenimientoController/Create
-        public ActionResult Create()
+        public ActionResult Create(int idCabania)
         {
-            return View();
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
+            VMAltaMantenimiento vmAltaMan = new VMAltaMantenimiento();
+            vmAltaMan.CabaniaId = idCabania;
+            vmAltaMan.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
+
+            return View(vmAltaMan);
         }
 
         // POST: MantenimientoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(VMAltaMantenimiento vmAltaMan)
         {
+            if (HttpContext.Session.GetString("EMAIL") == null)
+            {
+                return View("~/Views/Shared/LoginError.cshtml");
+            }
+
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                vmAltaMan.Mantenimiento.CabaniaId = vmAltaMan.CabaniaId;
+                vmAltaMan.Mantenimiento.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
+                
+                repositorioMantenimiento.Add(vmAltaMan.Mantenimiento);
 
-        // GET: MantenimientoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                VMCabania vmCabania = new VMCabania();
+                vmCabania.Cabanias = repositorioCabania.FindAll();
 
-        // POST: MantenimientoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                TempData["Message"] = "Mantenimiento ingresado con exito.";
+                return RedirectToAction("Index", "Cabania");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
-            }
-        }
-
-        // GET: MantenimientoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MantenimientoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                ViewBag.Error = e.Message;
+                return View(vmAltaMan);
             }
         }
     }

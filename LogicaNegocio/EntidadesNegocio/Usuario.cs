@@ -45,8 +45,8 @@ namespace LogicaNegocio.EntidadesNegocio
 
         private bool ValidacionesContrasenia(string contrasena)
         {
-            bool mayus = Regex.IsMatch(contrasena, @"[A-Z]");
-            bool minus = Regex.IsMatch(contrasena, @"[a-z]");
+            bool mayus = Regex.IsMatch(contrasena, @"[A-ZÑ]");
+            bool minus = Regex.IsMatch(contrasena, @"[a-zñ]");
             bool num   = Regex.IsMatch(contrasena, @"\d");
 
             if (mayus && minus && num && contrasena.Length >= 6)

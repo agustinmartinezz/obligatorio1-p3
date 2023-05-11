@@ -5,18 +5,41 @@
 }
 
 <div class="input-group rounded">
-    <form method="POST" action="Index">
-        <input id="strSearchCabania" name="strSearchCabania" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
-        <select name="searchTypeCabania">
-            <option value="1">By Name</option>
-            <option value="2">By Type</option>
-            <option value="3">By People</option>
-            <option value="4">Only Available</option>
+    <form method="POST" action="Index" class="d-flex w-100">
+        @Html.AntiForgeryToken()
+        <input id="searchText" name="SearchText" type="text" value="@Model.SearchText" class="form-control rounded flex-grow-1" placeholder="Nombre" />
+        
+        <input id="searchNumber" name="SearchNumber" type="number" value="@Model.SearchNumber" class="form-control rounded flex-grow-1" placeholder="Cantidad de personas" />
+        @if (Model.Tipos.Count() != 0)
+        {
+            <select id="searchType" name="SearchType" class="form-select rounded ms-2 flex-grow-1">
+                    @foreach (var item in Model.Tipos)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+            </select>
+        }
+        else
+        {
+            <h1 style="color: red;">No hay results</h1>
+        }
+
+        <select id="searchOption" name="SearchOption" class="form-select rounded ms-2 flex-grow-1">
+            <option value="1">Nombre</option>
+            <option value="2">Tipo</option>
+            <option value="3">Cant. Personas</option>
+            <option value="4">Solo Disponibles</option>
         </select>
 
-        <input id="strSearch" type="submit" value="Search" />
+        <button type="submit" class="btn btn-primary ms-2">
+            <i class="bi bi-search"></i>
+        </button>
     </form> 
 </div>
+
+<p class="text-danger">@ViewBag.Error</p>
+
+<br />
 
 <div class="w-100">
     <form action="Create" class="d-flex w-100">
@@ -26,19 +49,22 @@
 
 <br />
 
+<p class="text-success">@TempData["Message"]</p>
+
 <table class="table table-striped">
     <thead>
         <tr>
+            <th scope="col">Foto</th>
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Tiene Jacuzzi</th>
-            <th scope="col">Habilitada Reservas</th>
-            <th scope="col">Tipo</th>
+            <th scope="col">Permite Reservas</th>
             <th scope="col">Maximo de Personas</th>
-            <th scope="col">Foto</th>
-            <th scope="col">Mantenimientos Realizados</th>
-            <th scope="col">Realizar</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Costo p/ Huesped</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
 
         </tr>
     </thead>
@@ -47,48 +73,75 @@
         @foreach (var item in Model.Cabanias)
         {
             <tr>
+                <td class="w-25"><img src="@Url.Content("~/" + item.Foto)" class="img-fluid p-3" /></td>
                 <th scope="row">@item.Id</th>
                 <td>@item.Nombre</td>
                 <td>@item.Descripcion</td>
                 <td>@item.TieneJacuzzi</td>
                 <td>@item.HabilitadaReservas</td>
-               @* <td>@item.Tipo.Nombre  @item.Tipo.CostoxHuesped</td>*@
                 <td>@item.MaxPersonas</td>
-                <td>@item.Foto</td>
-
+                <td>@item.Tipo.Nombre</td>
+                <td>@item.Tipo.CostoxHuesped</td>
                 <td>
-                    <a asp-controller="Cabania" asp-action="Create" asp-route-id="@item.Id">
-                        <span class="bi-pencil-square text-primary"></span>
+                    <a title="Ver Mantenimientos" asp-controller="Mantenimiento" asp-action="Index" asp-route-idCabania="@item.Id">
+                        <span class="bi-card-checklist text-primary"></span>
                     </a>
                 </td>
                 <td>
-                    @using (Html.BeginForm("Delete", "CabaniaController", new { id = item.Id }, FormMethod.Post))
-                    {
-                        <button type="submit"><span class="bi bi-trash-fill text-danger"></span</button>
-                    }
-                    
+                    <a title="Realizar Mantenimiento" asp-controller="Mantenimiento" asp-action="Create" asp-route-idCabania="@item.Id">
+                        <span class="bi-wrench text-primary"></span>
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@*<script>
-    document.getElementById('strSearchCabania').focus();
+<script>
+    document.getElementById('searchText').focus();
 
-    let btnsDelete = document.querySelectorAll('.delete');
+    const selectElement = document.getElementById('searchOption');
+    const searchText = document.getElementById('searchText'); 
+    const searchNumber = document.getElementById('searchNumber');
+    const searchType = document.getElementById('searchType');
 
+    selectElement.addEventListener('change', (event) => {
 
-    btnsDelete.forEach(function (btn) {
-        btn.addEventListener('click', function (evento) {
+        const selectedOption = event.target.value;
 
-            let id = evento.target.getAttribute('data-id');
-            if (confirm(`¿Seguro que desea eliminar esta cabaña? (ID: ${id})`)) {
+        toggleMenu(selectedOption);
 
-                let url = '@Url.Action("Delete", "Cabania")?id=' + encodeURIComponent(id);
-                window.location.href = url;
-            }
-        });
     });
+
+    selectedOption = "" + @Model.SearchOption
+    toggleMenu(selectedOption);
+
+    function hideAll() {
+        searchText.style.display = "none";
+        searchType.style.display = "none";
+        searchNumber.style.display = "none";
+    }
+
+    function toggleMenu(selectedOption) {
+        selectElement.value = selectedOption;
+        searchType.value = @Model.SearchType;
+
+        switch (selectedOption) {
+            case "1":
+                hideAll()
+                searchText.style.display = "block";
+                break;
+            case "2":
+                hideAll()
+                searchType.style.display = "block";
+                break;
+            case "3":
+                hideAll()
+                searchNumber.style.display = "block";
+                break;
+            case "4":
+                hideAll()
+                break;
+        }
+    }
 </script>
-*@

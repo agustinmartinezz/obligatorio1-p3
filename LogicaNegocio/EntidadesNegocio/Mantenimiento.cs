@@ -14,24 +14,50 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         [Key]
         public int Id { get; set; }
-        public DateTime Fecha { get; set; }
 
-        [MinLength(10, ErrorMessage = "La descripción debe tener mínimo 10 caracteres")]
-        [MaxLength(200, ErrorMessage = "La descripción debe tener máximo 500 caracteres")]
+        public DateTime Fecha { get; set; }
+        [Required]
         public string Descripcion { get; set; }
+
+        [Required]
         public int Costo { get; set; }
-        public string NombreReazlizo { get; set; }
-        public Cabania Cabania { get; set; }
+
+        [Required]
+        public string NombreRealizo { get; set; }
 
         [ForeignKey(nameof(Cabania))]
         public int CabaniaId { get; set; }
 
+        public Cabania Cabania { get; set; }
+        
+        public Mantenimiento() {
+            Descripcion = "";
+            NombreRealizo = "";
+            Cabania = new Cabania();
+        }
+
         public void ValidarDatos()
         {
-            if (Descripcion.Length > 200 || Descripcion.Length < 10)
+            if (string.IsNullOrWhiteSpace(Descripcion))
             {
-                throw new DescripcionException("La descripcion debe estar entre 10 y 500 caracteres");
+                throw new DescripcionException("La descripcion no puede estar vacia.");
             }
+
+            if (Descripcion.Length > Parametros.MaxDescMantenimiento || Descripcion.Length < Parametros.MinDescMantenimiento)
+            {
+                throw new DescripcionException("La descripcion debe estar entre 10 y 200 caracteres.");
+            }
+
+            if (string.IsNullOrWhiteSpace(NombreRealizo))
+            {
+                throw new NombreException("El nombre no puede estar vacio.");
+            }
+            if (Costo<=0)
+            {
+                throw new CostoException("El costo no puede ser menor o igual 0");
+            }
+
         }
     }
 }
+

@@ -71,7 +71,9 @@ namespace LogicaAccesoDatos.Repositorios
         {
             try
             {
-                return Contexto.Cabanias.ToList();
+                return Contexto.Cabanias
+                    .Include(c => c.Tipo)
+                    .ToList();
             }
             catch
             {
@@ -95,30 +97,59 @@ namespace LogicaAccesoDatos.Repositorios
 
         public IEnumerable<Cabania> FindByName(string nombre)
         {
-            return Contexto.Cabanias
-                .Where(c => c.Nombre.ToLower().Contains(nombre.ToLower()))
-                .ToList();
+            try
+            {
+                return Contexto.Cabanias
+                    .Where(c => c.Nombre.ToLower().Contains(nombre.ToLower()))
+                    .Include(c => c.Tipo)
+                    .ToList();
+            } catch
+            {
+                throw;
+            }
+            
         }
 
         public IEnumerable<Cabania> FindByTypo(int tipoId)
         {
-            return Contexto.Cabanias
-                .Where(c => c.TipoId==tipoId)
+            try
+            {
+                return Contexto.Cabanias
+                .Where(c => c.TipoId == tipoId)
+                .Include(c => c.Tipo)
                 .ToList();
+            } catch
+            {
+                throw;
+            }
         }
 
         public IEnumerable<Cabania> FindByMaxPeople(int maxPeople)
         {
-            return Contexto.Cabanias
-              .Where(c => c.MaxPersonas >= maxPeople)
-              .ToList();
+            try
+            {
+                return Contexto.Cabanias
+                  .Where(c => c.MaxPersonas >= maxPeople)
+                  .Include(c => c.Tipo)
+                  .ToList();
+            } catch
+            {
+                throw;
+            }
         }
 
         public IEnumerable<Cabania> FindHabilitadas()
         {
-            return Contexto.Cabanias
-             .Where(c => c.HabilitadaReservas)
-             .ToList();
+            try
+            {
+                return Contexto.Cabanias
+                    .Where(c => c.HabilitadaReservas)
+                    .Include(c => c.Tipo)
+                    .ToList();
+            } catch
+            {
+                throw;
+            }
         }
     } 
     

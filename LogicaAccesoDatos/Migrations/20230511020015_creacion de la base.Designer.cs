@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(HotelCabaniaContext))]
-    [Migration("20230508004652_inicial-aux")]
-    partial class inicialaux
+    [Migration("20230511020015_creacion de la base")]
+    partial class creaciondelabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,8 +35,7 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Foto")
                         .IsRequired()
@@ -87,13 +86,12 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NombreReazlizo")
+                    b.Property<string>("NombreRealizo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

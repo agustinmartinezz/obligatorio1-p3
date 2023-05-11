@@ -32,8 +32,7 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Foto")
                         .IsRequired()
@@ -84,13 +83,12 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NombreReazlizo")
+                    b.Property<string>("NombreRealizo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

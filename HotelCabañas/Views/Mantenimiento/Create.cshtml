@@ -1,45 +1,84 @@
-﻿@*@model HotelCabañas.Models.VMMantenimiento.Mantenimiento
-@using LogicaNegocio.EntidadesNegocio
-
+﻿@model HotelCabañas.Models.VMAltaMantenimiento;
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Agregar Mantenimiento";
 }
 
-<h1>Create</h1>
+<section class="vh-70 gradient-custom">
 
-<h4>Mantenimiento</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="date" asp-for="Fecha" placeholder="Fecha" class="form-control" />
-                <input type="text" asp-for="Nombre" placeholder="Nombre" class="form-control" />
-                <input type="text" asp-for="Descripcion" placeholder="Descripcion" class="form-control" />
-                <input type="number" asp-for="CostoxHuesped" placeholder="Costo por Huesped" class="form-control" />
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Foto</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Tiene Jacuzzi</th>
+                <th scope="col">Permite Reservas</th>
+                <th scope="col">Maximo de Personas</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Costo p/ Huesped</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="w-25"><img src="@Url.Content("~/" + Model.Cabania.Foto)" class="img-fluid p-3" /></td>
+                <td>@Model.Cabania.Nombre</td>
+                <td>@Model.Cabania.Descripcion</td>
+                <td>@Model.Cabania.TieneJacuzzi</td>
+                <td>@Model.Cabania.HabilitadaReservas</td>
+                <td>@Model.Cabania.MaxPersonas</td>
+                <td>@Model.Cabania.Tipo.Nombre</td>
+                <td>@Model.Cabania.Tipo.CostoxHuesped</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-primary bg-gradient text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-md-5 mt-md-4">
+                            <form asp-action="Create">
+                                <input asp-for="CabaniaId" type="number" class="d-none" value="@Model.CabaniaId"/>
+                               
 
-                <label asp-for="Cabania" class="control-label"></label>
-                <select name="tipo">
-                    @foreach (var item in Model.Cabanias)
-                    {
-                        <option value="@item.Id">@item.Nombre</option>
-                    }
-                </select>
+                                <h3 class="fw-bold mb-2">Agregar Mantenimiento</h3>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Mantenimiento.Fecha" class="form-label">Fecha</label>
+                                    <input asp-for="Mantenimiento.Fecha" type="date" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Fecha" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Mantenimiento.Descripcion" class="form-label">Descripcion</label>
+                                    <input asp-for="Mantenimiento.Descripcion" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Descripcion" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Mantenimiento.Costo" class="form-label">Costo</label>
+                                    <input asp-for="Mantenimiento.Costo" type="number" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Costo" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline form-white mb-4">
+                                    <label asp-for="Mantenimiento.NombreRealizo" class="form-label">Nombre quien realizo</label>
+                                    <input asp-for="Mantenimiento.NombreRealizo" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.NombreRealizo" class="text-danger"></span>
+                                </div>
+
+                                <input type="submit" value="Agregar" class="btn btn-outline-light btn-lg px-5" />
+
+                            </form>
+                            <h5 class="text-warning mt-5 fw-bold">@ViewBag.Error</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-@ViewBag.Mensaje
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
-*@
+</section>
