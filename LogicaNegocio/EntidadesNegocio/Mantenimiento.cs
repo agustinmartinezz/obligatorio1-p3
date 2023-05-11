@@ -17,8 +17,6 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public DateTime Fecha { get; set; }
 
-        [MinLength(10, ErrorMessage = "La descripción debe tener mínimo 10 caracteres")]
-        [MaxLength(200, ErrorMessage = "La descripción debe tener máximo 200 caracteres")]
         public string Descripcion { get; set; }
 
         public int Costo { get; set; }
@@ -30,11 +28,15 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Cabania Cabania { get; set; }
         
-        public Mantenimiento() {}
+        public Mantenimiento() {
+            Descripcion = "";
+            NombreRealizo = "";
+            Cabania = new Cabania();
+        }
 
         public void ValidarDatos()
         {
-            if (Descripcion.Length > 200 || Descripcion.Length < 10)
+            if (Descripcion.Length > Parametros.MaxDescMantenimiento || Descripcion.Length < Parametros.MinDescMantenimiento)
             {
                 throw new DescripcionException("La descripcion debe estar entre 10 y 200 caracteres.");
             }
@@ -46,3 +48,4 @@ namespace LogicaNegocio.EntidadesNegocio
         }
     }
 }
+

@@ -30,6 +30,8 @@ namespace HotelCabañas.Controllers
 
             VMCabania vmCabania = new VMCabania();
             vmCabania.Cabanias = repositorioCabania.FindAll();
+            vmCabania.Tipos = repositorioTipoCabania.FindAll();
+            vmCabania.SearchOption = 1;
             return View(vmCabania);
         }
 
@@ -42,27 +44,26 @@ namespace HotelCabañas.Controllers
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            string searchText = "";
-
-            if (!string.IsNullOrWhiteSpace(vmCabania.strSearchCabania))
-            {
-                searchText = vmCabania.strSearchCabania;
-            }                
-
             try
             {
-                switch (vmCabania.searchTypeCabania)
+                switch (vmCabania.SearchOption)
                 {
                     case 1:
-                        vmCabania.Cabanias = repositorioCabania.FindByName(searchText);
+                        if (string.IsNullOrWhiteSpace(vmCabania.SearchText))
+                        {
+                            vmCabania.Cabanias = repositorioCabania.FindAll();
+                        } else
+                        {
+                            vmCabania.Cabanias = repositorioCabania.FindByName(vmCabania.SearchText);
+                        }
                         break;
                     case 2:
-                        int intSearch = Int32.Parse(searchText);
-                        vmCabania.Cabanias = repositorioCabania.FindByTypo(intSearch);
+                        //int intSearch = Int32.Parse(searchText);
+                        vmCabania.Cabanias = repositorioCabania.FindByTypo(vmCabania.SearchType);
                         break;
                     case 3:
-                        int intSearch2 = Int32.Parse(searchText);
-                        vmCabania.Cabanias = repositorioCabania.FindByMaxPeople(intSearch2);
+                        //int intSearch2 = Int32.Parse(searchText);
+                        vmCabania.Cabanias = repositorioCabania.FindByMaxPeople(vmCabania.SearchNumber);
                         break;
                     case 4:
                         vmCabania.Cabanias = repositorioCabania.FindHabilitadas();
@@ -73,16 +74,15 @@ namespace HotelCabañas.Controllers
                 if (!vmCabania.Cabanias.Any())
                 {
                     ViewBag.Error = "No existen cabañas ingresadas según el criterio utilizado.";
-                } else
-                {
-                    vmCabania.strSearchCabania = searchText;
                 }
             } catch (Exception e)
             {
                 ViewBag.Error = e.Message;
                 vmCabania.Cabanias = repositorioCabania.FindAll();
             }
-            
+
+            vmCabania.Tipos = repositorioTipoCabania.FindAll();
+
             return View(vmCabania);
         }
 

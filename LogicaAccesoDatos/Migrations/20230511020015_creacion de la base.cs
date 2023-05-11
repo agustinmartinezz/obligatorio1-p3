@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class inicialaux : Migration
+    public partial class creaciondelabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,7 +49,7 @@ namespace LogicaAccesoDatos.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TipoId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TieneJacuzzi = table.Column<bool>(type: "bit", nullable: false),
                     HabilitadaReservas = table.Column<bool>(type: "bit", nullable: false),
                     NumeroHabitacion = table.Column<int>(type: "int", nullable: false),
@@ -74,9 +74,9 @@ namespace LogicaAccesoDatos.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Costo = table.Column<int>(type: "int", nullable: false),
-                    NombreReazlizo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NombreRealizo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CabaniaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

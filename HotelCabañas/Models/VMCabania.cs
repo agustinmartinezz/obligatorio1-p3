@@ -12,8 +12,12 @@ namespace HotelCabañas.Models
 
         public Cabania? Cabania { get; set; }
 
-        public String? strSearchCabania { get; set; }
-        public int? searchTypeCabania { get; set; }
+
+        public string? SearchText { get; set; } //1
+        public int SearchType { get; set; } //2 - TipoId
+        public int SearchNumber { get; set; } //3
+        public int SearchOption { get; set; } //1,2,3,4
+
         public IEnumerable<TipoCabania>? Tipos { get; set; }
         public IEnumerable<Cabania>? Cabanias { get; set; }
     }
