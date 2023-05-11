@@ -101,6 +101,7 @@ namespace LogicaAccesoDatos.Repositorios
             {
                 return Contexto.Cabanias
                     .Where(c => c.Nombre.ToLower().Contains(nombre.ToLower()))
+                    .Include(c => c.Tipo)
                     .ToList();
             } catch
             {
@@ -115,6 +116,7 @@ namespace LogicaAccesoDatos.Repositorios
             {
                 return Contexto.Cabanias
                 .Where(c => c.TipoId == tipoId)
+                .Include(c => c.Tipo)
                 .ToList();
             } catch
             {
@@ -128,6 +130,7 @@ namespace LogicaAccesoDatos.Repositorios
             {
                 return Contexto.Cabanias
                   .Where(c => c.MaxPersonas >= maxPeople)
+                  .Include(c => c.Tipo)
                   .ToList();
             } catch
             {
@@ -141,6 +144,7 @@ namespace LogicaAccesoDatos.Repositorios
             {
                 return Contexto.Cabanias
                     .Where(c => c.HabilitadaReservas)
+                    .Include(c => c.Tipo)
                     .ToList();
             } catch
             {

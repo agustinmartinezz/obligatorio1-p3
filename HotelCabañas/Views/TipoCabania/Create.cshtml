@@ -16,18 +16,21 @@
                                 <h3 class="fw-bold mb-2">Agregar Tipo de Cabaña</h3>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input asp-for="Nombre" type="text" class="form-control form-control-lg" />
                                     <label asp-for="Nombre" class="form-label">Nombre</label>
+                                    <input asp-for="Nombre" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input asp-for="Descripcion" type="text" class="form-control form-control-lg" />
                                     <label asp-for="Descripcion" class="form-label">Descripcion</label>
+                                    <input asp-for="Descripcion" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Descripcion" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input asp-for="CostoxHuesped" type="number" class="form-control form-control-lg" />
                                     <label asp-for="CostoxHuesped" class="form-label">Costo por Huesped</label>
+                                    <input asp-for="CostoxHuesped" type="number" class="form-control form-control-lg" />
+                                    <span asp-validation-for="CostoxHuesped" class="text-danger"></span>
                                 </div>
 
                                 <input type="submit" value="Agregar" class="btn btn-outline-light btn-lg px-5" />

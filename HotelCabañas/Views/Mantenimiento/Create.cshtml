@@ -19,21 +19,25 @@
                                 <div class="form-outline form-white mb-4">
                                     <label asp-for="Mantenimiento.Fecha" class="form-label">Fecha</label>
                                     <input asp-for="Mantenimiento.Fecha" type="date" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Fecha" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
                                     <label asp-for="Mantenimiento.Descripcion" class="form-label">Descripcion</label>
                                     <input asp-for="Mantenimiento.Descripcion" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Descripcion" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
                                     <label asp-for="Mantenimiento.Costo" class="form-label">Costo</label>
                                     <input asp-for="Mantenimiento.Costo" type="number" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.Costo" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
                                     <label asp-for="Mantenimiento.NombreRealizo" class="form-label">Nombre quien realizo</label>
                                     <input asp-for="Mantenimiento.NombreRealizo" type="text" class="form-control form-control-lg" />
+                                    <span asp-validation-for="Mantenimiento.NombreRealizo" class="text-danger"></span>
                                 </div>
 
                                 <input type="submit" value="Agregar" class="btn btn-outline-light btn-lg px-5" />

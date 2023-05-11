@@ -7,9 +7,18 @@
 <div class="input-group rounded">
     <form method="POST" action="Index" class="d-flex w-100">
         @Html.AntiForgeryToken()
-        <input id="strSearchCabania" name="strSearchCabania" type="text" value="@Model.strSearchCabania" class="form-control rounded flex-grow-1" placeholder="Buscar" />
+        <input id="searchText" name="SearchText" type="text" value="@Model.SearchText" class="form-control rounded flex-grow-1" placeholder="Nombre" />
         
-        <select name="searchTypeCabania" class="form-select rounded ms-2 flex-grow-1">
+        <input id="searchNumber" name="SearchNumber" type="number" value="@Model.SearchNumber" class="form-control rounded flex-grow-1" placeholder="Cantidad de personas" />
+        
+        <select id="searchType" name="SearchType" class="form-select rounded ms-2 flex-grow-1">
+            @foreach (var item in Model.Tipos)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+            }
+        </select>
+
+        <select id="searchOption" name="SearchOption" class="form-select rounded ms-2 flex-grow-1">
             <option value="1">Nombre</option>
             <option value="2">Tipo</option>
             <option value="3">Cant. Personas</option>
@@ -81,5 +90,50 @@
 </table>
 
 <script>
-    document.getElementById('strSearchCabania').focus();
+    document.getElementById('searchText').focus();
+
+    const selectElement = document.getElementById('searchOption');
+    const searchText = document.getElementById('searchText'); 
+    const searchNumber = document.getElementById('searchNumber');
+    const searchType = document.getElementById('searchType');
+
+    selectElement.addEventListener('change', (event) => {
+
+        const selectedOption = event.target.value;
+
+        toggleMenu(selectedOption);
+
+    });
+
+    selectedOption = "" + @Model.SearchOption
+    toggleMenu(selectedOption);
+
+    function hideAll() {
+        searchText.style.display = "none";
+        searchType.style.display = "none";
+        searchNumber.style.display = "none";
+    }
+
+    function toggleMenu(selectedOption) {
+        selectElement.value = selectedOption;
+        searchType.value = @Model.SearchType;
+
+        switch (selectedOption) {
+            case "1":
+                hideAll()
+                searchText.style.display = "block";
+                break;
+            case "2":
+                hideAll()
+                searchType.style.display = "block";
+                break;
+            case "3":
+                hideAll()
+                searchNumber.style.display = "block";
+                break;
+            case "4":
+                hideAll()
+                break;
+        }
+    }
 </script>

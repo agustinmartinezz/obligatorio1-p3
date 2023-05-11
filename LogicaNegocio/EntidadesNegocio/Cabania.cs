@@ -50,7 +50,10 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Cabania()
         {
-
+            Nombre = "";
+            Descripcion = "";
+            Foto = "";
+            Tipo = new();
         }
 
         public void ValidarDatos()
