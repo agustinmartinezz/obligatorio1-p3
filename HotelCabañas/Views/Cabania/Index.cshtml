@@ -57,13 +57,13 @@
         @foreach (var item in Model.Cabanias)
         {
             <tr>
-                <td><img src="@Url.Content("~/Imagenes/Cabania_Prueba_2_001.jpg")" /></td>
+                <td class="w-25"><img src="@Url.Content("~/" + item.Foto)" class="img-fluid p-3" /></td>
                 <th scope="row">@item.Id</th>
                 <td>@item.Nombre</td>
                 <td>@item.Descripcion</td>
                 <td>@item.TieneJacuzzi</td>
                 <td>@item.HabilitadaReservas</td>
-                <td></td>
+                <td>@item.Tipo.Nombre</td>
                 <td>@item.MaxPersonas</td>
                 <td>
                     <a title="Ver Mantenimientos" asp-controller="Mantenimiento" asp-action="Index" asp-route-idCabania="@item.Id">

@@ -127,6 +127,8 @@ namespace HotelCabañas.Controllers
 
                 FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
 
+                nombreImagen = "Imagenes/" + nombreImagen;
+
                 cab.Tipo = repositorioTipoCabania.FindById(cab.TipoId);
                 cab.Foto = nombreImagen;
 
