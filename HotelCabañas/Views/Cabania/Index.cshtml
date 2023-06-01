@@ -12,11 +12,13 @@
         <input id="searchNumber" name="SearchNumber" type="number" value="@Model.SearchNumber" class="form-control rounded flex-grow-1" placeholder="Cantidad de personas" />
         
         <select id="searchType" name="SearchType" class="form-select rounded ms-2 flex-grow-1">
-            @foreach (var item in Model.Tipos)
-            {
-                <option value="@item.Id">@item.Nombre</option>
-            }
+                @foreach (var item in Model.Tipos)
+                {
+                    <option value="@item.Id">@item.Nombre</option>
+                }
         </select>
+        
+        
 
         <select id="searchOption" name="SearchOption" class="form-select rounded ms-2 flex-grow-1">
             <option value="1">Nombre</option>
@@ -54,8 +56,9 @@
             <th scope="col">Descripcion</th>
             <th scope="col">Tiene Jacuzzi</th>
             <th scope="col">Permite Reservas</th>
-            <th scope="col">Tipo</th>
             <th scope="col">Maximo de Personas</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Costo p/ Huesped</th>
             <th scope="col"></th>
             <th scope="col"></th>
 
@@ -72,8 +75,9 @@
                 <td>@item.Descripcion</td>
                 <td>@item.TieneJacuzzi</td>
                 <td>@item.HabilitadaReservas</td>
-                <td>@item.Tipo.Nombre</td>
                 <td>@item.MaxPersonas</td>
+                <td>@item.Tipo.Nombre</td>
+                <td>@item.Tipo.CostoxHuesped</td>
                 <td>
                     <a title="Ver Mantenimientos" asp-controller="Mantenimiento" asp-action="Index" asp-route-idCabania="@item.Id">
                         <span class="bi-card-checklist text-primary"></span>

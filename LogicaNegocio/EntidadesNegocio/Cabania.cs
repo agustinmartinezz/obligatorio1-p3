@@ -35,7 +35,8 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         public string Foto { get; set; }
 
-        public Cabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas, string foto)
+        public  List<string> Fotos { get; set; }
+        public Cabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas)
         {
             UltimoNumHab++;
             TipoId = tipoId;
@@ -45,14 +46,15 @@ namespace LogicaNegocio.EntidadesNegocio
             HabilitadaReservas = habilitadaReservas;
             NumeroHabitacion = UltimoNumHab;
             MaxPersonas = maxPersonas;
-            Foto = foto;
+            Fotos = new List<string>();
+            //Foto = foto;
         }
 
         public Cabania()
         {
             Nombre = "";
             Descripcion = "";
-            Foto = "";
+            Fotos = new List<string>();
             Tipo = new();
         }
 
@@ -61,19 +63,19 @@ namespace LogicaNegocio.EntidadesNegocio
 
             if (string.IsNullOrWhiteSpace(Nombre))
             {
-              throw new NombreException("El nombre de una Cabaña no puede estar vacio.");
+                throw new NombreException("El nombre de una Cabaña no puede estar vacio.");
             }
             if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
             {
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
-            if (Descripcion.Length>Parametros.MaxDescCabania || Descripcion.Length < Parametros.MinDescCabania)
+            if (Descripcion.Length > Parametros.MaxDescCabania || Descripcion.Length < Parametros.MinDescCabania)
             {
                 throw new DescripcionException("La descripcion debe estar entre " + Parametros.MinDescCabania + " y " + Parametros.MaxDescCabania + " caracteres.");
             }
-            if (string.IsNullOrWhiteSpace(Foto))
+            if (Fotos.Count() <= 0 || Fotos == null)
             {
-                throw new FotoException("La Cabaña debe tener una foto.");
+                throw new FotoException("La Cabaña debe tener al menos una foto.");
             }
 
         }

@@ -28,40 +28,43 @@
 <p class="text-success fw-bold">@TempData["Mensaje"]</p>
 <p class="text-danger fw-bold">@TempData["Error"]</p>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Costo por Huesped</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (TipoCabania tipo in Model.TiposCabania)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th scope="row">@tipo.Id</th>
-                <td>@tipo.Nombre</td>
-                <td>@tipo.Descripcion</td>
-                <td>@tipo.CostoxHuesped</td>
-                <td>
-                    <a class="" asp-controller="TipoCabania" asp-action="Edit" asp-route-id="@tipo.Id">
-                        <span class="bi-pencil-square text-primary"></span>
-                    </a>
-                </td>
-                <td>
-                    <a class="delete" style="cursor: pointer;">
-                        <span class="bi bi-trash-fill text-danger" data-id="@tipo.Id"></span>
-                    </a>
-                </td>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Costo por Huesped</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+            @foreach (TipoCabania tipo in Model.TiposCabania)
+            {
+                <tr>
+                    <th scope="row">@tipo.Id</th>
+                    <td>@tipo.Nombre</td>
+                    <td>@tipo.Descripcion</td>
+                    <td>@tipo.CostoxHuesped</td>
+                    <td>
+                        <a class="" asp-controller="TipoCabania" asp-action="Edit" asp-route-id="@tipo.Id">
+                            <span class="bi-pencil-square text-primary"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="delete" style="cursor: pointer;">
+                            <span class="bi bi-trash-fill text-danger" data-id="@tipo.Id"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
 
 <script>
     document.getElementById('strSearch').focus();

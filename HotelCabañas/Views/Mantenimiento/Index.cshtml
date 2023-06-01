@@ -22,28 +22,31 @@
 
 <br />
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Costo</th>
-            <th scope="col">Nombre quien realizo</th>
 
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model.Mantenimientos)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th scope="row">@item.Id</th>
-                <td>@item.Fecha</td>
-                <td>@item.Descripcion</td>
-                <td>$@item.Costo</td>
-                <td>@item.NombreRealizo</td>
+                <th scope="col">Id</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Costo</th>
+                <th scope="col">Nombre quien realizo</th>
+
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Mantenimientos)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Fecha</td>
+                    <td>@item.Descripcion</td>
+                    <td>$@item.Costo</td>
+                    <td>@item.NombreRealizo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
