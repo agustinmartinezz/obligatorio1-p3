@@ -7,6 +7,7 @@ namespace HotelCabañas.Models
         public Mantenimiento Mantenimiento { get; set; }
 
         public int CabaniaId { get; set; }
+        public Cabania Cabania { get; set; }
 
         public VMAltaMantenimiento() { 
             Mantenimiento = new Mantenimiento();

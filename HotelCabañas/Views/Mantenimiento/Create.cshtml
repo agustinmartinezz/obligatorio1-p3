@@ -4,15 +4,46 @@
 }
 
 <section class="vh-70 gradient-custom">
+
+    <table>
+        <thead>
+            <tr>
+                @*<th scope="col">Foto</th>*@
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Tiene Jacuzzi</th>
+                <th scope="col">Permite Reservas</th>
+                <th scope="col">Maximo de Personas</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Costo p/ Huesped</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="w-25"><img src="@Url.Content("~/" + @Model.Mantenimiento.Cabania.Foto)" class="img-fluid p-3" /></td>
+                <td>@Model.Mantenimiento.Cabania.Nombre</td>
+                <td>@Model.Mantenimiento.Cabania.Descripcion</td>
+                <td>@Model.Mantenimiento.Cabania.TieneJacuzzi</td>
+                <td>@Model.Mantenimiento.Cabania.HabilitadaReservas</td>
+                <td>@Model.Mantenimiento.Cabania.MaxPersonas</td>
+                <td>@Model.Mantenimiento.Cabania.Tipo.Nombre</td>
+                <td>@Model.Mantenimiento.Cabania.Tipo.CostoxHuesped</td>
+            </tr>
+        </tbody>
+    </table>
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-primary bg-gradient text-white" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
-
                         <div class="mb-md-5 mt-md-4">
                             <form asp-action="Create">
                                 <input asp-for="CabaniaId" type="number" class="d-none" value="@Model.CabaniaId"/>
+                               
 
                                 <h3 class="fw-bold mb-2">Agregar Mantenimiento</h3>
 

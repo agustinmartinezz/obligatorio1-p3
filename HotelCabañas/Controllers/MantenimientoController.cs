@@ -82,6 +82,7 @@ namespace HotelCabañas.Controllers
 
             VMAltaMantenimiento vmAltaMan = new VMAltaMantenimiento();
             vmAltaMan.CabaniaId = idCabania;
+            vmAltaMan.Mantenimiento.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
 
             return View(vmAltaMan);
         }

@@ -118,6 +118,8 @@ namespace HotelCabañas.Controllers
 
             try
             {
+                //Primero me aseguro que la cabania existe, luego subo la foto, si algo falla no subo al pedo la foto
+                //verificar que pase eso
                 Cabania cab = vmCabania.Cabania;
 
                 string nombreImagen = cab.GetNombreFoto() + Path.GetExtension(vmCabania.Foto.FileName);
@@ -127,12 +129,12 @@ namespace HotelCabañas.Controllers
 
                 FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
 
-                nombreImagen = "Imagenes/" + nombreImagen;
+                //nombreImagen = "Imagenes/" + nombreImagen;
 
                 cab.Tipo = repositorioTipoCabania.FindById(cab.TipoId);
-                cab.Foto = nombreImagen;
+                //cab.Foto = nombreImagen;
 
-                repositorioCabania.Add(cab);
+                repositorioCabania.Add(cab, nombreImagen);
 
                 vmCabania.Foto.CopyTo(foto);
 
