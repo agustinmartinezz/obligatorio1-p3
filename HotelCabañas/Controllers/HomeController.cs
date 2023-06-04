@@ -29,13 +29,13 @@ namespace HotelCabañas.Controllers
         public ActionResult Login(VMLogin vmLogin)
         {
             string email = vmLogin.Email;
-            string contrasena = vmLogin.Contrasena;
+            string contrasenia = vmLogin.Contrasenia;
 
-            Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasena);
+            Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasenia);
 
             if (usuario != null)
             {
-                HttpContext.Session.SetString("EMAIL", usuario.Mail);
+                HttpContext.Session.SetString("EMAIL", usuario.Mail.TextoMail);
                 return View("~/Views/Home/Index.cshtml");
             }
             else

@@ -32,14 +32,14 @@ namespace LogicaAccesoDatos.Repositorios
             }
         }
 
-        public Usuario LoguearUsuario(string mail, string contrasena)
+        public Usuario LoguearUsuario(string mail, string contrasenia)
         {
 
             try
             {
-                Usuario usrEncontrado = Contexto.Usuarios.First(u => u.Mail == mail);
+                Usuario usrEncontrado = Contexto.Usuarios.First(u => u.Mail.TextoMail == mail);
 
-                if (usrEncontrado.Contrasena.Equals(contrasena))
+                if (usrEncontrado.Contrasenia.Equals(contrasenia))
                     return usrEncontrado;
 
                 return null;

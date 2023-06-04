@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LogicaNegocio.InterfacesEntidades;
 using LogicaNegocio.ExcepcionesEntidades;
-
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaNegocio.EntidadesNegocio
 {
@@ -21,7 +16,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public int TipoId { get; set; }
         public TipoCabania Tipo { get; set; }
         [Required]
-        public string Nombre { get; set; }
+        public Nombre Nombre { get; set; }
         [Required]
         public string Descripcion { get; set; }
         [Required]
@@ -34,25 +29,24 @@ namespace LogicaNegocio.EntidadesNegocio
         public int MaxPersonas { get; set; }
         [Required]
         public string Foto { get; set; }
-
         public  List<string> Fotos { get; set; }
+
         public Cabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas)
         {
             UltimoNumHab++;
             TipoId = tipoId;
-            Nombre = nombre;
+            Nombre = new Nombre(nombre);
             Descripcion = descripcion;
             TieneJacuzzi = tieneJacuzzi;
             HabilitadaReservas = habilitadaReservas;
             NumeroHabitacion = UltimoNumHab;
             MaxPersonas = maxPersonas;
             Fotos = new List<string>();
-            //Foto = foto;
         }
 
         public Cabania()
         {
-            Nombre = "";
+            Nombre = new Nombre(string.Empty);
             Descripcion = "";
             Fotos = new List<string>();
             Tipo = new();
@@ -60,29 +54,21 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void ValidarDatos()
         {
+            Nombre.ValidarDatos();
 
-            if (string.IsNullOrWhiteSpace(Nombre))
-            {
-                throw new NombreException("El nombre de una Cabaña no puede estar vacio.");
-            }
-            if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
-            {
-                throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
-            }
             if (Descripcion.Length > Parametros.MaxDescCabania || Descripcion.Length < Parametros.MinDescCabania)
             {
                 throw new DescripcionException("La descripcion debe estar entre " + Parametros.MinDescCabania + " y " + Parametros.MaxDescCabania + " caracteres.");
             }
-            if (Fotos.Count() <= 0 || Fotos == null)
+            if (Fotos.Count <= 0 || Fotos == null)
             {
                 throw new FotoException("La Cabaña debe tener al menos una foto.");
             }
-
         }
 
         public string GetNombreFoto()
         {
-            string nombre = Nombre.Trim().Replace(" ", "_") + "_001";
+            string nombre = Nombre.TextoNombre.Trim().Replace(" ", "_") + "_001";
             return nombre;
         }
     }
