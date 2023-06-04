@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
+using LogicaNegocio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,44 +16,25 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         [Key]
         public int Id { get; set; }
-        public string Nombre { get; set; }
+        public Nombre Nombre { get; set; }
 
-        [EmailAddress]
-        public string Mail { get; set; }
+        public Mail Mail { get; set; }
 
-        public string Contrasena { get; set; }
+        public Contrasenia Contrasenia { get; set; }
 
-        public Usuario(string nombre, string mail, string contrasena) {
-            Nombre = nombre;
-            Mail = mail;
-            Contrasena = contrasena;
+        public Usuario(string nombre, string mail, string contrasenia) {
+            Nombre = new Nombre(nombre);
+            Mail = new Mail(mail);
+            Contrasenia = new Contrasenia(contrasenia);
         }
 
         public void ValidarDatos()
         {
-            if (string.IsNullOrWhiteSpace(Nombre))
-                throw new UsuarioException("Nombre no puede ser nulo o vacio.");
+            Nombre.ValidarDatos();
 
-            if (string.IsNullOrWhiteSpace(Mail))
-                throw new UsuarioException("Mail no puede ser nulo o vacio.");
+            Mail.ValidarDatos();
 
-            if (string.IsNullOrWhiteSpace(Contrasena))
-                throw new UsuarioException("Contraseña no puede ser nulo o vacio.");
-
-            if (!ValidacionesContrasenia(Contrasena))
-                throw new UsuarioException("Contraseña debe tener al menos 6 caracteres e incluir minúscula, mayúscula y número.");
-        }
-
-        private bool ValidacionesContrasenia(string contrasena)
-        {
-            bool mayus = Regex.IsMatch(contrasena, @"[A-ZÑ]");
-            bool minus = Regex.IsMatch(contrasena, @"[a-zñ]");
-            bool num   = Regex.IsMatch(contrasena, @"\d");
-
-            if (mayus && minus && num && contrasena.Length >= 6)
-                return true;
-
-            return false;
+            Contrasenia.ValidarDatos();
         }
     }
 }

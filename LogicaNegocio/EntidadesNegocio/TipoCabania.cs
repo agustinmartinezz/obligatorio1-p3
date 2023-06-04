@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
+using LogicaNegocio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,32 +15,27 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         [Key]
         public int Id { get; set; }
-        public string Nombre { get; set; }
+        public NombreTipoCabania Nombre { get; set; }
         public string Descripcion { get; set; }
-        public int CostoxHuesped { get; set; }
-        public TipoCabania() 
-        {
-            Nombre = string.Empty;
-            Descripcion = string.Empty;
-            CostoxHuesped = 0;
-        }
+        public Costo CostoxHuesped { get; set; }
+
         public TipoCabania(string nombre, string descripcion, int costoxHuesped)
         {
-            Nombre = nombre;
+            Nombre = new NombreTipoCabania(nombre);
             Descripcion = descripcion;
-            CostoxHuesped = costoxHuesped;
+            CostoxHuesped = new Costo(costoxHuesped);
+        }
+
+        public TipoCabania()
+        {
+            Nombre = new NombreTipoCabania(string.Empty);
+            Descripcion = string.Empty;
+            CostoxHuesped = new Costo(0);
         }
 
         public void ValidarDatos()
         {
-            if (string.IsNullOrWhiteSpace(Nombre))
-                throw new NombreException("El nombre del tipo de cabaña no puede estar vacio.");
-
-            if (Nombre.StartsWith(" ") || Nombre.EndsWith(" "))
-                throw new NombreException("El nombre no puede comenzar ni terminar con espacios.");
-
-            if (!Regex.IsMatch(Nombre, @"^[a-zA-ZñÑ ]+$"))
-                throw new DescripcionException("El nombre no puede tener caracteres no alfabéticos.");
+            Nombre.ValidarDatos();
 
             if (string.IsNullOrWhiteSpace(Descripcion))
                 throw new DescripcionException("La descripcion no puede estar vacia.");
@@ -50,8 +46,7 @@ namespace LogicaNegocio.EntidadesNegocio
             if (Descripcion.Length > Parametros.MaxDescTipoCabania)
                 throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabania.ToString() + " caracteres");
 
-            if (CostoxHuesped <= 0)
-                throw new DescripcionException("El costo debe ser mayor que 0");
+            CostoxHuesped.ValidarDatos();
         }
     }
 }

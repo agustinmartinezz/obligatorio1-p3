@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using LogicaNegocio.InterfacesEntidades;
 using LogicaNegocio.ExcepcionesEntidades;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaNegocio.EntidadesNegocio
 {
@@ -14,25 +10,21 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         [Key]
         public int Id { get; set; }
-
         public DateTime Fecha { get; set; }
         [Required]
         public string Descripcion { get; set; }
-
         [Required]
-        public int Costo { get; set; }
-
+        public Costo Costo { get; set; }
         [Required]
-        public string NombreRealizo { get; set; }
-
+        public Nombre NombreRealizo { get; set; }
         [ForeignKey(nameof(Cabania))]
         public int CabaniaId { get; set; }
-
         public Cabania Cabania { get; set; }
         
         public Mantenimiento() {
             Descripcion = "";
-            NombreRealizo = "";
+            Costo = new Costo(0);
+            NombreRealizo = new Nombre(string.Empty);
             Cabania = new Cabania();
         }
 
@@ -48,15 +40,9 @@ namespace LogicaNegocio.EntidadesNegocio
                 throw new DescripcionException("La descripcion debe estar entre 10 y 200 caracteres.");
             }
 
-            if (string.IsNullOrWhiteSpace(NombreRealizo))
-            {
-                throw new NombreException("El nombre no puede estar vacio.");
-            }
-            if (Costo<=0)
-            {
-                throw new CostoException("El costo no puede ser menor o igual 0");
-            }
+            NombreRealizo.ValidarDatos();
 
+            Costo.ValidarDatos();
         }
     }
 }

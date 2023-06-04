@@ -9,6 +9,6 @@ namespace LogicaNegocio.InterfacesRepositorios
 {
     public interface IRepositorioUsuario : IRepositorio<Usuario>
     {
-        public Usuario LoguearUsuario(string mail, string contrasena);
+        public Usuario LoguearUsuario(string mail, string contrasenia);
     }
 }
