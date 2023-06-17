@@ -59,7 +59,7 @@ namespace HotelCabañas.Controllers
                         break;
                     case 2:
                         //int intSearch = Int32.Parse(searchText);
-                        vmCabania.Cabanias = repositorioCabania.FindByTypo(vmCabania.SearchType);
+                        vmCabania.Cabanias = repositorioCabania.FindByTipo(vmCabania.SearchType);
                         break;
                     case 3:
                         //int intSearch2 = Int32.Parse(searchText);
