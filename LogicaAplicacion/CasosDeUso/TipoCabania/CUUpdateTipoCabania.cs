@@ -1,11 +1,7 @@
-﻿using LogicaNegocio.EntidadesNegocio;
+﻿using DTOs;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +15,17 @@ namespace LogicaAplicacion.CasosDeUso
             RepoTipoCabania = repoTipoCabania;
         }
 
-        public void UpdateTipoCabania(int Id,TipoCabania tipoCabania)
+        public void UpdateTipoCabania(int Id,DTOTipoCabania dtoTipoCabania)
         {
             try
             {
-                RepoTipoCabania.Update(Id,tipoCabania);
+                TipoCabania tipoCabania = new()
+                {
+                    Nombre = new NombreTipoCabania(dtoTipoCabania.Nombre),
+                    Descripcion = dtoTipoCabania.Descripcion,
+                    CostoxHuesped = new Costo(dtoTipoCabania.CostoxHuesped)
+                };
+                RepoTipoCabania.Update(Id, tipoCabania);
             }
             catch
             {
