@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +20,24 @@ namespace LogicaAplicacion.CasosDeUso
             RepoCabania = repoCabania;
         }
 
-        public void FindByNameCabania(string name)
+        public IEnumerable<DTOCabania> FindByNameCabania(string name)
         {
             try
             {
-                RepoCabania.FindByName(name);
+                IEnumerable<Cabania> cabanias = RepoCabania.FindByName(name);
+
+                IEnumerable<DTOCabania> dtoCabanias = cabanias.Select(c => new DTOCabania()
+                {
+                    TipoId = c.TipoId,
+                    Nombre = c.Nombre.TextoNombre,
+                    Descripcion = c.Descripcion,
+                    TieneJacuzzi = c.TieneJacuzzi,
+                    HabilitadaReservas = c.HabilitadaReservas,
+                    NumeroHabitacion = c.NumeroHabitacion,
+                    MaxPersonas = c.MaxPersonas,
+                    Foto = c.Foto,
+                });
+                return dtoCabanias;
             }
             catch
             {
