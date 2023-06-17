@@ -1,11 +1,7 @@
-﻿using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LogicaNegocio.InterfacesRepositorios;
+using DTOs;
+using LogicaNegocio.EntidadesNegocio;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -20,10 +16,18 @@ namespace LogicaAplicacion.CasosDeUso
             RepoMantenimiento = repoMantenimiento;
         }
 
-        public void AltaMantenimiento(Mantenimiento mantenimiento)
+        public void AltaMantenimiento(DTOMantenimiento dtoMantenimiento)
         {
             try
             {
+                Mantenimiento mantenimiento = new() {
+                    Fecha = dtoMantenimiento.Fecha,
+                    Descripcion = dtoMantenimiento.Descripcion,
+                    Costo = new Costo(dtoMantenimiento.Costo),
+                    NombreRealizo = new Nombre(dtoMantenimiento.NombreRealizo),
+                    CabaniaId = dtoMantenimiento.CabaniaId
+                };
+
                 RepoMantenimiento.Add(mantenimiento);
             }
             catch

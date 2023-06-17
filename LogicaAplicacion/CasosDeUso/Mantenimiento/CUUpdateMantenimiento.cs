@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +21,19 @@ namespace LogicaAplicacion.CasosDeUso
             RepoMantenimiento = repoMantenimiento;
         }
 
-        public void UpdateMantenimiento(int Id,Mantenimiento mantenimiento)
+        public void UpdateMantenimiento(int Id, DTOMantenimiento dtoMantenimiento)
         {
             try
             {
-                RepoMantenimiento.Update(Id,mantenimiento);
+                Mantenimiento mantenimiento = new()
+                {
+                    Fecha = dtoMantenimiento.Fecha,
+                    Descripcion = dtoMantenimiento.Descripcion,
+                    Costo = new Costo(dtoMantenimiento.Costo),
+                    NombreRealizo = new Nombre(dtoMantenimiento.NombreRealizo),
+                    CabaniaId = dtoMantenimiento.CabaniaId
+                };
+                RepoMantenimiento.Update(Id, mantenimiento);
             }
             catch
             {

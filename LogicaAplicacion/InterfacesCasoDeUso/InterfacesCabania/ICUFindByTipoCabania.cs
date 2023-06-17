@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTOs;
 
 namespace LogicaAplicacion.InterfacesCasoDeUso
 {
     public interface ICUFindByTipoCabania
     {
-        public void FindByTipoCabania(int tipoId);
+        public IEnumerable<DTOCabania> FindByTipoCabania(int tipoId);
     }
 }

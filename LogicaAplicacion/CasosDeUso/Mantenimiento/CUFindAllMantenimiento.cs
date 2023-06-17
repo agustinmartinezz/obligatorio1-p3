@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +21,21 @@ namespace LogicaAplicacion.CasosDeUso
             RepoMantenimiento = repoMantenimiento;
         }
 
-        public void FindAllMantenimiento()
+        public IEnumerable<DTOMantenimiento> FindAllMantenimiento()
         {
             try
             {
-                RepoMantenimiento.FindAll();
+                IEnumerable<Mantenimiento> mantenimientos = RepoMantenimiento.FindAll();
+
+                IEnumerable<DTOMantenimiento> dtoMantenimientos = mantenimientos.Select(m => new DTOMantenimiento ()
+                {
+                    Fecha = m.Fecha,
+                    Descripcion = m.Descripcion,
+                    Costo = m.Costo.ValorCosto,
+                    NombreRealizo = m.NombreRealizo.TextoNombre,
+                    CabaniaId = m.CabaniaId
+                });
+                return dtoMantenimientos;
             }
             catch
             {

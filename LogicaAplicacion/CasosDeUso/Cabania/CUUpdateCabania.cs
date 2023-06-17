@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +21,23 @@ namespace LogicaAplicacion.CasosDeUso
             RepoCabania = repoCabania;
         }
 
-        public void UpdateCabania(int Id,Cabania cabania)
+        public void UpdateCabania(int Id, DTOCabania dtoCabania)
         {
             try
             {
-                RepoCabania.Update(Id,cabania);
+                Cabania cabania = new()
+                {
+                    TipoId = dtoCabania.TipoId,
+                    Nombre = new Nombre(dtoCabania.Nombre),
+                    Descripcion = dtoCabania.Descripcion,
+                    TieneJacuzzi = dtoCabania.TieneJacuzzi,
+                    HabilitadaReservas = dtoCabania.HabilitadaReservas,
+                    NumeroHabitacion = dtoCabania.NumeroHabitacion,
+                    MaxPersonas = dtoCabania.MaxPersonas,
+                    Foto = dtoCabania.Foto,
+                };
+
+                RepoCabania.Update(Id, cabania);
             }
             catch
             {
