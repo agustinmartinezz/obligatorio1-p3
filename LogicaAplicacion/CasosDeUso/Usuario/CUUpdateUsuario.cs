@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,10 +21,17 @@ namespace LogicaAplicacion.CasosDeUso
             RepoUsuario = repoUsuario;
         }
 
-        public void UpdateUsuario(int Id,Usuario usuario)
+        public void UpdateUsuario(int Id, DTOUsuario dtoUsuario)
         {
             try
             {
+                Usuario usuario = new ()
+                {
+                    Nombre = new Nombre(dtoUsuario.Nombre),
+                    Mail = new Mail(dtoUsuario.Mail),
+                    Contrasenia = new Contrasenia(dtoUsuario.Contrasenia)
+                };
+
                 RepoUsuario.Update(Id,usuario);
             }
             catch

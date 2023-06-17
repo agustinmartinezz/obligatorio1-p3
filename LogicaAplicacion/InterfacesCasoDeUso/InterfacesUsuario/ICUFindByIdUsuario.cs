@@ -1,17 +1,9 @@
-﻿using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.CasosDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTOs;
 
 namespace LogicaAplicacion.CasosDeUso
 {
     public interface ICUFindByIdUsuario
     {
-
-        public void FindByIdUsuario(int usuarioId);
+        public DTOUsuario FindByIdUsuario(int usuarioId);
     }
 }

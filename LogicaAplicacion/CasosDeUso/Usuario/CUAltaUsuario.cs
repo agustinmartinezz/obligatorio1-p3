@@ -1,12 +1,6 @@
 ﻿using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
 using DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
@@ -26,11 +20,17 @@ namespace LogicaAplicacion.CasosDeUso
 
             try
             {
-                Usuario u = new Usuario(dtoUsuario.Nombre,  dtoUsuario.Mail,  dtoUsuario.Contrasenia);
-                RepoUsuario.Add(u);
-                dtoUsuario.Id = u.Id;
-                return dtoUsuario;
+                Usuario usuario = new ()
+                {
+                    Nombre = new Nombre(dtoUsuario.Nombre),
+                    Mail = new Mail(dtoUsuario.Mail),
+                    Contrasenia = new Contrasenia(dtoUsuario.Contrasenia)
+                };
 
+                RepoUsuario.Add(usuario);
+                dtoUsuario.Id = usuario.Id; //revisar si funciona.
+
+                return dtoUsuario;
             }
             catch
             {

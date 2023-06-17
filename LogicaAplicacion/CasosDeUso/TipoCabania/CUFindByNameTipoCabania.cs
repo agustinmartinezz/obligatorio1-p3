@@ -1,11 +1,7 @@
-﻿using LogicaNegocio.EntidadesNegocio;
+﻿using DTOs;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +15,19 @@ namespace LogicaAplicacion.CasosDeUso
             RepoTipoCabania = repoTipoCabania;
         }
 
-        public void FindByNameTipoCabania(string name)
+        public IEnumerable<DTOTipoCabania> FindByNameTipoCabania(string name)
         {
             try
             {
-                RepoTipoCabania.FindByName(name);
+                IEnumerable<TipoCabania> tipoCabanias = RepoTipoCabania.FindByName(name);
+
+                IEnumerable<DTOTipoCabania> dtoTipoCabanias = tipoCabanias.Select(t => new DTOTipoCabania()
+                {
+                    Nombre = t.Nombre.TextoNombre,
+                    Descripcion = t.Descripcion,
+                    CostoxHuesped = t.CostoxHuesped.ValorCosto,
+                });
+                return dtoTipoCabanias;
             }
             catch
             {
