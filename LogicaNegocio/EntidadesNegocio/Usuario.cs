@@ -22,6 +22,8 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Contrasenia Contrasenia { get; set; }
 
+        public Usuario() { }
+
         public Usuario(string nombre, string mail, string contrasenia) {
             Nombre = new Nombre(nombre);
             Mail = new Mail(mail);

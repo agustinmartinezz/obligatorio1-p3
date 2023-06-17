@@ -1,11 +1,6 @@
 ﻿using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DTOs;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -19,11 +14,18 @@ namespace LogicaAplicacion.CasosDeUso
             RepoUsuario = repoUsuario;
         }
 
-        public void LoguearUsuario(string mail, string contrasenia)
+        public DTOUsuario LoguearUsuario(string mail, string contrasenia)
         {
             try
             {
-                RepoUsuario.LoguearUsuario(mail, contrasenia);
+                Usuario usuario = RepoUsuario.LoguearUsuario(mail, contrasenia);
+
+                DTOUsuario dtoUsuario = new() { 
+                    Nombre = usuario.Nombre.TextoNombre,
+                    Mail = usuario.Mail.TextoMail,
+                    Contrasenia = usuario.Contrasenia.TextoContrasenia
+                };
+                return dtoUsuario;
             }
             catch
             {

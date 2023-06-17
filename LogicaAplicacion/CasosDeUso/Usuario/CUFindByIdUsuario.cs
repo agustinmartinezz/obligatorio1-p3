@@ -1,11 +1,5 @@
 ﻿using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using LogicaAplicacion.InterfacesCasoDeUso;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DTOs;
 
 namespace LogicaAplicacion.CasosDeUso
@@ -28,8 +22,7 @@ namespace LogicaAplicacion.CasosDeUso
 
                 if (u != null)
                 {
-                    DTOUsuario dtoUsuario =
-                    new DTOUsuario()
+                    DTOUsuario dtoUsuario = new()
                     {
                         Id = u.Id,
                         Nombre = u.Nombre.TextoNombre,
@@ -37,6 +30,7 @@ namespace LogicaAplicacion.CasosDeUso
                         Contrasenia = u.Contrasenia.TextoContrasenia,
 
                     };
+
                     return dtoUsuario;
                 }
                 else
