@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
+using LogicaAplicacion.InterfacesCasoDeUso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosDeUso
 {
-    public class CUAltaCabania: ICUAltaCabania
+    public class CUAltaTipoCabania : ICUAltaTipoCabania
     {
     
-        public IRepositorioCabania RepoCabania { get; set; }
+        public IRepositorioTipoCabania RepoTipoCabania { get; set; }
 
-        public CUAltaCabania(IRepositorioCabania repoCabania)
+        public CUAltaTipoCabania(IRepositorioTipoCabania repoTipoCabania)
         {
-            RepoCabania = repoCabania;
+            RepoTipoCabania = repoTipoCabania;
         }
 
-        public void AltaCabania(Cabania cabania)
+        public void AltaTipoCabania(TipoCabania tipoCabania)
         {
             try
             {
-                RepoCabania.Add(cabania);
+                RepoTipoCabania.Add(tipoCabania);
             }
             catch
             {

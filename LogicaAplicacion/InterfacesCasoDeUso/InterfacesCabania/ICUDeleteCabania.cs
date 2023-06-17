@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.InterfacesCasoDeUso
 {
-    internal interface ICUAltaCabania
+    public interface ICUDeleteCabania
     {
+        public void DeleteCabania(int cabaniaId);
     }
 }

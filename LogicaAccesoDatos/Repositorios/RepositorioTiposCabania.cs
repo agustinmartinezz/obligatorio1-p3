@@ -86,7 +86,7 @@ namespace LogicaAccesoDatos.Repositorios
             try
             {
                 return Contexto.TipoCabanias
-                    .Where(t => t.Nombre.Contains(nombre)).ToList();
+                    .Where(t => t.Nombre.TextoNombre.Contains(nombre)).ToList();
             } catch
             {
                 throw;
