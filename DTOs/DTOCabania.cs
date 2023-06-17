@@ -20,14 +20,11 @@ namespace DTOs
         public bool TieneJacuzzi { get; set; }
         
         public bool HabilitadaReservas { get; set; }
+
         public int NumeroHabitacion { get; set; }
         
         public int MaxPersonas { get; set; }
-        
-        //public string Foto { get; set; }
-        //public List<string> Fotos { get; set; }
 
-        //public DTOCabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas)
-
+        public string Foto { get; set; }
     }
 }

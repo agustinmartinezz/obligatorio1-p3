@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace LogicaAplicacion.InterfacesCasoDeUso
 {
     public interface ICUFindByNameCabania
     {
-        public void FindByNameCabania(string name);
+        public IEnumerable<DTOCabania> FindByNameCabania(string name);
     }
 }

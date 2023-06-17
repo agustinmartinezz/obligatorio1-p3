@@ -9,7 +9,6 @@ namespace LogicaNegocio.EntidadesNegocio
     public class Cabania: IValidar
     {
         [Key]
-        [Required]
         public int Id { get; set; }
         [Required]
         [ForeignKey(nameof(Tipo))]
@@ -48,6 +47,7 @@ namespace LogicaNegocio.EntidadesNegocio
         {
             Nombre = new Nombre(string.Empty);
             Descripcion = "";
+            Foto = "";
             Fotos = new List<string>();
             Tipo = new();
         }

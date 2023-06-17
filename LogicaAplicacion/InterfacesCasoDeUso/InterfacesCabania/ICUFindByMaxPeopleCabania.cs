@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace LogicaAplicacion.InterfacesCasoDeUso
 {
     public interface ICUFindByMaxPeopleCabania
     { 
-     public void FindByMaxPeopleCabania(int max);
+     public IEnumerable<DTOCabania> FindByMaxPeopleCabania(int max);
 
     }
 }

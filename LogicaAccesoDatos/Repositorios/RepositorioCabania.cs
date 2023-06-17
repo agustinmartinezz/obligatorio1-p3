@@ -135,7 +135,7 @@ namespace LogicaAccesoDatos.Repositorios
             try
             {
                 return Contexto.Cabanias
-                    .Where(c => c.Nombre.ToLower().Contains(nombre.ToLower()))
+                    .Where(c => c.Nombre.TextoNombre.ToLower().Contains(nombre.ToLower()))
                     .Include(c => c.Tipo)
                     .ToList();
             } catch
