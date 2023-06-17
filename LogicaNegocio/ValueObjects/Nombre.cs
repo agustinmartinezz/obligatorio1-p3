@@ -28,5 +28,16 @@ namespace LogicaNegocio.ValueObjects
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Nombre nombre = (Nombre) obj;
+            return TextoNombre.Equals(nombre.TextoNombre);
+        }
     }
 }

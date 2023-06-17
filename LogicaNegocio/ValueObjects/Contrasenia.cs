@@ -3,6 +3,8 @@ using LogicaNegocio.InterfacesEntidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,6 +33,17 @@ namespace LogicaNegocio.ValueObjects
 
             if (!mayus && !minus && !num && !(TextoContrasenia.Length >= 6))
                 throw new ContraseniaException("Contraseña debe tener al menos 6 caracteres e incluir minúscula, mayúscula y número.");
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Contrasenia contrasenia = (Contrasenia) obj;
+            return TextoContrasenia.Equals(contrasenia.TextoContrasenia);
         }
     }
 }

@@ -30,5 +30,16 @@ namespace LogicaNegocio.ValueObjects
                 throw new NombreException("El nombre no puede tener caracteres no alfabéticos.");
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            NombreTipoCabania nombre = (NombreTipoCabania) obj;
+            return TextoNombre.Equals(nombre.TextoNombre);
+        }
     }
 }

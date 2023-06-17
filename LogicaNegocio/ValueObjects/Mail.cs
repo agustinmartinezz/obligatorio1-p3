@@ -26,5 +26,16 @@ namespace LogicaNegocio.ValueObjects
             if (!Regex.IsMatch(TextoMail, @"^[\w\.-]+@[\w\.-]+\.\w+$"))
                 throw new MailException("El mail ingresado no es valido, verifique formato.");
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Mail mail = (Mail) obj;
+            return TextoMail.Equals(mail.TextoMail);
+        }
     }
 }

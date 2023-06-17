@@ -24,5 +24,16 @@ namespace LogicaNegocio.ValueObjects
                 throw new CostoException("El costo debe ser mayor que 0.");
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Costo costo = (Costo) obj;
+            return ValorCosto == costo.ValorCosto;
+        }
     }
 }
