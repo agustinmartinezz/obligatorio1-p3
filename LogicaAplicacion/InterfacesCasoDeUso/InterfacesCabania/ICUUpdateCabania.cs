@@ -1,14 +1,9 @@
-﻿using LogicaNegocio.EntidadesNegocio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DTOs;
 
 namespace LogicaAplicacion.InterfacesCasoDeUso
 {
     public interface ICUUpdateCabania
     {
-        public void UpdateCabania(int Id, Cabania cabania);
+        public void UpdateCabania(int Id, DTOCabania cabania);
     }
 }
