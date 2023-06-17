@@ -145,7 +145,7 @@ namespace LogicaAccesoDatos.Repositorios
             
         }
 
-        public IEnumerable<Cabania> FindByTypo(int tipoId)
+        public IEnumerable<Cabania> FindByTipo(int tipoId)
         {
             try
             {

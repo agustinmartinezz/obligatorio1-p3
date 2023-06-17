@@ -11,7 +11,7 @@ namespace LogicaNegocio.InterfacesRepositorios
     {
         void AddPicture(int cabaniaId, string name);
         IEnumerable<Cabania> FindByName(string nombre);
-        IEnumerable<Cabania> FindByTypo(int tipoId);
+        IEnumerable<Cabania> FindByTipo(int tipoId);
         IEnumerable<Cabania> FindByMaxPeople(int maxPeople);
         IEnumerable<Cabania> FindHabilitadas();
     }
