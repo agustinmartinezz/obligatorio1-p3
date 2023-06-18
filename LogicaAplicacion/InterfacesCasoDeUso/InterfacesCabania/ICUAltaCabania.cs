@@ -4,6 +4,6 @@ namespace LogicaAplicacion.InterfacesCasoDeUso
 {
     public interface ICUAltaCabania
     {
-         public void AltaCabania(DTOCabania dtoCabania);
+         public DTOCabania AltaCabania(DTOCabania dtoCabania);
     }
 }

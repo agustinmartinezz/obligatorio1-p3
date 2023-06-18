@@ -1,7 +1,9 @@
 ﻿using LogicaNegocio.ValueObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DTOs
 {
+    [NotMapped]
     public class DTOUsuario
     {
         public int Id { get; set; }

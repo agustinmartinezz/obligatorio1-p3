@@ -16,7 +16,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoMantenimiento = repoMantenimiento;
         }
 
-        public void AltaMantenimiento(DTOMantenimiento dtoMantenimiento)
+        public DTOMantenimiento AltaMantenimiento(DTOMantenimiento dtoMantenimiento)
         {
             try
             {
@@ -29,11 +29,13 @@ namespace LogicaAplicacion.CasosDeUso
                 };
 
                 RepoMantenimiento.Add(mantenimiento);
+                dtoMantenimiento.Id = mantenimiento.Id;
             }
             catch
             {
                 throw;
             }
+            return dtoMantenimiento;
         }
     }
 }

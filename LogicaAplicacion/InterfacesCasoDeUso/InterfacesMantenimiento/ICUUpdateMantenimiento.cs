@@ -5,6 +5,6 @@ namespace LogicaAplicacion.CasosDeUso
     public interface ICUUpdateMantenimiento
     {
 
-        public void UpdateMantenimiento(int Id, DTOMantenimiento mantenimiento);
+        public DTOMantenimiento UpdateMantenimiento(int Id, DTOMantenimiento mantenimiento);
     }
 }

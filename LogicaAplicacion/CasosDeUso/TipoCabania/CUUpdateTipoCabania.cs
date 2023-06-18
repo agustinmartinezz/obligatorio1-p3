@@ -15,7 +15,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoTipoCabania = repoTipoCabania;
         }
 
-        public void UpdateTipoCabania(int Id,DTOTipoCabania dtoTipoCabania)
+        public DTOTipoCabania UpdateTipoCabania(int Id,DTOTipoCabania dtoTipoCabania)
         {
             try
             {
@@ -26,11 +26,13 @@ namespace LogicaAplicacion.CasosDeUso
                     CostoxHuesped = new Costo(dtoTipoCabania.CostoxHuesped)
                 };
                 RepoTipoCabania.Update(Id, tipoCabania);
+                dtoTipoCabania.Id = tipoCabania.Id;
             }
             catch
             {
                 throw;
             }
+            return dtoTipoCabania;
         }
     }
 }

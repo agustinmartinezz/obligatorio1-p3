@@ -21,7 +21,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoCabania = repoCabania;
         }
 
-        public void UpdateCabania(int Id, DTOCabania dtoCabania)
+        public DTOCabania UpdateCabania(int Id, DTOCabania dtoCabania)
         {
             try
             {
@@ -38,11 +38,13 @@ namespace LogicaAplicacion.CasosDeUso
                 };
 
                 RepoCabania.Update(Id, cabania);
+                dtoCabania.Id = cabania.Id;
             }
             catch
             {
                 throw;
             }
+            return dtoCabania;
         }
     }
 }
