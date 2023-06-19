@@ -1,24 +1,20 @@
-﻿using LogicaNegocio.EntidadesNegocio;
-
-namespace HotelCabañas.Models
+﻿namespace HotelCabañas.Models
 {
     public class VMCabania
     {
-        public string TieneJacuzzi { get; set; }
+        public int Id { get; set; }
+        public int TipoId { get; set; }
 
-        public string HabilitadaReservas { get; set; }
+        public string Nombre { get; set; }
 
-        public IFormFile Foto { get; set; }
+        public string Descripcion { get; set; }
 
-        public Cabania? Cabania { get; set; }
+        public bool TieneJacuzzi { get; set; }
 
+        public bool HabilitadaReservas { get; set; }
 
-        public string? SearchText { get; set; } //1
-        public int SearchType { get; set; } //2 - TipoId
-        public int SearchNumber { get; set; } //3
-        public int SearchOption { get; set; } //1,2,3,4
+        public int NumeroHabitacion { get; set; }
 
-        public IEnumerable<TipoCabania>? Tipos { get; set; }
-        public IEnumerable<Cabania>? Cabanias { get; set; }
+        public int MaxPersonas { get; set; }
     }
 }
