@@ -1,11 +1,3 @@
-using LogicaAccesoDatos.BaseDatos;
-using LogicaAccesoDatos.Repositorios;
-using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-
 namespace HotelCabañas
 {
 public class Program
@@ -13,41 +5,16 @@ public class Program
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
-            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-            builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTiposCabania>();
-            builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
-            builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
-
-            ConfigurationBuilder miConfiguracion = new();
-            miConfiguracion.AddJsonFile("appsettings.json");
-
-            string cadenaConexion = builder.Configuration.GetConnectionString("HotelCabanias");
-            builder.Services.
-                AddDbContext<HotelCabaniaContext>(options => options.UseSqlServer(cadenaConexion));
-
-            builder.Configuration.AddJsonFile("parametros.json",
-                     optional: true,
-                     reloadOnChange: true);
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            /*--------- PARAMETROS JSON ---------*/
-            Parametros.MinDescTipoCabania = builder.Configuration.GetValue<int>("MinDescTipoCabania");
-            Parametros.MaxDescTipoCabania = builder.Configuration.GetValue<int>("MaxDescTipoCabania");
-            Parametros.MinDescCabania = builder.Configuration.GetValue<int>("MinDescCabania");
-            Parametros.MaxDescCabania = builder.Configuration.GetValue<int>("MaxDescCabania");
-            Parametros.MinDescMantenimiento = builder.Configuration.GetValue<int>("MinDescMantenimiento");
-            Parametros.MaxDescMantenimiento = builder.Configuration.GetValue<int>("MaxDescMantenimiento");
-            /*-----------------------------------*/
-
             var app = builder.Build();
 
-            app.UseSession();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -56,6 +23,7 @@ public class Program
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

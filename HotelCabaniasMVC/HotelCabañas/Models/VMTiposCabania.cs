@@ -1,16 +1,10 @@
-﻿using LogicaNegocio.EntidadesNegocio;
-
-namespace HotelCabañas.Models
+﻿namespace HotelCabañas.Models
 {
     public class VMTiposCabania
     {
-        public string StrSearch { get; set; }
-        public IEnumerable<TipoCabania> TiposCabania { get; set; }
-
-        public VMTiposCabania()
-        {
-            StrSearch = string.Empty;
-            TiposCabania = new List<TipoCabania>();
-        }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public int CostoxHuesped { get; set; }
     }
 }
