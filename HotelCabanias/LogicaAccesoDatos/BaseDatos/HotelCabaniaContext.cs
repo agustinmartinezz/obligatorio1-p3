@@ -22,10 +22,7 @@ namespace LogicaAccesoDatos.BaseDatos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cabania>().HasIndex(c => c.Nombre).IsUnique();
-            modelBuilder.Entity<TipoCabania>().HasIndex(t => t.Nombre).IsUnique();
-            modelBuilder.Entity<Usuario>().HasIndex(u => u.Mail).IsUnique();
-
+            modelBuilder.Entity<List<string>>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
     }

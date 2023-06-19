@@ -1,4 +1,5 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,17 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
+    [Index("TextoNombre", IsUnique = true)]
     public class NombreTipoCabania : Nombre
     {
         public NombreTipoCabania(string textoNombre) : base(textoNombre)
         {
             //ValidarDatos();
         }
-        
+
+        private NombreTipoCabania() { }
+
         public new void ValidarDatos()
         {
             if (string.IsNullOrWhiteSpace(TextoNombre))
