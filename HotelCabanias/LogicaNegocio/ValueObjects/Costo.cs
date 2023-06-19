@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
     public class Costo : IValidar
     {
         public int ValorCosto { get; }
@@ -16,6 +18,8 @@ namespace LogicaNegocio.ValueObjects
             this.ValorCosto = valorCosto;
             //ValidarDatos();
         }
+
+        private Costo() { }
 
         public void ValidarDatos()
         {

@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
+    [Index("TextoNombre", IsUnique = true)]
     public class Nombre : IValidar
     {
         public string TextoNombre { get; }
@@ -16,6 +19,8 @@ namespace LogicaNegocio.ValueObjects
             this.TextoNombre = textoNombre;
             //ValidarDatos();
         }
+
+        public Nombre() { }
 
         public void ValidarDatos()
         {

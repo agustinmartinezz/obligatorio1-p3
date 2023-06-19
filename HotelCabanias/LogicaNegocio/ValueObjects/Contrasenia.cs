@@ -1,16 +1,11 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
     public class Contrasenia : IValidar
     {
 
@@ -21,6 +16,8 @@ namespace LogicaNegocio.ValueObjects
             this.TextoContrasenia = textoContrasenia;
             //ValidarDatos();
         }
+
+        private Contrasenia() { }
 
         public void ValidarDatos()
         {

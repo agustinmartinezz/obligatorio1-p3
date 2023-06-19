@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.InterfacesEntidades;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    [Owned]
+    [Index("TextoMail", IsUnique = true)]
     public class Mail : IValidar
     {
         public string TextoMail { get; }
@@ -17,6 +20,8 @@ namespace LogicaNegocio.ValueObjects
             this.TextoMail = textoMail;
             //ValidarDatos();
         }
+
+        private Mail() { }
 
         public void ValidarDatos()
         {

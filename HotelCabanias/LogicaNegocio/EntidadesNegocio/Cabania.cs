@@ -28,6 +28,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public int MaxPersonas { get; set; }
         [Required]
         public string Foto { get; set; }
+        [NotMapped]
         public  List<string> Fotos { get; set; }
 
         public Cabania(int tipoId, string nombre, string descripcion, bool tieneJacuzzi, bool habilitadaReservas, int maxPersonas)
