@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelCabañas", "HotelCabañas\HotelCabañas.csproj", "{9C54FC9C-7B56-4D9A-83D5-587042748A81}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4} = {4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}
-		{9B025F85-FF9C-4311-A014-D4A6CCA35AE3} = {9B025F85-FF9C-4311-A014-D4A6CCA35AE3}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{9B025F85-FF9C-4311-A014-D4A6CCA35AE3}"
@@ -18,9 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAccesoDatos", "Logica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAplicacion", "LogicaAplicacion\LogicaAplicacion.csproj", "{771340D5-644C-4949-9581-1D5F25C9CCA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelCabaniasWebAPI", "HotelCabaniasWebAPI\HotelCabaniasWebAPI.csproj", "{94E65DC5-12AC-4C3F-B49D-507F6540B497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelCabaniasWebAPI", "HotelCabaniasWebAPI\HotelCabaniasWebAPI.csproj", "{94E65DC5-12AC-4C3F-B49D-507F6540B497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{0FE2E7CB-7E5A-4C07-940B-B2DB9A126558}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{0FE2E7CB-7E5A-4C07-940B-B2DB9A126558}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9C54FC9C-7B56-4D9A-83D5-587042748A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C54FC9C-7B56-4D9A-83D5-587042748A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C54FC9C-7B56-4D9A-83D5-587042748A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C54FC9C-7B56-4D9A-83D5-587042748A81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D3DFF90-3586-4D37-B5F6-C2DA3871E3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
