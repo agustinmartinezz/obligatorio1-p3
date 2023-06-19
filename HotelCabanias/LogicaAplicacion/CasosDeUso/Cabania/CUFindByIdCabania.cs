@@ -27,6 +27,7 @@ namespace LogicaAplicacion.CasosDeUso
                 Cabania c = RepoCabania.FindById(cabaniaId);
 
                 return new DTOCabania() {
+                    Id = c.Id,
                     TipoId = c.TipoId,
                     Nombre = c.Nombre.TextoNombre,
                     Descripcion = c.Descripcion,

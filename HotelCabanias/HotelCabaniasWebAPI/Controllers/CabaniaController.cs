@@ -49,7 +49,7 @@ namespace HotelCabaniasWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204);
+                return StatusCode(204, ex.Message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace HotelCabaniasWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204);
+                return StatusCode(204, ex.Message);
             }
         }
 
@@ -87,7 +87,7 @@ namespace HotelCabaniasWebAPI.Controllers
 
         // GET api/<CabaniaController>/Nombre/"Nombre"
         [HttpGet()]
-        [Route("Name/{id}")]
+        [Route("Name/{name}")]
         public IActionResult GetByName(string name)
         {
             try
@@ -152,7 +152,7 @@ namespace HotelCabaniasWebAPI.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -174,7 +174,7 @@ namespace HotelCabaniasWebAPI.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 

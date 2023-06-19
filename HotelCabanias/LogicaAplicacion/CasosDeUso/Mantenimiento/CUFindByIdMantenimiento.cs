@@ -28,6 +28,7 @@ namespace LogicaAplicacion.CasosDeUso
 
                 DTOMantenimiento dtoMantenimiento = new()
                 {
+                    Id = m.Id,
                     Fecha = m.Fecha,
                     Descripcion = m.Descripcion,
                     Costo = m.Costo.ValorCosto,

@@ -24,6 +24,7 @@ namespace LogicaAplicacion.CasosDeUso
                 DTOTipoCabania dtoTipoCabania =
                 new DTOTipoCabania()
                 {
+                    Id = tc.Id,
                     Nombre = tc.Nombre.TextoNombre,
                     Descripcion = tc.Descripcion,
                     CostoxHuesped = tc.CostoxHuesped.ValorCosto,

@@ -28,18 +28,18 @@ namespace HotelMantenimientosWebAPI.Controllers
 
 
         // GET: api/<MantenimientoController>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            try
-            {
-                return Ok(CUFindAllMantenimiento.FindAllMantenimiento());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(204);
-            }
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    try
+        //    {
+        //        return Ok(CUFindAllMantenimiento.FindAllMantenimiento());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(204, ex.Message);
+        //    }
+        //}
 
         // GET api/<MantenimientoController>/5
         [HttpGet("{id}")]
@@ -74,31 +74,31 @@ namespace HotelMantenimientosWebAPI.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         // PUT api/<MantenimientoController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int MantenimientoId, [FromBody] DTOMantenimiento dtoMantenimiento)
-        {
-            try
-            {
-                if (dtoMantenimiento == null)
-                {
-                    return BadRequest();
-                }
-                dtoMantenimiento = CUUpdateMantenimiento.UpdateMantenimiento(MantenimientoId, dtoMantenimiento);
-                //return CreatedAtRoute("FindById", new { id = dtoMantenimiento.Id}, dtoMantenimiento);
-                return RedirectToAction("FindById", new { id = dtoMantenimiento.Id });
-                //return Ok();
-            }
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int MantenimientoId, [FromBody] DTOMantenimiento dtoMantenimiento)
+        //{
+        //    try
+        //    {
+        //        if (dtoMantenimiento == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        dtoMantenimiento = CUUpdateMantenimiento.UpdateMantenimiento(MantenimientoId, dtoMantenimiento);
+        //        //return CreatedAtRoute("FindById", new { id = dtoMantenimiento.Id}, dtoMantenimiento);
+        //        return RedirectToAction("FindById", new { id = dtoMantenimiento.Id });
+        //        //return Ok();
+        //    }
 
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
 
         // DELETE api/<MantenimientoController>/5
         [HttpDelete("{id}")]

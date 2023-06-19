@@ -29,6 +29,7 @@ namespace LogicaAplicacion.CasosDeUso
 
                 IEnumerable<DTOMantenimiento> dtoMantenimientos = mantenimientos.Select(m => new DTOMantenimiento ()
                 {
+                    Id = m.Id,
                     Fecha = m.Fecha,
                     Descripcion = m.Descripcion,
                     Costo = m.Costo.ValorCosto,

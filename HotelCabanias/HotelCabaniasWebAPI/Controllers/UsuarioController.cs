@@ -39,24 +39,24 @@ namespace HotelUsuariosWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204);
+                return StatusCode(204, ex.Message);
             }
         }
 
-        // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            try
-            {
-                DTOUsuario dtoUsuario = CUFindByIdUsuario.FindByIdUsuario(id);
-                return Ok(dtoUsuario);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(404, ex.Message);
-            }
-        }
+        //// GET api/<UsuarioController>/5
+        //[HttpGet("{id}")]
+        //public IActionResult Get(int id)
+        //{
+        //    try
+        //    {
+        //        DTOUsuario dtoUsuario = CUFindByIdUsuario.FindByIdUsuario(id);
+        //        return Ok(dtoUsuario);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(404, ex.Message);
+        //    }
+        //}
 
         // POST api/<UsuarioController>
         [HttpPost]
@@ -80,41 +80,41 @@ namespace HotelUsuariosWebAPI.Controllers
             }
         }
 
-        // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int UsuarioId, [FromBody] DTOUsuario dtoUsuario)
-        {
-            try
-            {
-                if (dtoUsuario == null)
-                {
-                    return BadRequest();
-                }
-                dtoUsuario = CUUpdateUsuario.UpdateUsuario(UsuarioId, dtoUsuario);
-                //return CreatedAtRoute("FindById", new { id = dtoUsuario.Id}, dtoUsuario);
-                return RedirectToAction("FindById", new { id = dtoUsuario.Id });
-                //return Ok();
-            }
+        //// PUT api/<UsuarioController>/5
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int UsuarioId, [FromBody] DTOUsuario dtoUsuario)
+        //{
+        //    try
+        //    {
+        //        if (dtoUsuario == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        dtoUsuario = CUUpdateUsuario.UpdateUsuario(UsuarioId, dtoUsuario);
+        //        //return CreatedAtRoute("FindById", new { id = dtoUsuario.Id}, dtoUsuario);
+        //        return RedirectToAction("FindById", new { id = dtoUsuario.Id });
+        //        //return Ok();
+        //    }
 
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
 
-        // DELETE api/<UsuarioController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                CUDeleteUsuario.DeleteUsuario(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(404, ex.Message);
-            }
-        }
+        //// DELETE api/<UsuarioController>/5
+        //[HttpDelete("{id}")]
+        //public IActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        CUDeleteUsuario.DeleteUsuario(id);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(404, ex.Message);
+        //    }
+        //}
     }
 }

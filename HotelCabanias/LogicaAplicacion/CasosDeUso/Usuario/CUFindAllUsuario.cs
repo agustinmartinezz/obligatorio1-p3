@@ -22,6 +22,7 @@ namespace LogicaAplicacion.CasosDeUso
                 
                 IEnumerable<DTOUsuario> dtoUsuarios = usuarios.Select(u => new DTOUsuario()
                 {
+                    Id = u.Id,
                     Nombre = u.Nombre.TextoNombre,
                     Mail = u.Mail.TextoMail,
                     Contrasenia = u.Contrasenia.TextoContrasenia,

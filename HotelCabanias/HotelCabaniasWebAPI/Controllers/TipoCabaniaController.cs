@@ -40,7 +40,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204);
+                return StatusCode(204, ex.Message);
             }
         }
 
@@ -116,7 +116,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 

@@ -28,6 +28,8 @@ namespace LogicaAplicacion.CasosDeUso
 
                 IEnumerable<DTOCabania> dtoCabanias = cabanias.Select(c => new DTOCabania()
                 {
+
+                    Id = c.Id,
                     TipoId = c.TipoId,
                     Nombre = c.Nombre.TextoNombre,
                     Descripcion = c.Descripcion,
