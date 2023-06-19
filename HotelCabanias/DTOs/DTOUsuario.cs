@@ -12,7 +12,5 @@ namespace DTOs
         public string Mail { get; set; }
 
         public string Contrasenia { get; set; }
-
-        
     }
 }

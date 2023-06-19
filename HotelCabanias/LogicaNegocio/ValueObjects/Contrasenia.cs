@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LogicaNegocio.ValueObjects
 {
     [Owned]
+    [Index("TextoContrasenia")]
     public class Contrasenia : IValidar
     {
 

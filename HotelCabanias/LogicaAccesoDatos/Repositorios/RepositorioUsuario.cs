@@ -70,7 +70,7 @@ namespace LogicaAccesoDatos.Repositorios
 
         public IEnumerable<Usuario> FindAll()
         {
-            throw new NotImplementedException();
+            return Contexto.Usuarios;
         }
     }
 }

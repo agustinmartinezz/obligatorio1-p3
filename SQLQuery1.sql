@@ -47,16 +47,16 @@ INSERT INTO dbo.Cabanias VALUES
 (7,'La Cabaña de Los Increíbles','En un bosque tranquilo, perfecta para relajarse después de una larga misión de salvar al mundo',1,0,7,3,'Imagenes/la_cabania_de_los_increibles_001.jpeg'),
 (8,'La Cabaña de Thor','Situada en un acantilado con vistas al océano',0,1,8,4,'Imagenes/la_cabania_de_thor_001.jpg'),
 (9,'La Cabaña de Elsa','En medio de un paisaje nevado',1,1,9,2,'Imagenes/la_cabania_de_elsa_001.jpg'),
-(10,'La Cabaña de Capitán América','Ubicada en un prado con vistas al horizonte, con un escudo del Capitán América en la entrada',0,0,10,5,'Imagenes/la_cabania_de_capitan_america_001.jpg')
+(10,'La Cabaña de Capitán América','Ubicada en un prado con vistas al horizonte, con un escudo del Capitán América en la entrada',0,0,10,5,'Imagenes/la_cabania_de_capitan_america_001.jpg');
 
 INSERT INTO dbo.Mantenimientos VALUES
-('01/03/2022','Limpieza completa de la cabaña, incluyendo cambio de sábanas y toallas','150','Juan el limpiador',5),
-('15/05/2022','Revisión y reparación del sistema de calefacción','300','Pedro el técnico',3),
-('22/06/2022','Limpieza del exterior de la cabaña, incluyendo los muebles de jardín','100','Sofía la limpiadora',1),
-('10/07/2022','Reparación del techo de la cabaña después de una tormenta','500','Carlos el técnico',7),
-('02/08/2022','Limpieza de las ventanas y puertas de la cabaña','50','María la limpiadora',2),
-('19/08/2022','Revisión y reparación del sistema de fontanería','400','Pedro el técnico',9),
-('30/08/2022','Limpieza completa de la cocina, incluyendo la nevera y el horno','200','Juan el limpiador',6),
-('05/09/2022','Revisión y reparación del sistema de iluminación','250','Carlos el técnico',4),
-('22/09/2022','Limpieza de las alfombras y tapicería de la cabaña','100','Sofía la limpiadora',8),
-('10/10/2022','Reparación de las puertas y ventanas de la cabaña','350','Pedro el técnico',1)
+('2022-03-01','Limpieza completa de la cabaña, incluyendo cambio de sábanas y toallas',150,'Juan el limpiador',5),
+('2022-05-15','Revisión y reparación del sistema de calefacción',300,'Pedro el técnico',3),
+('2022-06-22','Limpieza del exterior de la cabaña, incluyendo los muebles de jardín',100,'Sofía la limpiadora',1),
+('2022-07-10','Reparación del techo de la cabaña después de una tormenta',500,'Carlos el técnico',7),
+('2022-08-02','Limpieza de las ventanas y puertas de la cabaña',50,'María la limpiadora',2),
+('2022-08-19','Revisión y reparación del sistema de fontanería',400,'Pedro el técnico',9),
+('2022-08-30','Limpieza completa de la cocina, incluyendo la nevera y el horno',200,'Juan el limpiador',6),
+('2022-09-05','Revisión y reparación del sistema de iluminación',250,'Carlos el técnico',4),
+('2022-09-22','Limpieza de las alfombras y tapicería de la cabaña',100,'Sofía la limpiadora',8),
+('2022-10-10','Reparación de las puertas y ventanas de la cabaña',350,'Pedro el técnico',1);

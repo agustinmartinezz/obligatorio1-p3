@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class primeramigracion : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,8 @@ namespace LogicaAccesoDatos.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre_TextoNombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CostoxHuesped_ValorCosto = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,8 @@ namespace LogicaAccesoDatos.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre_TextoNombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Mail_TextoMail = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Mail_TextoMail = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Contrasenia_TextoContrasenia = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +85,8 @@ namespace LogicaAccesoDatos.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NombreRealizo_TextoNombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Costo_ValorCosto = table.Column<int>(type: "int", nullable: false),
+                    NombreRealizo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CabaniaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -114,16 +117,25 @@ namespace LogicaAccesoDatos.Migrations
                 column: "CabaniaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mantenimientos_NombreRealizo_TextoNombre",
+                name: "IX_Mantenimientos_Costo_ValorCosto",
                 table: "Mantenimientos",
-                column: "NombreRealizo_TextoNombre",
-                unique: true);
+                column: "Costo_ValorCosto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoCabanias_CostoxHuesped_ValorCosto",
+                table: "TipoCabanias",
+                column: "CostoxHuesped_ValorCosto");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TipoCabanias_Nombre_TextoNombre",
                 table: "TipoCabanias",
                 column: "Nombre_TextoNombre",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Contrasenia_TextoContrasenia",
+                table: "Usuarios",
+                column: "Contrasenia_TextoContrasenia");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_Mail_TextoMail",

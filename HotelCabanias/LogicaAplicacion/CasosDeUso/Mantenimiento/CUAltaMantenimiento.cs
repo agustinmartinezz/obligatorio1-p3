@@ -24,7 +24,7 @@ namespace LogicaAplicacion.CasosDeUso
                     Fecha = dtoMantenimiento.Fecha,
                     Descripcion = dtoMantenimiento.Descripcion,
                     Costo = new Costo(dtoMantenimiento.Costo),
-                    NombreRealizo = new Nombre(dtoMantenimiento.NombreRealizo),
+                    NombreRealizo = dtoMantenimiento.NombreRealizo,
                     CabaniaId = dtoMantenimiento.CabaniaId
                 };
 

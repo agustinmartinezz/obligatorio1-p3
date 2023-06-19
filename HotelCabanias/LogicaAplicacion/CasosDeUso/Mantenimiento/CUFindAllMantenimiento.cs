@@ -32,7 +32,7 @@ namespace LogicaAplicacion.CasosDeUso
                     Fecha = m.Fecha,
                     Descripcion = m.Descripcion,
                     Costo = m.Costo.ValorCosto,
-                    NombreRealizo = m.NombreRealizo.TextoNombre,
+                    NombreRealizo = m.NombreRealizo,
                     CabaniaId = m.CabaniaId
                 });
                 return dtoMantenimientos;

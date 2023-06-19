@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(HotelCabaniaContext))]
-    [Migration("20230619015232_primera-migracion")]
-    partial class primeramigracion
+    [Migration("20230619151233_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,10 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("NombreRealizo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -173,27 +177,12 @@ namespace LogicaAccesoDatos.Migrations
                             b1.Property<int>("MantenimientoId")
                                 .HasColumnType("int");
 
-                            b1.HasKey("MantenimientoId");
-
-                            b1.ToTable("Mantenimientos");
-
-                            b1.WithOwner()
-                                .HasForeignKey("MantenimientoId");
-                        });
-
-                    b.OwnsOne("LogicaNegocio.ValueObjects.Nombre", "NombreRealizo", b1 =>
-                        {
-                            b1.Property<int>("MantenimientoId")
+                            b1.Property<int>("ValorCosto")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("TextoNombre")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(450)");
-
                             b1.HasKey("MantenimientoId");
 
-                            b1.HasIndex("TextoNombre")
-                                .IsUnique();
+                            b1.HasIndex("ValorCosto");
 
                             b1.ToTable("Mantenimientos");
 
@@ -205,9 +194,6 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Navigation("Costo")
                         .IsRequired();
-
-                    b.Navigation("NombreRealizo")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.TipoCabania", b =>
@@ -217,7 +203,12 @@ namespace LogicaAccesoDatos.Migrations
                             b1.Property<int>("TipoCabaniaId")
                                 .HasColumnType("int");
 
+                            b1.Property<int>("ValorCosto")
+                                .HasColumnType("int");
+
                             b1.HasKey("TipoCabaniaId");
+
+                            b1.HasIndex("ValorCosto");
 
                             b1.ToTable("TipoCabanias");
 
@@ -279,7 +270,13 @@ namespace LogicaAccesoDatos.Migrations
                             b1.Property<int>("UsuarioId")
                                 .HasColumnType("int");
 
+                            b1.Property<string>("TextoContrasenia")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
                             b1.HasKey("UsuarioId");
+
+                            b1.HasIndex("TextoContrasenia");
 
                             b1.ToTable("Usuarios");
 
