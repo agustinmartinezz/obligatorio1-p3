@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace LogicaNegocio.ValueObjects
 {
     [Owned]
+    [Index("ValorCosto")]
     public class Costo : IValidar
     {
         public int ValorCosto { get; }

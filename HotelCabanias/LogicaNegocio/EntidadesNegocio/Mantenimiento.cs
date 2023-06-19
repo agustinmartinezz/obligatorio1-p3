@@ -16,7 +16,7 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         public Costo Costo { get; set; }
         [Required]
-        public Nombre NombreRealizo { get; set; }
+        public string NombreRealizo { get; set; }
         [ForeignKey(nameof(Cabania))]
         public int CabaniaId { get; set; }
         public Cabania Cabania { get; set; }
@@ -24,7 +24,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public Mantenimiento() {
             Descripcion = "";
             Costo = new Costo(0);
-            NombreRealizo = new Nombre(string.Empty);
+            NombreRealizo = string.Empty;
             Cabania = new Cabania();
         }
 
@@ -40,7 +40,14 @@ namespace LogicaNegocio.EntidadesNegocio
                 throw new DescripcionException("La descripcion debe estar entre 10 y 200 caracteres.");
             }
 
-            NombreRealizo.ValidarDatos();
+            if (string.IsNullOrWhiteSpace(NombreRealizo))
+            {
+                throw new NombreException("El nombre no puede estar vacio.");
+            }
+            if (NombreRealizo.StartsWith(" ") || NombreRealizo.EndsWith(" "))
+            {
+                throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
+            }
 
             Costo.ValidarDatos();
         }
