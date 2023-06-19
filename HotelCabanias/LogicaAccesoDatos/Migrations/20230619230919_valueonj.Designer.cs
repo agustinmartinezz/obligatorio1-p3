@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(HotelCabaniaContext))]
-    [Migration("20230619151233_inicial")]
-    partial class inicial
+    [Migration("20230619230919_valueonj")]
+    partial class valueonj
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

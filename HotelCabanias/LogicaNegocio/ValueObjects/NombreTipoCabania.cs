@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LogicaNegocio.ValueObjects
 {
     [Owned]
-    [Index("TextoNombre", IsUnique = true)]
+    [Index("TextoNombre")]
     public class NombreTipoCabania : Nombre
     {
         public NombreTipoCabania(string textoNombre) : base(textoNombre)

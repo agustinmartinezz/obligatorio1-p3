@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class Primera : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
