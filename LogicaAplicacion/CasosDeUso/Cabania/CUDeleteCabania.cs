@@ -25,6 +25,7 @@ namespace LogicaAplicacion.CasosDeUso
             try
             {
                 RepoCabania.Delete(cabaniaId);
+              
             }
             catch
             {

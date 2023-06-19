@@ -4,6 +4,6 @@ namespace LogicaAplicacion.CasosDeUso
 {
     public interface ICUUpdateUsuario
     {
-        public void UpdateUsuario(int Id, DTOUsuario usuario);
+        public DTOUsuario UpdateUsuario(int Id, DTOUsuario usuario);
     }
 }

@@ -5,6 +5,6 @@ namespace LogicaAplicacion.CasosDeUso
     public interface ICUAltaMantenimiento
     {
 
-        public void AltaMantenimiento(DTOMantenimiento mantenimiento);
+        public DTOMantenimiento AltaMantenimiento(DTOMantenimiento mantenimiento);
     }
 }

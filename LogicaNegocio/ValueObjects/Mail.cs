@@ -2,6 +2,7 @@
 using LogicaNegocio.InterfacesEntidades;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    
+
     public class Mail : IValidar
     {
         public string TextoMail { get; }

@@ -5,6 +5,7 @@ using LogicaNegocio.ValueObjects;
 
 namespace LogicaAplicacion.CasosDeUso
 {
+
     public class CUAltaTipoCabania : ICUAltaTipoCabania
     {
     
@@ -15,7 +16,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoTipoCabania = repoTipoCabania;
         }
 
-        public void AltaTipoCabania(DTOTipoCabania dtoTipoCabania)
+        public DTOTipoCabania AltaTipoCabania(DTOTipoCabania dtoTipoCabania)
         {
             try
             {
@@ -25,13 +26,14 @@ namespace LogicaAplicacion.CasosDeUso
                     Descripcion = dtoTipoCabania.Descripcion,
                     CostoxHuesped = new Costo(dtoTipoCabania.CostoxHuesped)
                 };
-
                 RepoTipoCabania.Add(tipoCabania);
+                dtoTipoCabania.Id = tipoCabania.Id;
             }
             catch
             {
                 throw;
             }
+            return dtoTipoCabania;
         }
     }
 }

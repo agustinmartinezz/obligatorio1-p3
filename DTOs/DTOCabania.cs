@@ -7,6 +7,7 @@ using LogicaNegocio.ValueObjects;
 
 namespace DTOs
 {
+    [NotMapped]
     public class DTOCabania
 
     {

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTOs
 {
+    [NotMapped]
     public class DTOMantenimiento
     {
         public int Id { get; set; }

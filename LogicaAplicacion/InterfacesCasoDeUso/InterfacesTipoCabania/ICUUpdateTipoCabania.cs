@@ -5,6 +5,6 @@ namespace LogicaAplicacion.CasosDeUso
     public interface ICUUpdateTipoCabania
     {
 
-        public void UpdateTipoCabania(int Id, DTOTipoCabania tipoCabania);
+        public DTOTipoCabania UpdateTipoCabania(int Id, DTOTipoCabania tipoCabania);
     }
 }

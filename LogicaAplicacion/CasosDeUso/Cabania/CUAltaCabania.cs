@@ -16,7 +16,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoCabania = repoCabania;
         }
 
-        public void AltaCabania(DTOCabania dtoCabania)
+        public DTOCabania AltaCabania(DTOCabania dtoCabania)
         {
             try
             {
@@ -33,11 +33,14 @@ namespace LogicaAplicacion.CasosDeUso
                 };
 
                 RepoCabania.Add(cabania);
+                dtoCabania.Id = cabania.Id;
+                
             }
             catch
             {
                 throw;
             }
+            return dtoCabania;
         }
     }
 }

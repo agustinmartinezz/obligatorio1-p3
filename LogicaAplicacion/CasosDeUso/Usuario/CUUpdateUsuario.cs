@@ -21,7 +21,7 @@ namespace LogicaAplicacion.CasosDeUso
             RepoUsuario = repoUsuario;
         }
 
-        public void UpdateUsuario(int Id, DTOUsuario dtoUsuario)
+        public DTOUsuario UpdateUsuario(int Id, DTOUsuario dtoUsuario)
         {
             try
             {
@@ -33,11 +33,13 @@ namespace LogicaAplicacion.CasosDeUso
                 };
 
                 RepoUsuario.Update(Id,usuario);
+                dtoUsuario.Id = usuario.Id;
             }
             catch
             {
                 throw;
             }
+            return dtoUsuario;
         }
     }
 }

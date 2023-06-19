@@ -1,6 +1,7 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
+    
+
     public class NombreTipoCabania : Nombre
     {
         public NombreTipoCabania(string textoNombre) : base(textoNombre)
