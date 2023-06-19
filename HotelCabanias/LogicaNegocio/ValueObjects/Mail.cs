@@ -2,7 +2,6 @@
 using LogicaNegocio.InterfacesEntidades;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
-    
-
     public class Mail : IValidar
     {
         public string TextoMail { get; }
@@ -28,6 +25,17 @@ namespace LogicaNegocio.ValueObjects
 
             if (!Regex.IsMatch(TextoMail, @"^[\w\.-]+@[\w\.-]+\.\w+$"))
                 throw new MailException("El mail ingresado no es valido, verifique formato.");
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Mail mail = (Mail) obj;
+            return TextoMail.Equals(mail.TextoMail);
         }
     }
 }

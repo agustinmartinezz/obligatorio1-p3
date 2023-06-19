@@ -2,15 +2,12 @@
 using LogicaNegocio.InterfacesEntidades;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
-   
-
     public class Nombre : IValidar
     {
         public string TextoNombre { get; }
@@ -30,6 +27,17 @@ namespace LogicaNegocio.ValueObjects
             {
                 throw new NombreException("El nombre no puede comenzar ni terminar con espacios");
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Nombre nombre = (Nombre) obj;
+            return TextoNombre.Equals(nombre.TextoNombre);
         }
     }
 }

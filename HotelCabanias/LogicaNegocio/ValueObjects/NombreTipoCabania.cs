@@ -1,7 +1,6 @@
 ﻿using LogicaNegocio.ExcepcionesEntidades;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.ValueObjects
 {
-    
-
     public class NombreTipoCabania : Nombre
     {
         public NombreTipoCabania(string textoNombre) : base(textoNombre)
@@ -32,6 +29,17 @@ namespace LogicaNegocio.ValueObjects
             {
                 throw new NombreException("El nombre no puede tener caracteres no alfabéticos.");
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            NombreTipoCabania nombre = (NombreTipoCabania) obj;
+            return TextoNombre.Equals(nombre.TextoNombre);
         }
     }
 }

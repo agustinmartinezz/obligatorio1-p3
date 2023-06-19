@@ -1,0 +1,86 @@
+﻿@model HotelCabañas.Models.VMTiposCabania
+@using LogicaNegocio.EntidadesNegocio
+@{
+    ViewData["Title"] = "Tipos Cabaña";
+}
+
+<div class="input-group rounded">
+    <form method="POST" action="Index" class="d-flex w-100">
+        @Html.AntiForgeryToken()
+        <input id="strSearch" name="StrSearch" type="search" class="form-control rounded flex-grow-1" placeholder="Buscar" value="@Model.StrSearch" />
+
+        <button type="submit" class="btn btn-primary ms-2">
+            <i class="bi bi-search"></i>
+        </button>
+    </form>
+</div>
+
+<br />
+
+<div class="w-100">
+    <form action="Create" class="d-flex w-100">
+        <input type="submit" class="btn btn-success btn-lg w-100" value="Agregar Tipo de Cabaña">
+    </form>
+</div>
+
+<br />
+
+<p class="text-success fw-bold">@TempData["Mensaje"]</p>
+<p class="text-danger fw-bold">@TempData["Error"]</p>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Costo por Huesped</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (TipoCabania tipo in Model.TiposCabania)
+            {
+                <tr>
+                    <th scope="row">@tipo.Id</th>
+                    <td>@tipo.Nombre</td>
+                    <td>@tipo.Descripcion</td>
+                    <td>@tipo.CostoxHuesped</td>
+                    <td>
+                        <a class="" asp-controller="TipoCabania" asp-action="Edit" asp-route-id="@tipo.Id">
+                            <span class="bi-pencil-square text-primary"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="delete" style="cursor: pointer;">
+                            <span class="bi bi-trash-fill text-danger" data-id="@tipo.Id"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+<script>
+    document.getElementById('strSearch').focus();
+
+    let btnsDelete = document.querySelectorAll('.delete');
+
+
+    btnsDelete.forEach(function (btn) {
+        btn.addEventListener('click', function (evento) {
+
+            let id = evento.target.getAttribute('data-id');
+            if (confirm(`¿Seguro que desea eliminar este tipo de cabaña? (ID: ${id})`)) {
+
+                let url = '@Url.Action("Delete", "TipoCabania")?id=' + encodeURIComponent(id);
+                window.location.href = url;
+            }
+        });
+    });
+</script>
