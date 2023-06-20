@@ -1,4 +1,4 @@
-﻿@model HotelCabañas.Models.VMAltaMantenimiento;
+﻿@model HotelCabañas.Models.VMIndexMantenimiento;
 @{
     ViewData["Title"] = "Agregar Mantenimiento";
 }
@@ -24,14 +24,14 @@
         </thead>
         <tbody>
             <tr>
-                <td class="w-25"><img src="@Url.Content("~/" + @Model.Mantenimiento.Cabania.Foto)" class="img-fluid p-3" /></td>
-                <td>@Model.Mantenimiento.Cabania.Nombre</td>
-                <td>@Model.Mantenimiento.Cabania.Descripcion</td>
-                <td>@Model.Mantenimiento.Cabania.TieneJacuzzi</td>
-                <td>@Model.Mantenimiento.Cabania.HabilitadaReservas</td>
-                <td>@Model.Mantenimiento.Cabania.MaxPersonas</td>
-                <td>@Model.Mantenimiento.Cabania.Tipo.Nombre</td>
-                <td>@Model.Mantenimiento.Cabania.Tipo.CostoxHuesped</td>
+                <td class="w-25"><img src="@Url.Content("~/" + @Model.Cabania.Foto)" class="img-fluid p-3" /></td>
+                <td>@Model.Cabania.Nombre</td>
+                <td>@Model.Cabania.Descripcion</td>
+                <td>@Model.Cabania.TieneJacuzzi</td>
+                <td>@Model.Cabania.HabilitadaReservas</td>
+                <td>@Model.Cabania.MaxPersonas</td>
+                <td>@Model.Cabania.Tipo.Nombre</td>
+                <td>@Model.Cabania.Tipo.CostoxHuesped</td>
             </tr>
         </tbody>
     </table>
@@ -42,7 +42,7 @@
                     <div class="card-body p-5 text-center">
                         <div class="mb-md-5 mt-md-4">
                             <form asp-action="Create">
-                                <input asp-for="CabaniaId" type="number" class="d-none" value="@Model.CabaniaId"/>
+                                <input asp-for="Cabania.Id" type="number" class="d-none" value="@Model.Cabania.Id"/>
                                
 
                                 <h3 class="fw-bold mb-2">Agregar Mantenimiento</h3>

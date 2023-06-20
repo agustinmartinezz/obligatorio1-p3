@@ -70,7 +70,7 @@ namespace LogicaAccesoDatos.Repositorios
                 .Where(m => m.Fecha.Date >= fecha1.Date)
                 .Where(m => m.Fecha.Date <= fecha2.Date)
                 .Where(m => m.CabaniaId == CabaniaId)
-                .OrderByDescending(m => m.Costo)
+                .OrderByDescending(m => m.Costo.ValorCosto)
                 .ToList();
 
         }

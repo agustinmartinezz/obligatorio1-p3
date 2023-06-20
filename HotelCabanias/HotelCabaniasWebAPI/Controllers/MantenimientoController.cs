@@ -13,14 +13,16 @@ namespace HotelMantenimientosWebAPI.Controllers
     {
         public ICUUpdateMantenimiento CUUpdateMantenimiento { get; set; }
         public ICUFindByIdMantenimiento CUFindByIdMantenimiento { get; set; }
+        public ICUFindByDateMantenimiento CUFindByDateMantenimiento { get; set; }
         public ICUFindAllMantenimiento CUFindAllMantenimiento { get; set; }
         public ICUDeleteMantenimiento CUDeleteMantenimiento { get; set; }
         public ICUAltaMantenimiento CUAltaMantenimiento { get; set; }
 
-        public MantenimientoController(ICUUpdateMantenimiento cUUpdateMantenimiento, ICUFindByIdMantenimiento cUFindByIdMantenimiento, ICUFindAllMantenimiento cUFindAllMantenimiento, ICUDeleteMantenimiento cUDeleteMantenimiento, ICUAltaMantenimiento cUAltaMantenimiento)
+        public MantenimientoController(ICUUpdateMantenimiento cUUpdateMantenimiento, ICUFindByIdMantenimiento cUFindByIdMantenimiento, ICUFindByDateMantenimiento cUFindByDateMantenimiento, ICUFindAllMantenimiento cUFindAllMantenimiento, ICUDeleteMantenimiento cUDeleteMantenimiento, ICUAltaMantenimiento cUAltaMantenimiento)
         {
             CUUpdateMantenimiento = cUUpdateMantenimiento;
             CUFindByIdMantenimiento = cUFindByIdMantenimiento;
+            CUFindByDateMantenimiento = cUFindByDateMantenimiento;
             CUFindAllMantenimiento = cUFindAllMantenimiento;
             CUDeleteMantenimiento = cUDeleteMantenimiento;
             CUAltaMantenimiento = cUAltaMantenimiento;
@@ -49,6 +51,21 @@ namespace HotelMantenimientosWebAPI.Controllers
             {
                 DTOMantenimiento dtoMantenimiento = CUFindByIdMantenimiento.FindByIdMantenimiento(id);
                 return Ok(dtoMantenimiento);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+        }
+
+        [HttpGet()]
+        [Route("Dates/cabaniaId={cabaniaId}&fechaDesde={fechaDesde}&fechaHasta={fechaHasta}")]
+        public IActionResult Get(int cabaniaId, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            try
+            {
+                IEnumerable<DTOMantenimiento> dtoMantenimientos = CUFindByDateMantenimiento.FindByDates(cabaniaId, fechaDesde, fechaHasta);
+                return Ok(dtoMantenimientos);
             }
             catch (Exception ex)
             {
