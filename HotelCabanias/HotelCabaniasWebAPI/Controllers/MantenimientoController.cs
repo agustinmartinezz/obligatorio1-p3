@@ -85,8 +85,8 @@ namespace HotelMantenimientosWebAPI.Controllers
                 }
                 dtoMantenimiento = CUAltaMantenimiento.AltaMantenimiento(dtoMantenimiento);
                 //return CreatedAtRoute("FindById", new { id = dtoMantenimiento.Id}, dtoMantenimiento);
-                return RedirectToAction("FindById", new { id = dtoMantenimiento.Id });
-                //return Ok();
+                //return RedirectToAction("FindById", new { id = dtoMantenimiento.Id });
+                return Ok();
             }
 
             catch (Exception ex)
