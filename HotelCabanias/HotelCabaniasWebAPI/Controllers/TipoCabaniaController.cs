@@ -87,14 +87,13 @@ namespace HotelTipoCabaniasWebAPI.Controllers
                     return BadRequest();
                 }
                 dtoTipoCabania = CUAltaTipoCabania.AltaTipoCabania(dtoTipoCabania);
-                //return CreatedAtRoute("FindById", new { id = dtoTipoCabania.Id}, dtoTipoCabania);
-                return RedirectToAction("FindById", new { id = dtoTipoCabania.Id });
-                //return Ok();
+
+                return Ok();
             }
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.InnerException.Message);
             }
         }
 
@@ -109,9 +108,8 @@ namespace HotelTipoCabaniasWebAPI.Controllers
                     return BadRequest();
                 }
                 dtoTipoCabania = CUUpdateTipoCabania.UpdateTipoCabania(TipoCabaniaId, dtoTipoCabania);
-                //return CreatedAtRoute("FindById", new { id = dtoTipoCabania.Id}, dtoTipoCabania);
-                return RedirectToAction("FindById", new { id = dtoTipoCabania.Id });
-                //return Ok();
+                
+                return Ok();
             }
 
             catch (Exception ex)

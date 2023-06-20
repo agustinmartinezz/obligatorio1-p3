@@ -33,6 +33,7 @@ namespace LogicaAplicacion.CasosDeUso
                     NombreRealizo = dtoMantenimiento.NombreRealizo,
                     CabaniaId = dtoMantenimiento.CabaniaId
                 };
+
                 RepoMantenimiento.Update(Id, mantenimiento);
                 dtoMantenimiento.Id = mantenimiento.Id;
             }

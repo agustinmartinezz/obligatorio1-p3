@@ -26,12 +26,7 @@ namespace LogicaNegocio.EntidadesNegocio
             CostoxHuesped = new Costo(costoxHuesped);
         }
 
-        public TipoCabania()
-        {
-            Nombre = new NombreTipoCabania(string.Empty);
-            Descripcion = string.Empty;
-            CostoxHuesped = new Costo(0);
-        }
+        public TipoCabania() {}
 
         public void ValidarDatos()
         {
@@ -41,7 +36,7 @@ namespace LogicaNegocio.EntidadesNegocio
                 throw new DescripcionException("La descripcion no puede estar vacia.");
 
             if (Descripcion.Length < Parametros.MinDescTipoCabania)
-                throw new DescripcionException("La descripcion no puede tener menos de" + Parametros.MinDescTipoCabania.ToString() + " caracteres");
+                throw new DescripcionException("La descripcion no puede tener menos de " + Parametros.MinDescTipoCabania.ToString() + " caracteres");
 
             if (Descripcion.Length > Parametros.MaxDescTipoCabania)
                 throw new DescripcionException("La descripcion no puede tener mas de " + Parametros.MaxDescTipoCabania.ToString() + " caracteres");

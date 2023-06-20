@@ -201,7 +201,7 @@ namespace HotelCabañas.Controllers
                     HttpContent contenido = postMantenimiento.Result.Content;
                     Task<string> tarea2 = contenido.ReadAsStringAsync();
 
-                    ViewBag.Mensaje(tarea2.Result);
+                    ViewBag.Error = tarea2.Result;
                     return View(vmIndexMantenimiento);
                 }               
             }

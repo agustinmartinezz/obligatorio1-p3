@@ -6,5 +6,11 @@
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int CostoxHuesped { get; set; }
+
+        public VMTipoCabania()
+        {
+            Nombre = string.Empty;
+            Descripcion = string.Empty;
+        }
     }
 }

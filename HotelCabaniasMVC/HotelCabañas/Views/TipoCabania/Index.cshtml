@@ -1,5 +1,4 @@
-﻿@model HotelCabañas.Models.VMTiposCabania
-@using LogicaNegocio.EntidadesNegocio
+﻿@model HotelCabañas.Models.VMIndexTipoCabania
 @{
     ViewData["Title"] = "Tipos Cabaña";
 }
@@ -7,7 +6,7 @@
 <div class="input-group rounded">
     <form method="POST" action="Index" class="d-flex w-100">
         @Html.AntiForgeryToken()
-        <input id="strSearch" name="StrSearch" type="search" class="form-control rounded flex-grow-1" placeholder="Buscar" value="@Model.StrSearch" />
+        <input id="searchText" asp-for="Busqueda.SearchText" type="search" class="form-control rounded flex-grow-1" placeholder="Buscar" value="@Model.Busqueda.SearchText" />
 
         <button type="submit" class="btn btn-primary ms-2">
             <i class="bi bi-search"></i>
@@ -42,7 +41,7 @@
         </thead>
         <tbody>
 
-            @foreach (TipoCabania tipo in Model.TiposCabania)
+            @foreach (VMTipoCabania tipo in Model.TiposCabania)
             {
                 <tr>
                     <th scope="row">@tipo.Id</th>
@@ -67,7 +66,7 @@
 
 
 <script>
-    document.getElementById('strSearch').focus();
+    document.getElementById('searchText').focus();
 
     let btnsDelete = document.querySelectorAll('.delete');
 
