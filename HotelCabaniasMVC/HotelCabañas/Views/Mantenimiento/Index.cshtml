@@ -1,5 +1,4 @@
-﻿@model HotelCabañas.Models.VMMantenimiento
-@using LogicaNegocio.EntidadesNegocio
+﻿@model HotelCabañas.Models.VMIndexMantenimiento
 @{
     ViewData["Title"] = "Mantenimientos";
 }
@@ -11,9 +10,9 @@
 <div class="input-group rounded">
     <form method="POST" action="Index" class="d-flex">
         @Html.AntiForgeryToken()
-        <input asp-for="IdCabania" type="number" value="@Model.IdCabania" class="d-none">
-        <input asp-for="Fecha1" type="date" class="form-control rounded" placeholder="Fecha Desde" />
-        <input asp-for="Fecha2" type="date" class="form-control rounded" placeholder="Fecha Hasta" />
+        <input asp-for="Cabania.Id" type="number" value="@Model.Cabania.Id" class="d-none">
+        <input asp-for="Busqueda.Fecha1" type="date" class="form-control rounded" placeholder="Fecha Desde" />
+        <input asp-for="Busqueda.Fecha2" type="date" class="form-control rounded" placeholder="Fecha Hasta" />
         <input id="search" type="submit" value="Buscar" />
     </form>
 </div>

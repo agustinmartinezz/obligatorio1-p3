@@ -1,7 +1,4 @@
 ﻿using HotelCabañas.Models;
-using LogicaAccesoDatos.Repositorios;
-using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,16 +6,6 @@ namespace HotelCabañas.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public IRepositorioUsuario repositorioUsuarios;
-
-        public HomeController(ILogger<HomeController> logger, IRepositorioUsuario repositorio)
-        {
-            _logger = logger;
-            repositorioUsuarios = repositorio;
-        }
-
         public ActionResult Login()
         {
             return View();

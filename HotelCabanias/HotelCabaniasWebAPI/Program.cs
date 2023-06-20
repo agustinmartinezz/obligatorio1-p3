@@ -69,6 +69,7 @@ builder.Services.AddScoped<ICUAltaTipoCabania, CUAltaTipoCabania>();
 
 builder.Services.AddScoped<ICUUpdateMantenimiento, CUUpdateMantenimiento>();
 builder.Services.AddScoped<ICUFindByIdMantenimiento, CUFindByIdMantenimiento>();
+builder.Services.AddScoped<ICUFindByDateMantenimiento, CUFindByDateMantenimiento>();
 builder.Services.AddScoped<ICUFindAllMantenimiento, CUFindAllMantenimiento>();
 builder.Services.AddScoped<ICUDeleteMantenimiento, CUDeleteMantenimiento>();
 builder.Services.AddScoped<ICUAltaMantenimiento, CUAltaMantenimiento>();

@@ -1,24 +1,14 @@
 ﻿using HotelCabañas.Models;
-using LogicaAccesoDatos.Repositorios;
-using LogicaNegocio.EntidadesNegocio;
-using LogicaNegocio.InterfacesRepositorios;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Threading;
 
 namespace HotelCabañas.Controllers
 {
     public class MantenimientoController : Controller
 
     {
-        public IRepositorioCabania repositorioCabania { get; set; }
-        public IRepositorioMantenimiento repositorioMantenimiento { get; set; }
-
-        public MantenimientoController(IRepositorioCabania repoCabania, IRepositorioMantenimiento repoMantenimiento)
-        {
-            repositorioCabania = repoCabania;
-            repositorioMantenimiento = repoMantenimiento;
-        }
-
+        private const string baseURL = "http://localhost:5256/api";
 
         // GET: MantenimientoController
         public ActionResult Index(int idCabania)
@@ -29,17 +19,38 @@ namespace HotelCabañas.Controllers
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            VMMantenimiento vmMantenimiento = new();
+            VMIndexMantenimiento vmIndexMantenimiento = new();
 
-            vmMantenimiento.IdCabania = idCabania;
-            vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
-            
-            return View(vmMantenimiento);
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
+
+            Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            getCabania.Wait();
+
+            if (getCabania.Result.IsSuccessStatusCode)
+            {
+                HttpContent contenido = getCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                deseralize.Wait();
+
+                vmIndexMantenimiento.Cabania = JsonConvert.DeserializeObject<VMCabania>(deseralize.Result);
+                vmIndexMantenimiento.Busqueda.Fecha1 = DateTime.Now.AddMonths(-1);
+                vmIndexMantenimiento.Busqueda.Fecha2 = DateTime.Now;
+            }
+            else 
+            {
+                HttpContent contenido = getCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+                ViewBag.Mensaje = deseralize.Result;
+            }
+           
+            return View(vmIndexMantenimiento);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(VMMantenimiento vmMantenimiento)
+        public ActionResult Index(VMIndexMantenimiento vmIndexMantenimiento)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
             {
@@ -48,14 +59,58 @@ namespace HotelCabañas.Controllers
 
             try
             {
-                int idCabania = vmMantenimiento.IdCabania;
-                vmMantenimiento.Cabania = repositorioCabania.FindById(idCabania);
-
-                if (vmMantenimiento.Fecha1 <= vmMantenimiento.Fecha2)
+                //Si las fechas de busqueda son validas
+                if (vmIndexMantenimiento.Busqueda.Fecha1 <= vmIndexMantenimiento.Busqueda.Fecha2)
                 {
-                    vmMantenimiento.Mantenimientos = repositorioMantenimiento.FindByDates(vmMantenimiento.Cabania.Id, vmMantenimiento.Fecha1, vmMantenimiento.Fecha2);
-                    
-                    if (!vmMantenimiento.Mantenimientos.Any())
+                    int idCabania = vmIndexMantenimiento.Cabania.Id;
+
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
+                    //Busco la cabania
+                    Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+                    getCabania.Wait();
+
+                    //Si obtuve la cabania correctamente
+                    if (getCabania.Result.IsSuccessStatusCode)
+                    {
+                        HttpContent contenido = getCabania.Result.Content;
+                        Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                        deseralize.Wait();
+                        vmIndexMantenimiento.Cabania = JsonConvert.DeserializeObject<VMCabania>(deseralize.Result);
+
+                        //Busco los mantenimientos de la misma entre las fechas dadas
+
+                        DateTime fechaDesde = vmIndexMantenimiento.Busqueda.Fecha1;
+                        DateTime fechaHasta = vmIndexMantenimiento.Busqueda.Fecha2;
+                        string URLParams = "cabaniaId=" + idCabania + "&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta;
+
+                        httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento/Dates/" + URLParams);
+                        Task<HttpResponseMessage> getMantenimientos = httpClient.GetAsync(httpClient.BaseAddress);
+                        getMantenimientos.Wait();
+
+                        if (getMantenimientos.Result.IsSuccessStatusCode)
+                        {
+                            HttpContent contenido2 = getCabania.Result.Content;
+                            Task<string> deseralize2 = contenido.ReadAsStringAsync();
+                            deseralize2.Wait();
+                            vmIndexMantenimiento.Mantenimientos = JsonConvert.DeserializeObject<IEnumerable<VMMantenimiento>>(deseralize2.Result);
+                        } else
+                        {
+                            HttpContent contenido2 = getMantenimientos.Result.Content;
+                            Task<string> deseralize2 = contenido.ReadAsStringAsync();
+                            ViewBag.Mensaje = deseralize.Result;
+                        }
+
+                    }
+                    else
+                    {
+                        HttpContent contenido = getCabania.Result.Content;
+                        Task<string> deseralize = contenido.ReadAsStringAsync();
+                        ViewBag.Mensaje = deseralize.Result;
+                    }
+
+                    if (!vmIndexMantenimiento.Mantenimientos.Any())
                     {
                         ViewBag.Error = "No se encontraron mantenimientos para las fechas dadas.";
                     }
@@ -69,7 +124,7 @@ namespace HotelCabañas.Controllers
                 ViewBag.Error = e;
             }
 
-            return View(vmMantenimiento);
+            return View(vmIndexMantenimiento);
         }
 
         // GET: MantenimientoController/Create
@@ -80,17 +135,38 @@ namespace HotelCabañas.Controllers
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            VMAltaMantenimiento vmAltaMan = new VMAltaMantenimiento();
-            vmAltaMan.CabaniaId = idCabania;
-            vmAltaMan.Mantenimiento.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
+            VMIndexMantenimiento vmMantenimiento = new VMIndexMantenimiento();
 
-            return View(vmAltaMan);
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
+
+            //Busco la cabania
+            Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            getCabania.Wait();
+
+            //Si obtuve la cabania correctamente
+            if (getCabania.Result.IsSuccessStatusCode)
+            {
+                HttpContent contenido = getCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                deseralize.Wait();
+                vmMantenimiento.Cabania = JsonConvert.DeserializeObject<VMCabania>(deseralize.Result);
+            }
+            else
+            {
+                HttpContent contenido = getCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+                ViewBag.Mensaje = deseralize.Result;
+            }
+
+            return View(vmMantenimiento);
         }
 
         // POST: MantenimientoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VMAltaMantenimiento vmAltaMan)
+        public ActionResult Create(VMIndexMantenimiento vmIndexMantenimiento)
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
             {
@@ -98,22 +174,40 @@ namespace HotelCabañas.Controllers
             }
 
             try
-            {
-                vmAltaMan.Mantenimiento.CabaniaId = vmAltaMan.CabaniaId;
-                vmAltaMan.Mantenimiento.Cabania = repositorioCabania.FindById(vmAltaMan.CabaniaId);
-                
-                repositorioMantenimiento.Add(vmAltaMan.Mantenimiento);
+            {               
+                VMMantenimiento mantenimiento = new ()
+                {
+                    CabaniaId = vmIndexMantenimiento.Cabania.Id,
+                    Fecha = vmIndexMantenimiento.Mantenimiento.Fecha,
+                    Descripcion = vmIndexMantenimiento.Mantenimiento.Descripcion,
+                    NombreRealizo = vmIndexMantenimiento.Mantenimiento.NombreRealizo,
+                    Costo = vmIndexMantenimiento.Mantenimiento.Costo
+                };
 
-                VMCabania vmCabania = new VMCabania();
-                vmCabania.Cabanias = repositorioCabania.FindAll();
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento");
 
-                TempData["Message"] = "Mantenimiento ingresado con exito.";
-                return RedirectToAction("Index", "Cabania");
+                Task<HttpResponseMessage> postMantenimiento = httpClient.PostAsJsonAsync(httpClient.BaseAddress, mantenimiento);
+
+                postMantenimiento.Wait();
+
+                if (postMantenimiento.Result.IsSuccessStatusCode)
+                {
+                    TempData["Message"] = "Mantenimiento ingresado con exito.";
+                    return RedirectToAction("Index", "Cabania");
+                } else
+                {
+                    HttpContent contenido = postMantenimiento.Result.Content;
+                    Task<string> tarea2 = contenido.ReadAsStringAsync();
+
+                    ViewBag.Mensaje(tarea2.Result);
+                    return View(vmIndexMantenimiento);
+                }               
             }
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                return View(vmAltaMan);
+                return View(vmIndexMantenimiento);
             }
         }
     }
