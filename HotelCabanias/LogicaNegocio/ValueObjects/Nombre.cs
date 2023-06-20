@@ -17,7 +17,7 @@ namespace LogicaNegocio.ValueObjects
 
         public Nombre(string textoNombre) {
             this.TextoNombre = textoNombre;
-            //ValidarDatos();
+            ValidarDatos();
         }
 
         public Nombre() { }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(HotelCabaniaContext))]
-    [Migration("20230619230919_valueonj")]
-    partial class valueonj
+    [Migration("20230620162927_WebApi")]
+    partial class WebApi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

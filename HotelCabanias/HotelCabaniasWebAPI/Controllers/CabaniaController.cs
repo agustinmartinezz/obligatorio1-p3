@@ -146,8 +146,8 @@ namespace HotelCabaniasWebAPI.Controllers
                 }
                 dtoCabania = CUAltaCabania.AltaCabania(dtoCabania);
                 //return CreatedAtRoute("FindById", new { id = dtoCabania.Id}, dtoCabania);
-                return RedirectToAction("FindById", new { id = dtoCabania.Id });
-                //return Ok();
+                //return RedirectToAction("Id", new { id = dtoCabania.Id });
+                return Ok();
             }
 
             catch (Exception ex)
@@ -179,7 +179,7 @@ namespace HotelCabaniasWebAPI.Controllers
         }
 
         // DELETE api/<CabaniaController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id)
         {
             try

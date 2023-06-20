@@ -44,7 +44,8 @@ namespace HotelCabañas.Controllers
                 Task<string> deseralize = contenido.ReadAsStringAsync();
                 ViewBag.Mensaje = deseralize.Result;
             }
-           
+
+
             return View(vmIndexMantenimiento);
         }
 

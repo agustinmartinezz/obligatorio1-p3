@@ -20,6 +20,10 @@ namespace LogicaAplicacion.CasosDeUso
         {
             try
             {
+                List<string> Fotos = new List<string>();
+                //RepoCabania.AddPicture();
+                //Fotos.(dtoCabania.Foto);
+
                 Cabania cabania = new()
                 {
                     TipoId = dtoCabania.TipoId,
@@ -30,11 +34,14 @@ namespace LogicaAplicacion.CasosDeUso
                     NumeroHabitacion = dtoCabania.NumeroHabitacion,
                     MaxPersonas = dtoCabania.MaxPersonas,
                     Foto = dtoCabania.Foto,
+                    Fotos = Fotos,
                 };
 
                 RepoCabania.Add(cabania);
                 dtoCabania.Id = cabania.Id;
-                
+
+
+
             }
             catch
             {
