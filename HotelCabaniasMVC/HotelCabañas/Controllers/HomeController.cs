@@ -18,18 +18,20 @@ namespace HotelCabañas.Controllers
             string email = vmLogin.Email;
             string contrasenia = vmLogin.Contrasenia;
 
-            Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasenia);
+            HttpContext.Session.SetString("EMAIL", "Pruebasinlogin");
+            return View("~/Views/Home/Index.cshtml");
+            //Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasenia);
 
-            if (usuario != null)
-            {
-                HttpContext.Session.SetString("EMAIL", usuario.Mail.TextoMail);
-                return View("~/Views/Home/Index.cshtml");
-            }
-            else
-            {
-                ViewBag.Error = "Usuario o contraseña incorrecto.";
-                return View();
-            }
+            //if (usuario != null)
+            //{
+            //HttpContext.Session.SetString("EMAIL", usuario.Mail.TextoMail);
+            //return View("~/Views/Home/Index.cshtml");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Usuario o contraseña incorrecto.";
+            //    return View();
+            //}
 
         }
 

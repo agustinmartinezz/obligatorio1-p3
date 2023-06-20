@@ -62,6 +62,8 @@ namespace LogicaAccesoDatos.Repositorios
         {
             try
             {
+                tipoCabania.ValidarDatos();
+
                 Contexto.TipoCabanias.Update(tipoCabania);
                 Contexto.SaveChanges();
             } catch

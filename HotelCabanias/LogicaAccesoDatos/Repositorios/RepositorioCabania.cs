@@ -120,6 +120,8 @@ namespace LogicaAccesoDatos.Repositorios
         {
             try
             {
+                cabania.ValidarDatos();
+
                 Contexto.Cabanias.Update(cabania);
                 Contexto.SaveChanges();
             }

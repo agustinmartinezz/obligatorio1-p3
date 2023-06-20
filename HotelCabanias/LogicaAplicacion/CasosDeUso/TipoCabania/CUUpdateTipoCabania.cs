@@ -21,10 +21,12 @@ namespace LogicaAplicacion.CasosDeUso
             {
                 TipoCabania tipoCabania = new()
                 {
+                    Id = dtoTipoCabania.Id,
                     Nombre = new NombreTipoCabania(dtoTipoCabania.Nombre),
                     Descripcion = dtoTipoCabania.Descripcion,
                     CostoxHuesped = new Costo(dtoTipoCabania.CostoxHuesped)
                 };
+                
                 RepoTipoCabania.Update(Id, tipoCabania);
                 dtoTipoCabania.Id = tipoCabania.Id;
             }

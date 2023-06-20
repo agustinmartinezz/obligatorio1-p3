@@ -1,4 +1,4 @@
-﻿@model LogicaNegocio.EntidadesNegocio.TipoCabania;
+﻿@model HotelCabañas.Models.VMTipoCabania;
 @{
     ViewData["Title"] = "Modificar Tipo";
 }
@@ -14,6 +14,11 @@
                             <form asp-action="Edit">
 
                                 <h3 class="fw-bold mb-2">Modificar Tipo de Cabaña</h3>
+
+                                <div class="form-outline form-white mb-4" style="display:none;">
+                                    <input asp-for="Id" type="text" class="form-control form-control-lg" value="@Model.Id" readonly />
+                                    <label asp-for="Id" class="form-label">Id</label>
+                                </div>
 
                                 <div class="form-outline form-white mb-4">
                                     <input asp-for="Nombre" type="text" class="form-control form-control-lg" value="@Model.Nombre" readonly/>

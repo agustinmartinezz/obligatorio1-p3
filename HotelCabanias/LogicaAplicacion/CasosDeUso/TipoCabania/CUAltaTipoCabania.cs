@@ -26,6 +26,7 @@ namespace LogicaAplicacion.CasosDeUso
                     Descripcion = dtoTipoCabania.Descripcion,
                     CostoxHuesped = new Costo(dtoTipoCabania.CostoxHuesped)
                 };
+
                 RepoTipoCabania.Add(tipoCabania);
                 dtoTipoCabania.Id = tipoCabania.Id;
             }

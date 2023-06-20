@@ -39,9 +39,6 @@ namespace LogicaAplicacion.CasosDeUso
 
                 RepoCabania.Add(cabania);
                 dtoCabania.Id = cabania.Id;
-
-
-
             }
             catch
             {
