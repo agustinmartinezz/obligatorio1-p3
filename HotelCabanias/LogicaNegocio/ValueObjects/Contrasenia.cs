@@ -15,7 +15,7 @@ namespace LogicaNegocio.ValueObjects
         public Contrasenia(string textoContrasenia)
         {
             this.TextoContrasenia = textoContrasenia;
-            //ValidarDatos();
+            ValidarDatos();
         }
 
         private Contrasenia() { }

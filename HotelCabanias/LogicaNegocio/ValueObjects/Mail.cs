@@ -18,7 +18,7 @@ namespace LogicaNegocio.ValueObjects
 
         public Mail(string textoMail) { 
             this.TextoMail = textoMail;
-            //ValidarDatos();
+            ValidarDatos();
         }
 
         private Mail() { }

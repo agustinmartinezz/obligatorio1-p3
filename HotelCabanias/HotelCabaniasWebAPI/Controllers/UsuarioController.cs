@@ -71,15 +71,21 @@ namespace HotelUsuariosWebAPI.Controllers
                 {
                     return BadRequest();
                 }
+
                 dtoUsuario = CUAltaUsuario.AltaUsuario(dtoUsuario);
-                //return CreatedAtRoute("FindById", new { id = dtoUsuario.Id}, dtoUsuario);
-                return RedirectToAction("FindById", new { id = dtoUsuario.Id });
-                //return Ok();
+                
+                DTOUsuarioLogueado dtoUsuarioLogueado = new()
+                {
+                    Mail = dtoUsuario.Mail,
+                    Token = ManejadorToken.CrearToken(dtoUsuario)
+                };
+
+                return Ok(dtoUsuarioLogueado);
             }
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
