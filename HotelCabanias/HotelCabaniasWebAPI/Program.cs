@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-
 using LogicaAccesoDatos.Repositorios;
 using LogicaAccesoDatos.BaseDatos;
-
 using LogicaAplicacion.CasosDeUso;
 using LogicaAplicacion.InterfacesCasoDeUso;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
 ConfigurationBuilder miConfiguracion = new();
 miConfiguracion.AddJsonFile("appsettings.json");
 
@@ -41,6 +42,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+////Comienza JWT////
+var claveSecreta = "ZWRpw6fDo28gZW0gY29tcHV0YWRvcmE="; //PUEDE SER OTRA CLAVE, SI ES FUERTE
+
+builder.Services.AddAuthentication(aut =>
+{
+    aut.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    aut.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(aut =>
+{
+    aut.RequireHttpsMetadata = false;
+    aut.SaveToken = true;
+    aut.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(claveSecreta)),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+//////////////////// FIN JWT ////////////////////////
 
 builder.Services.AddScoped<ICUUpdateUsuario, CUUpdateUsuario>();
 builder.Services.AddScoped<ICULoguearUsuario, CULoguearUsuario>();

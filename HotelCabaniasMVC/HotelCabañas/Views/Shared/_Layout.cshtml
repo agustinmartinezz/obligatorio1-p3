@@ -22,13 +22,13 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (Context.Session.GetString("EMAIL") == null)
+                        @if (Context.Session.GetString("token") == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
                             </li>
                         }
-                        @if (Context.Session.GetString("EMAIL") != null)
+                        @if (Context.Session.GetString("token") != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="TipoCabania" asp-action="Index">Tipos Cabaña</a>

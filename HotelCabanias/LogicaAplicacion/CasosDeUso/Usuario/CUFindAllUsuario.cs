@@ -25,7 +25,7 @@ namespace LogicaAplicacion.CasosDeUso
                     Id = u.Id,
                     Nombre = u.Nombre.TextoNombre,
                     Mail = u.Mail.TextoMail,
-                    Contrasenia = u.Contrasenia.TextoContrasenia,
+                    //Contrasenia = u.Contrasenia.TextoContrasenia,
                 });
                 return dtoUsuarios;
             }
