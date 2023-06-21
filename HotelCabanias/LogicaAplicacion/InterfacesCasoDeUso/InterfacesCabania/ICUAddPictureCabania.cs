@@ -2,6 +2,6 @@
 {
     public interface ICUAddPictureCabania
     {
-        public void AddPicture(int cabaniaId, string name);
+        public string AddPicture(int cabaniaId, string name);
     }
 }

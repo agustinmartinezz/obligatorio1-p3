@@ -8,5 +8,10 @@
         public int Costo { get; set; }
         public string NombreRealizo { get; set; }
         public int CabaniaId { get; set; }
+
+        public VMMantenimiento() { 
+            Descripcion = string.Empty;
+            NombreRealizo = string.Empty;
+        }
     }
 }
