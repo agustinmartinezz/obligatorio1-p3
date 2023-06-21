@@ -46,11 +46,11 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Cabania()
         {
-            /*Nombre = new Nombre(string.Empty);
-            Descripcion = "";
-            Foto = "";
+            //Nombre = new Nombre(string.Empty);
+            //Descripcion = "";
+           // Foto = "";
             Fotos = new List<string>();
-            Tipo = new TipoCabania();*/
+           // Tipo = new TipoCabania();
         }
 
         public void ValidarDatos()

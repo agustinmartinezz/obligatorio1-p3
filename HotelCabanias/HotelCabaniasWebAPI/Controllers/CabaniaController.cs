@@ -134,6 +134,22 @@ namespace HotelCabaniasWebAPI.Controllers
             }
         }
 
+        [HttpGet()]
+        [Route("{id}/Foto/{fotoString}")]
+
+        public IActionResult AddPicture(int id,string fotoString)
+        {
+            try
+            {
+                string name = CUAddPictureCabania.AddPicture(id,fotoString);
+                return Ok(name);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+        }
+
         // POST api/<CabaniaController>
         [HttpPost]
         public IActionResult Post([FromBody] DTOCabania dtoCabania)

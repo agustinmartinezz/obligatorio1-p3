@@ -19,11 +19,11 @@ namespace LogicaAplicacion.CasosDeUso
             RepoCabania = repoCabania;
         }
 
-        public void AddPicture(int cabaniaId, string name)
+        public string AddPicture(int cabaniaId, string name)
         {
             try
             {
-                RepoCabania.AddPicture(cabaniaId, name);
+               return RepoCabania.AddPicture(cabaniaId, name);
             }
             catch
             {

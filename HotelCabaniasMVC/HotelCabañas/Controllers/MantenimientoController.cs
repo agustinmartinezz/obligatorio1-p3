@@ -84,27 +84,29 @@ namespace HotelCabañas.Controllers
                         //Busco los mantenimientos de la misma entre las fechas dadas
 
                         DateTime fechaDesde = vmIndexMantenimiento.Busqueda.Fecha1;
+                        string fechaDesdeFormateada = fechaDesde.ToString("yyyy-MM-dd");
                         DateTime fechaHasta = vmIndexMantenimiento.Busqueda.Fecha2;
-                        string URLParams = "cabaniaId=" + idCabania + "&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta;
+                        string fechaHastaFormateada = fechaHasta.ToString("yyyy-MM-dd");
 
-                        httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento/Dates/" + URLParams);
+                        string URLParams = "cabaniaId=" + idCabania + "&fechaDesde="+fechaDesdeFormateada+"&fechaHasta="+fechaHastaFormateada;
 
-                        httpClient.DefaultRequestHeaders.Authorization =
-               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
-                        Task<HttpResponseMessage> getMantenimientos = httpClient.GetAsync(httpClient.BaseAddress);
-                        
+                        HttpClient httpClientDates = new HttpClient();
+
+                        httpClientDates.BaseAddress = new Uri(baseURL + "/Mantenimiento/Dates/" + URLParams);
+                        Task<HttpResponseMessage> getMantenimientos = httpClientDates.GetAsync(httpClientDates.BaseAddress);
+
                         getMantenimientos.Wait();
 
                         if (getMantenimientos.Result.IsSuccessStatusCode)
                         {
-                            HttpContent contenido2 = getCabania.Result.Content;
-                            Task<string> deseralize2 = contenido.ReadAsStringAsync();
+                            HttpContent contenido2 = getMantenimientos.Result.Content;
+                            Task<string> deseralize2 = contenido2.ReadAsStringAsync();
                             deseralize2.Wait();
                             vmIndexMantenimiento.Mantenimientos = JsonConvert.DeserializeObject<IEnumerable<VMMantenimiento>>(deseralize2.Result);
                         } else
                         {
                             HttpContent contenido2 = getMantenimientos.Result.Content;
-                            Task<string> deseralize2 = contenido.ReadAsStringAsync();
+                            Task<string> deseralize2 = contenido2.ReadAsStringAsync();
                             ViewBag.Mensaje = deseralize.Result;
                         }
 

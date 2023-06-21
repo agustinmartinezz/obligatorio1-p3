@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using HotelCabañas.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Text;
 using HotelCabañas.Filters;
 
 namespace HotelCabañas.Controllers
@@ -23,16 +24,13 @@ namespace HotelCabañas.Controllers
         {
             VMIndexCabania vmIndexCabania = new VMIndexCabania();
 
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClientCabania = new HttpClient();
 
-            httpClient.BaseAddress = new Uri(baseURL + "/Cabania" );
-            Task<HttpResponseMessage> getCabanias = httpClient.GetAsync(httpClient.BaseAddress);
+            httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania" );
+            Task<HttpResponseMessage> getCabanias = httpClientCabania.GetAsync(httpClientCabania.BaseAddress);
             getCabanias.Wait();
 
-            httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
-            Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress);
-            getTiposCabania.Wait();
-
+          
 
             if (getCabanias.Result.IsSuccessStatusCode)
             {
@@ -50,6 +48,15 @@ namespace HotelCabañas.Controllers
                 ViewBag.Mensaje = deseralize.Result;
             }
 
+
+            HttpClient httpClientTipoCabania = new HttpClient();
+
+
+            httpClientTipoCabania.BaseAddress = new Uri(baseURL + "/TipoCabania");
+            Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
+            getTiposCabania.Wait();
+
+
             if (getTiposCabania.Result.IsSuccessStatusCode)
             {
                 HttpContent contenido = getTiposCabania.Result.Content;
@@ -66,7 +73,7 @@ namespace HotelCabañas.Controllers
                 ViewBag.Mensaje = deseralize.Result;
             }
 
-            vmIndexCabania.Busqueda.SearchNumber = 1;
+            vmIndexCabania.Busqueda.SearchOption = 1;
 
             return View(vmIndexCabania);
         }
@@ -81,11 +88,11 @@ namespace HotelCabañas.Controllers
                 return View("~/Views/Shared/LoginError.cshtml");
             }
 
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClientCabania = new HttpClient();
+            HttpClient httpClientTipoCabania = new HttpClient();
 
-            
-            httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
-            Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            httpClientTipoCabania.BaseAddress = new Uri(baseURL + "/TipoCabania");
+            Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
             getTiposCabania.Wait();
 
             try
@@ -95,71 +102,49 @@ namespace HotelCabañas.Controllers
                     case 1:
                         if (string.IsNullOrWhiteSpace(VMIndexCabania.Busqueda.SearchText))
                         {
-                            httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
+                            httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania");
                             //VMIndexCabania.Cabanias = repositorioCabania.FindAll();
                         } else
                         {
-                            httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Name/" + VMIndexCabania.Busqueda.SearchText);
+                            httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Name/" + VMIndexCabania.Busqueda.SearchText);
                             //VMIndexCabania.Cabanias = repositorioCabania.FindByName(vmCabania.SearchText);
                         }
                         break;
                     case 2:
                         //int intSearch = Int32.Parse(searchText);
                         //VMIndexCabania.Cabanias = repositorioCabania.FindByTipo(vmCabania.SearchType);
-                        httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Tipo/" + VMIndexCabania.Busqueda.SearchType);
+                        httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Type/" + VMIndexCabania.Busqueda.SearchType);
 
                         break;
                     case 3:
                         //int intSearch2 = Int32.Parse(searchText);
                         // VMIndexCabania.Cabanias = repositorioCabania.FindByMaxPeople(vmCabania.SearchNumber);
-                        httpClient.BaseAddress = new Uri(baseURL + "/Cabania/MaxCupos/" + VMIndexCabania.Busqueda.SearchNumber);
+                        httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Cupos/" + VMIndexCabania.Busqueda.SearchNumber);
 
                         break;
                     case 4:
                         //VMIndexCabania.Cabanias = repositorioCabania.FindHabilitadas();
-                        httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Habilitadas");
+                        httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Habilitadas");
 
                         break;
 
                 }
 
-                if (!VMIndexCabania.Cabanias.Any())
-                {
-                    ViewBag.Error = "No existen cabañas ingresadas según el criterio utilizado.";
-                }
+             
             } catch (Exception e)
             {
                 ViewBag.Error = e.Message;
                 //Cabanias
-                httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
-
-                //Tipos Cabania
-                Task<HttpResponseMessage> getTiposCabanias = httpClient.GetAsync(httpClient.BaseAddress);
-                getTiposCabanias.Wait();
-
-                if (getTiposCabania.Result.IsSuccessStatusCode)
-                {
-                    HttpContent contenido = getTiposCabania.Result.Content;
-                    Task<string> deseralize = contenido.ReadAsStringAsync();
-
-                    deseralize.Wait();
-
-                    VMIndexCabania.TiposCabania = JsonConvert.DeserializeObject<IEnumerable<VMTipoCabania>>(deseralize.Result);
-                }
-                else
-                {
-                    HttpContent contenido = getTiposCabania.Result.Content;
-                    Task<string> deseralize = contenido.ReadAsStringAsync();
-                    ViewBag.Mensaje = deseralize.Result;
-                }
+                httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania");
+                
             }
 
-            Task<HttpResponseMessage> getCabanias = httpClient.GetAsync(httpClient.BaseAddress);
+            Task<HttpResponseMessage> getCabanias = httpClientCabania.GetAsync(httpClientCabania.BaseAddress);
             getCabanias.Wait();
 
             if (getCabanias.Result.IsSuccessStatusCode)
             {
-                HttpContent contenido = getTiposCabania.Result.Content;
+                HttpContent contenido = getCabanias.Result.Content;
                 Task<string> deseralize = contenido.ReadAsStringAsync();
 
                 deseralize.Wait();
@@ -173,10 +158,29 @@ namespace HotelCabañas.Controllers
                 ViewBag.Mensaje = deseralize.Result;
             }
 
+            if (getTiposCabania.Result.IsSuccessStatusCode)
+            {
+                HttpContent contenido = getTiposCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                deseralize.Wait();
+
+                VMIndexCabania.TiposCabania = JsonConvert.DeserializeObject<IEnumerable<VMTipoCabania>>(deseralize.Result);
+            }
+            else
+            {
+                HttpContent contenido = getTiposCabania.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+                ViewBag.Mensaje = deseralize.Result;
+            }
+
+            if (!VMIndexCabania.Cabanias.Any())
+            {
+                ViewBag.Error = "No existen cabañas ingresadas según el criterio utilizado.";
+            }
+
 
             return View(VMIndexCabania);
-
-
 
         }
 
@@ -239,9 +243,54 @@ namespace HotelCabañas.Controllers
 
             try
             {
-                //Primero me aseguro que la cabania existe, luego subo la foto, si algo falla no subo al pedo la foto
-                //verificar que pase eso
-                //VMCabania cab = vmIndexCabania.Cabania;
+
+
+                HttpClient httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
+
+                Task<HttpResponseMessage> postCabania = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmIndexCabania.Cabania);
+                postCabania.Wait();
+
+                if (postCabania.Result.IsSuccessStatusCode)
+                {
+                    TempData["Message"] = "Cabaña ingresada con exito.";
+
+                   // vmIndexCabania = new VMIndexCabania();
+                    return RedirectToAction("Index", vmIndexCabania);
+                }
+                else
+                {
+                    HttpContent contenido = postCabania.Result.Content;
+                    Task<string> tarea2 = contenido.ReadAsStringAsync();
+                    tarea2.Wait();
+
+                    ViewBag.Error = tarea2.Result.ToString();
+
+                    HttpClient httpClientTipo = new HttpClient();
+
+                    httpClientTipo.BaseAddress = new Uri(baseURL + "/TipoCabania");
+                    Task<HttpResponseMessage> getTiposCabania = httpClientTipo.GetAsync(httpClientTipo.BaseAddress);
+                    getTiposCabania.Wait();
+
+                    if (getTiposCabania.Result.IsSuccessStatusCode)
+                    {
+                        HttpContent contenido2 = getTiposCabania.Result.Content;
+                        Task<string> deseralize = contenido2.ReadAsStringAsync();
+
+                        deseralize.Wait();
+
+                        vmIndexCabania.TiposCabania = JsonConvert.DeserializeObject<IEnumerable<VMTipoCabania>>(deseralize.Result);
+                    }
+                    else
+                    {
+                        HttpContent contenido2 = getTiposCabania.Result.Content;
+                        Task<string> deseralize = contenido2.ReadAsStringAsync();
+                        ViewBag.Mensaje = deseralize.Result;
+                    }
+                }
+
+                        return View(vmIndexCabania);
+
 
                 //string nombreImagen = cab.GetNombreFoto() + Path.GetExtension(vmCabania.Foto.FileName);
 
@@ -260,7 +309,6 @@ namespace HotelCabañas.Controllers
                 //vmCabania.Foto.CopyTo(foto);
 
                 //ViewData["Message"] = "Cabaña ingresada correctamente.";
-               // return RedirectToAction(nameof(Index));
             }
 
             catch (Exception e)
@@ -268,8 +316,11 @@ namespace HotelCabañas.Controllers
                 //ViewBag.Error = e.Message;
                 //vmCabania.Tipos = repositorioTipoCabania.FindAll();
                 //return View(vmCabania);
+                return View(vmIndexCabania);
+
             }
-                return RedirectToAction(nameof(Index));
+
+
 
 
         }

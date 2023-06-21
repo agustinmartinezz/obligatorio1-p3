@@ -6,11 +6,11 @@
 <div class="input-group rounded">
     <form method="POST" action="Index" class="d-flex w-100">
         @Html.AntiForgeryToken()
-        <input id="searchText" name="SearchText" type="text" value="@Model.Busqueda.SearchText" class="form-control rounded flex-grow-1" placeholder="Nombre" />
+        <input id="searchText" name="Busqueda.SearchText" type="text" value="@Model.Busqueda.SearchText" class="form-control rounded flex-grow-1" placeholder="Nombre" />
         
-        <input id="searchNumber" name="SearchNumber" type="number" value="@Model.Busqueda.SearchNumber" class="form-control rounded flex-grow-1" placeholder="Cantidad de personas" />
+        <input id="searchNumber" name="Busqueda.SearchNumber" type="number" value="@Model.Busqueda.SearchNumber" class="form-control rounded flex-grow-1" placeholder="Cantidad de personas" />
         
-        <select id="searchType" name="SearchType" class="form-select rounded ms-2 flex-grow-1">
+        <select id="searchType" name="Busqueda.SearchType" class="form-select rounded ms-2 flex-grow-1">
                 @foreach (var item in Model.TiposCabania)
                 {
                     <option value="@item.Id">@item.Nombre</option>
@@ -19,7 +19,7 @@
         
         
 
-        <select id="searchOption" name="SearchOption" class="form-select rounded ms-2 flex-grow-1">
+        <select id="searchOption" name="Busqueda.SearchOption" class="form-select rounded ms-2 flex-grow-1">
             <option value="1">Nombre</option>
             <option value="2">Tipo</option>
             <option value="3">Cant. Personas</option>
@@ -75,7 +75,7 @@
                 <td>@item.TieneJacuzzi</td>
                 <td>@item.HabilitadaReservas</td>
                 <td>@item.MaxPersonas</td>
-                <td>@item.Tipo.Nombre</td>
+               Z <td>@item.Tipo.Nombre</td>
                 <td>@item.Tipo.CostoxHuesped</td>
                 <td>
                     <a title="Ver Mantenimientos" asp-controller="Mantenimiento" asp-action="Index" asp-route-idCabania="@item.Id">
@@ -99,12 +99,19 @@
 </div>
 
 <script>
+    
+
     document.getElementById('searchText').focus();
 
     const selectElement = document.getElementById('searchOption');
     const searchText = document.getElementById('searchText'); 
     const searchNumber = document.getElementById('searchNumber');
     const searchType = document.getElementById('searchType');
+
+    selectElement.value = @Model.Busqueda.SearchOption.ToString();
+
+    hideAll();
+    toggleMenu(selectElement.value);
 
     selectElement.addEventListener('change', (event) => {
 
@@ -114,9 +121,6 @@
 
     });
 
-    selectedOption = "" + @Model.Busqueda.SearchOption
-    toggleMenu(selectedOption);
-
     function hideAll() {
         searchText.style.display = "none";
         searchType.style.display = "none";
@@ -124,9 +128,9 @@
     }
 
     function toggleMenu(selectedOption) {
+       
         selectElement.value = selectedOption;
         searchType.value = @Model.Busqueda.SearchType;
-
         switch (selectedOption) {
             case "1":
                 hideAll()

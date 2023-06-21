@@ -38,7 +38,7 @@ namespace LogicaAccesoDatos.Repositorios
             }
         }
 
-        public void AddPicture(int cabaniaId,string name)
+        public string AddPicture(int cabaniaId,string name)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace LogicaAccesoDatos.Repositorios
                 int lastNumber = 0;
                 string lastNumberStr = "";
 
-                if (length >= 0)
+                if (length > 0)
                 {
                     string lastName = cabania.Fotos[length - 1].Split('.')[0];
                     lastNumber = Int32.Parse(lastName.Substring(length-3, length-1));
@@ -65,10 +65,12 @@ namespace LogicaAccesoDatos.Repositorios
                 name = "Imagenes/" + name + "_" + lastNumberStr;
                 cabania.Fotos.Add(name);
                 Update(cabaniaId, cabania);
+                return name;
             }
             catch
             {
                 throw;
+
             }
         }
 
