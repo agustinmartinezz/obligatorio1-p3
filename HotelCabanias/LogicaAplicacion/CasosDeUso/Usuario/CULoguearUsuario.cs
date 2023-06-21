@@ -20,11 +20,14 @@ namespace LogicaAplicacion.CasosDeUso
             {
                 Usuario usuario = RepoUsuario.LoguearUsuario(mail, contrasenia);
 
+                if (usuario == null)
+                    return null;
+
                 DTOUsuario dtoUsuario = new() { 
                     Nombre = usuario.Nombre.TextoNombre,
                     Mail = usuario.Mail.TextoMail,
-                    Contrasenia = usuario.Contrasenia.TextoContrasenia
                 };
+
                 return dtoUsuario;
             }
             catch

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using HotelCabañas.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
+using HotelCabañas.Filters;
 
 namespace HotelCabañas.Controllers
 {
@@ -16,15 +17,10 @@ namespace HotelCabañas.Controllers
         }
 
         // GET: CabaniaController
-
+        [Logueado]
         [HttpGet]
         public ActionResult Index()
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMIndexCabania vmIndexCabania = new VMIndexCabania();
 
             HttpClient httpClient = new HttpClient();
@@ -75,6 +71,7 @@ namespace HotelCabañas.Controllers
             return View(vmIndexCabania);
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(VMIndexCabania VMIndexCabania)
@@ -184,6 +181,7 @@ namespace HotelCabañas.Controllers
         }
 
         // GET: CabaniaController/Details/5
+        [Logueado]
         public ActionResult Details(int id)
         {
             return View();
@@ -191,6 +189,7 @@ namespace HotelCabañas.Controllers
 
         // GET: CabaniaController/Create
         [HttpGet]
+        [Logueado]
         public ActionResult Create()
         {
             if (HttpContext.Session.GetString("EMAIL") == null)
@@ -228,6 +227,7 @@ namespace HotelCabañas.Controllers
         }
 
         // POST: CabaniaController/Create
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(VMIndexCabania vmIndexCabania)
@@ -275,12 +275,14 @@ namespace HotelCabañas.Controllers
         }
 
         // GET: CabaniaController/Edit/5
+        [Logueado]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: CabaniaController/Edit/5
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -295,13 +297,13 @@ namespace HotelCabañas.Controllers
             }
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             try
             {
-
                 HttpClient httpClient = new HttpClient();
 
                 httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Delete" + id);

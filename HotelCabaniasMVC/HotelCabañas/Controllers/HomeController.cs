@@ -1,12 +1,20 @@
 ﻿using HotelCabañas.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace HotelCabañas.Controllers
 {
     public class HomeController : Controller
     {
+        private const string baseURL = "http://localhost:5256/api";
+
         public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult LoginError()
         {
             return View();
         }
@@ -15,29 +23,38 @@ namespace HotelCabañas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(VMLogin vmLogin)
         {
-            string email = vmLogin.Email;
-            string contrasenia = vmLogin.Contrasenia;
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL + "/Usuario/Login");
+           
+            Task<HttpResponseMessage> postLogin = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmLogin);
+            postLogin.Wait();
 
-            HttpContext.Session.SetString("EMAIL", "Pruebasinlogin");
-            return View("~/Views/Home/Index.cshtml");
-            //Usuario usuario = repositorioUsuarios.LoguearUsuario(email, contrasenia);
+            if (postLogin.Result.IsSuccessStatusCode) {
+                HttpContent contenido = postLogin.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
 
-            //if (usuario != null)
-            //{
-            //HttpContext.Session.SetString("EMAIL", usuario.Mail.TextoMail);
-            //return View("~/Views/Home/Index.cshtml");
-            //}
-            //else
-            //{
-            //    ViewBag.Error = "Usuario o contraseña incorrecto.";
-            //    return View();
-            //}
+                deseralize.Wait();
+                vmLogin = JsonConvert.DeserializeObject<VMLogin>(deseralize.Result);
 
+                if (vmLogin.Token != null)
+                {
+                    HttpContext.Session.SetString("token", vmLogin.Token);
+                }
+                return View("~/Views/Home/Index.cshtml");
+            } else
+            {
+                HttpContent contenido = postLogin.Result.Content;
+                Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                ViewBag.Error = deseralize.Result;
+
+                return View();
+            }
         }
 
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove("EMAIL");
+            HttpContext.Session.Remove("token");
             return View("~/Views/Home/Login.cshtml");
         }
 

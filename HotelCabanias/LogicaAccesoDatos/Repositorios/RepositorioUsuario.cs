@@ -34,22 +34,22 @@ namespace LogicaAccesoDatos.Repositorios
 
         public Usuario LoguearUsuario(string mail, string contrasenia)
         {
-
             try
             {
-                Usuario usrEncontrado = Contexto.Usuarios.First(u => u.Mail.TextoMail == mail);
+                Usuario usrEncontrado = Contexto.Usuarios.FirstOrDefault(u => u.Mail.TextoMail == mail);
+
+                if (usrEncontrado == null)
+                    return null;
 
                 if (usrEncontrado.Contrasenia.Equals(contrasenia))
                     return usrEncontrado;
-
-                return null;
-
+                else
+                    return null;
             }
-            catch (Exception e)
+            catch
             {
-                return null;
+                throw;
             }
-
         }
 
         public void Update(int id, Usuario usuario)

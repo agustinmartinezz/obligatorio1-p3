@@ -1,6 +1,8 @@
-﻿using HotelCabañas.Models;
+﻿using HotelCabañas.Filters;
+using HotelCabañas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace HotelCabañas.Controllers
 {
@@ -8,19 +10,18 @@ namespace HotelCabañas.Controllers
     {
         private const string baseURL = "http://localhost:5256/api";
 
+        [Logueado]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMIndexTipoCabania vmIndexTipoCabania = new ();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
 
+            httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress);
+
             getTiposCabania.Wait();
 
             if (getTiposCabania.Result.IsSuccessStatusCode)
@@ -44,15 +45,11 @@ namespace HotelCabañas.Controllers
             return View(vmIndexTipoCabania);
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(VMIndexTipoCabania vmIndexTipoCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             string texto = vmIndexTipoCabania.Busqueda.SearchText;
 
             if (string.IsNullOrWhiteSpace(texto))
@@ -60,7 +57,10 @@ namespace HotelCabañas.Controllers
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress);
+
                 getTiposCabania.Wait();
 
                 if (getTiposCabania.Result.IsSuccessStatusCode)
@@ -87,7 +87,10 @@ namespace HotelCabañas.Controllers
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania/Name/");
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress + texto);
+                
                 getTiposCabania.Wait();
 
                 if (getTiposCabania.Result.IsSuccessStatusCode)
@@ -114,31 +117,26 @@ namespace HotelCabañas.Controllers
             return View(vmIndexTipoCabania);
         }
 
+        [Logueado]
         public IActionResult Create()
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             return View();
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(VMTipoCabania tipoCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> postTiposCabania = httpClient.PostAsJsonAsync(httpClient.BaseAddress, tipoCabania);
+                
                 postTiposCabania.Wait();
 
                 if (postTiposCabania.Result.IsSuccessStatusCode)
@@ -165,19 +163,18 @@ namespace HotelCabañas.Controllers
             
         }
 
+        [Logueado]
         public IActionResult Edit(int id)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMTipoCabania tipoCabania = new();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania/" + id);
 
+            httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getTipoCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            
             getTipoCabania.Wait();
 
             if (getTipoCabania.Result.IsSuccessStatusCode)
@@ -197,21 +194,20 @@ namespace HotelCabañas.Controllers
             return View(tipoCabania);
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(VMTipoCabania tipoCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania/" + tipoCabania.Id);
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> putTipoCabania = httpClient.PutAsJsonAsync(httpClient.BaseAddress, tipoCabania);
+                
                 putTipoCabania.Wait();
 
                 if (putTipoCabania.Result.IsSuccessStatusCode)
@@ -234,19 +230,18 @@ namespace HotelCabañas.Controllers
             }
         }
 
+        [Logueado]
         public IActionResult Delete(int id)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania/" + id);
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> deleteTipoCabania = httpClient.DeleteAsync(httpClient.BaseAddress);
+                
                 deleteTipoCabania.Wait();
 
                 if (deleteTipoCabania.Result.IsSuccessStatusCode)
