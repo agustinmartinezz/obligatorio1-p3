@@ -1,0 +1,48 @@
+﻿@model HotelCabañas.Models.VMConsulta
+@{
+    ViewData["Title"] = "Consulta A";
+}
+<form method="POST" action="ConsultaA" class="row g-3 align-items-center">
+  <div class="col-5">
+    <div class="input-group">
+      <div class="input-group-text">Tipo de Cabaña</div>
+      <input asp-for="Param1" type="number" class="form-control" id="tipoCabania" placeholder="Tipo de Cabaña">
+    </div>
+  </div>
+
+    <div class="col-5">
+        <div class="input-group">
+            <div class="input-group-text">Monto</div>
+            <input asp-for="Param2" type="number" class="form-control" id="monto" placeholder="Monto">
+        </div>
+    </div>
+
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary ms-2">
+        <i class="bi bi-search"></i>
+    </button>
+  </div>
+</form>
+
+<p class="text-danger fw-bold">@ViewBag.Error</p>
+
+@if (@Model.Resultado != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nombre Cabaña</th>
+                <th scope="col">Max. Personas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (VMConsultaA item in Model.Resultado)
+            {
+                <tr>
+                    <th scope="row">@item.TextoNombre</th>
+                    <td>@item.MaxPersonas</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
