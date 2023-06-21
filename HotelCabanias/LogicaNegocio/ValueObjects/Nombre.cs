@@ -36,13 +36,12 @@ namespace LogicaNegocio.ValueObjects
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            if (obj == null)
             {
                 return false;
             }
 
-            Nombre nombre = (Nombre) obj;
-            return TextoNombre.Equals(nombre.TextoNombre);
+            return TextoNombre.Equals(obj.ToString());
         }
     }
 }

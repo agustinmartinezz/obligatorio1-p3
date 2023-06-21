@@ -8,6 +8,7 @@ using LogicaAplicacion.InterfacesCasoDeUso;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using LogicaAplicacion.CasosDeUso.Consulta;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,10 +97,14 @@ builder.Services.AddScoped<ICUFindAllMantenimiento, CUFindAllMantenimiento>();
 builder.Services.AddScoped<ICUDeleteMantenimiento, CUDeleteMantenimiento>();
 builder.Services.AddScoped<ICUAltaMantenimiento, CUAltaMantenimiento>();
 
+builder.Services.AddScoped<ICUConsultaA, CUConsultaA>();
+builder.Services.AddScoped<ICUConsultaB, CUConsultaB>();
+
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTiposCabania>();
 builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
 builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
+builder.Services.AddScoped<IRepositorioConsulta, RepositorioConsulta>();
 
 
 builder.Services.

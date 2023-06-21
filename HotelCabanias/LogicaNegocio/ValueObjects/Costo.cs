@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace LogicaNegocio.ValueObjects
         
         public Costo(int valorCosto) {
             this.ValorCosto = valorCosto;
-            //ValidarDatos();
+            ValidarDatos();
         }
 
         private Costo() { }
@@ -32,7 +33,7 @@ namespace LogicaNegocio.ValueObjects
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            if (obj == null)
             {
                 return false;
             }
