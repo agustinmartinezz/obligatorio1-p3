@@ -22,7 +22,7 @@ public class Program
             }
             app.UseStaticFiles();
 
-            app.UseRouting();
+            //app.UseRouting();
             app.UseSession();
 
             app.UseAuthorization();

@@ -1,6 +1,7 @@
 ﻿using DTOs;
 using LogicaAplicacion.CasosDeUso;
 using LogicaAplicacion.InterfacesCasoDeUso;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,6 +46,7 @@ namespace HotelMantenimientosWebAPI.Controllers
 
         // GET api/<MantenimientoController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult Get(int id)
         {
             try
@@ -60,6 +62,7 @@ namespace HotelMantenimientosWebAPI.Controllers
 
         [HttpGet()]
         [Route("Dates/cabaniaId={cabaniaId}&fechaDesde={fechaDesde}&fechaHasta={fechaHasta}")]
+        [Authorize]
         public IActionResult Get(int cabaniaId, DateTime fechaDesde, DateTime fechaHasta)
         {
             try
@@ -75,6 +78,7 @@ namespace HotelMantenimientosWebAPI.Controllers
 
         // POST api/<MantenimientoController>
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] DTOMantenimiento dtoMantenimiento)
         {
             try
@@ -119,6 +123,7 @@ namespace HotelMantenimientosWebAPI.Controllers
 
         // DELETE api/<MantenimientoController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             try

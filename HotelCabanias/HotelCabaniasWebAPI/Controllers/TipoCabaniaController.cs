@@ -1,5 +1,6 @@
 ﻿using DTOs;
 using LogicaAplicacion.CasosDeUso;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,6 +33,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
         // GET: api/<TipoCabaniaController>
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             try
@@ -46,6 +48,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
         // GET api/<TipoCabaniaController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult Get(int id)
         {
             try
@@ -62,7 +65,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
         // GET api/<TipoCabaniaController>/Nombre
         [HttpGet()]
         [Route("Name/{name}")]
-
+        [Authorize]
         public IActionResult GetByName(string name)
         {
             try
@@ -78,6 +81,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
         // POST api/<TipoCabaniaController>
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] DTOTipoCabania dtoTipoCabania)
         {
             try
@@ -93,12 +97,13 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500, ex.InnerException.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
         // PUT api/<TipoCabaniaController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Put(int TipoCabaniaId, [FromBody] DTOTipoCabania dtoTipoCabania)
         {
             try
@@ -120,6 +125,7 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
         // DELETE api/<TipoCabaniaController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             try

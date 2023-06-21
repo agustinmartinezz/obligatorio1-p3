@@ -1,6 +1,8 @@
-﻿using HotelCabañas.Models;
+﻿using HotelCabañas.Filters;
+using HotelCabañas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Threading;
 
 namespace HotelCabañas.Controllers
@@ -11,20 +13,19 @@ namespace HotelCabañas.Controllers
         private const string baseURL = "http://localhost:5256/api";
 
         // GET: MantenimientoController
+        [Logueado]
         public ActionResult Index(int idCabania)
         
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMIndexMantenimiento vmIndexMantenimiento = new();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
 
+            httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            
             getCabania.Wait();
 
             if (getCabania.Result.IsSuccessStatusCode)
@@ -49,15 +50,11 @@ namespace HotelCabañas.Controllers
             return View(vmIndexMantenimiento);
         }
 
+        [Logueado]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(VMIndexMantenimiento vmIndexMantenimiento)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {
                 //Si las fechas de busqueda son validas
@@ -67,8 +64,12 @@ namespace HotelCabañas.Controllers
 
                     HttpClient httpClient = new HttpClient();
                     httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
+
+                    httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     //Busco la cabania
                     Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+                   
                     getCabania.Wait();
 
                     //Si obtuve la cabania correctamente
@@ -93,6 +94,7 @@ namespace HotelCabañas.Controllers
 
                         httpClientDates.BaseAddress = new Uri(baseURL + "/Mantenimiento/Dates/" + URLParams);
                         Task<HttpResponseMessage> getMantenimientos = httpClientDates.GetAsync(httpClientDates.BaseAddress);
+
                         getMantenimientos.Wait();
 
                         if (getMantenimientos.Result.IsSuccessStatusCode)
@@ -134,20 +136,19 @@ namespace HotelCabañas.Controllers
         }
 
         // GET: MantenimientoController/Create
+        [Logueado]
         public ActionResult Create(int idCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMIndexMantenimiento vmMantenimiento = new VMIndexMantenimiento();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
 
+            httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             //Busco la cabania
             Task<HttpResponseMessage> getCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            
             getCabania.Wait();
 
             //Si obtuve la cabania correctamente
@@ -172,13 +173,9 @@ namespace HotelCabañas.Controllers
         // POST: MantenimientoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Logueado]
         public ActionResult Create(VMIndexMantenimiento vmIndexMantenimiento)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {               
                 VMMantenimiento mantenimiento = new ()
@@ -193,6 +190,8 @@ namespace HotelCabañas.Controllers
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento");
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> postMantenimiento = httpClient.PostAsJsonAsync(httpClient.BaseAddress, mantenimiento);
 
                 postMantenimiento.Wait();

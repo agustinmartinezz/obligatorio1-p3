@@ -1,5 +1,7 @@
 ﻿using DTOs;
+using HotelCabaniasWebAPI;
 using LogicaAplicacion.CasosDeUso;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,6 +33,7 @@ namespace HotelUsuariosWebAPI.Controllers
 
         // GET: api/<UsuarioController>
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             try
@@ -68,15 +71,55 @@ namespace HotelUsuariosWebAPI.Controllers
                 {
                     return BadRequest();
                 }
+
                 dtoUsuario = CUAltaUsuario.AltaUsuario(dtoUsuario);
-                //return CreatedAtRoute("FindById", new { id = dtoUsuario.Id}, dtoUsuario);
-                return RedirectToAction("FindById", new { id = dtoUsuario.Id });
-                //return Ok();
+                
+                DTOUsuarioLogueado dtoUsuarioLogueado = new()
+                {
+                    Mail = dtoUsuario.Mail,
+                    Token = ManejadorToken.CrearToken(dtoUsuario)
+                };
+
+                return Ok(dtoUsuarioLogueado);
             }
 
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public IActionResult Login([FromBody] DTOUsuario dtoUsuario)
+        {
+            try
+            {
+                if (dtoUsuario.Mail == null || dtoUsuario.Contrasenia == null)
+                {
+                    return BadRequest();
+                }
+
+                dtoUsuario = CULoguearUsuario.LoguearUsuario(dtoUsuario.Mail, dtoUsuario.Contrasenia); ;
+
+                if (dtoUsuario != null)
+                {
+                    DTOUsuarioLogueado dtoUsuarioLogueado = new()
+                    {
+                        Mail = dtoUsuario.Mail,
+                        Token = ManejadorToken.CrearToken(dtoUsuario)
+                    };
+
+                    return Ok(dtoUsuarioLogueado);
+                } else
+                {
+                    return StatusCode(401, "No autorizado");
+                }                
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
 

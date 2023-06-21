@@ -15,7 +15,7 @@ namespace LogicaNegocio.ValueObjects
         public Contrasenia(string textoContrasenia)
         {
             this.TextoContrasenia = textoContrasenia;
-            //ValidarDatos();
+            ValidarDatos();
         }
 
         private Contrasenia() { }
@@ -35,13 +35,12 @@ namespace LogicaNegocio.ValueObjects
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            if (obj == null)
             {
                 return false;
             }
 
-            Contrasenia contrasenia = (Contrasenia) obj;
-            return TextoContrasenia.Equals(contrasenia.TextoContrasenia);
+            return TextoContrasenia.Equals(obj.ToString());
         }
     }
 }
