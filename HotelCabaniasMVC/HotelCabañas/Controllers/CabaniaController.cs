@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using HotelCabañas.Filters;
+using System.Net.Http.Headers;
 
 namespace HotelCabañas.Controllers
 {
@@ -28,9 +29,7 @@ namespace HotelCabañas.Controllers
 
             httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania" );
             Task<HttpResponseMessage> getCabanias = httpClientCabania.GetAsync(httpClientCabania.BaseAddress);
-            getCabanias.Wait();
-
-          
+            getCabanias.Wait();          
 
             if (getCabanias.Result.IsSuccessStatusCode)
             {
@@ -83,16 +82,14 @@ namespace HotelCabañas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(VMIndexCabania VMIndexCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             HttpClient httpClientCabania = new HttpClient();
             HttpClient httpClientTipoCabania = new HttpClient();
 
             httpClientTipoCabania.BaseAddress = new Uri(baseURL + "/TipoCabania");
+            httpClientTipoCabania.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
+            
             getTiposCabania.Wait();
 
             try
@@ -139,6 +136,8 @@ namespace HotelCabañas.Controllers
                 
             }
 
+            httpClientCabania.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getCabanias = httpClientCabania.GetAsync(httpClientCabania.BaseAddress);
             getCabanias.Wait();
 
@@ -196,17 +195,16 @@ namespace HotelCabañas.Controllers
         [Logueado]
         public ActionResult Create()
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             VMIndexCabania vmIndexCabania = new ();
             HttpClient httpClient = new HttpClient();
 
 
             httpClient.BaseAddress = new Uri(baseURL + "/TipoCabania");
+
+            httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getTiposCabania = httpClient.GetAsync(httpClient.BaseAddress);
+            
             getTiposCabania.Wait();
 
             if (getTiposCabania.Result.IsSuccessStatusCode)
@@ -236,19 +234,15 @@ namespace HotelCabañas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(VMIndexCabania vmIndexCabania)
         {
-            if (HttpContext.Session.GetString("EMAIL") == null)
-            {
-                return View("~/Views/Shared/LoginError.cshtml");
-            }
-
             try
             {
-
-
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 Task<HttpResponseMessage> postCabania = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmIndexCabania.Cabania);
+                
                 postCabania.Wait();
 
                 if (postCabania.Result.IsSuccessStatusCode)
@@ -269,7 +263,11 @@ namespace HotelCabañas.Controllers
                     HttpClient httpClientTipo = new HttpClient();
 
                     httpClientTipo.BaseAddress = new Uri(baseURL + "/TipoCabania");
+
+                    httpClientTipo.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     Task<HttpResponseMessage> getTiposCabania = httpClientTipo.GetAsync(httpClientTipo.BaseAddress);
+                    
                     getTiposCabania.Wait();
 
                     if (getTiposCabania.Result.IsSuccessStatusCode)
@@ -358,9 +356,12 @@ namespace HotelCabañas.Controllers
                 HttpClient httpClient = new HttpClient();
 
                 httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Delete" + id);
-                Task<HttpResponseMessage> borrarCabania = httpClient.GetAsync(httpClient.BaseAddress);
-                borrarCabania.Wait();
 
+                httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                Task<HttpResponseMessage> borrarCabania = httpClient.GetAsync(httpClient.BaseAddress);
+                
+                borrarCabania.Wait();
 
                 TempData["Mensaje"] = "Tipo de cabaña eliminado correctamente.";
 

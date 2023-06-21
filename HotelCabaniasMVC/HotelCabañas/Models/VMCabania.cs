@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int TipoId { get; set; }
-        public VMTipoCabania Tipo { get; set; }
+        public VMTipoCabania TipoCabania { get; set; }
 
         public string Nombre { get; set; }
 
@@ -21,7 +21,7 @@
 
         public VMCabania()
         {
-            Tipo = new VMTipoCabania();
+            TipoCabania = new VMTipoCabania();
             Nombre = string.Empty;
             Descripcion = string.Empty;
             Foto = string.Empty;

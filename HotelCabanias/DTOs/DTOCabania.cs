@@ -13,6 +13,7 @@ namespace DTOs
     {
         public int Id { get; set; }
         public int TipoId { get; set; }
+        public DTOTipoCabania TipoCabania { get; set; }
         
         public string Nombre { get; set; }
     

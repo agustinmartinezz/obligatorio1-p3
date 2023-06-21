@@ -30,6 +30,13 @@ namespace LogicaAplicacion.CasosDeUso
                 {
                     Id = c.Id,
                     TipoId = c.TipoId,
+                    TipoCabania = new DTOTipoCabania()
+                    {
+                        Id = c.Tipo.Id,
+                        Nombre = c.Tipo.Nombre.TextoNombre,
+                        Descripcion = c.Tipo.Descripcion,
+                        CostoxHuesped = c.Tipo.CostoxHuesped.ValorCosto
+                    },
                     Nombre = c.Nombre.TextoNombre,
                     Descripcion = c.Descripcion,
                     TieneJacuzzi = c.TieneJacuzzi,
