@@ -62,6 +62,11 @@ namespace HotelUsuariosWebAPI.Controllers
         //}
 
         // POST api/<UsuarioController>
+        /// <summary>
+        /// Permite ingresar un usuario
+        /// </summary>
+        /// <response code="200">OK. Devuelve el usuario que se dio de alta</response>        
+        /// <response code="500">Error interno. No se pudo dar de alta el usuario</response> 
         [HttpPost]
         public IActionResult Post([FromBody] DTOUsuario dtoUsuario)
         {
@@ -89,6 +94,14 @@ namespace HotelUsuariosWebAPI.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Permite loguear un usuario
+        /// </summary>
+        /// <response code="200">OK.Usuario Logueado exitosamente</response>   
+        /// <response code="401">Usuario no autorizado</response>        
+        /// 
+        /// <response code="500">Error interno. No se pudo dar de alta el mantenimiento</response> 
         [HttpPost]
         [Route("Login")]
         public IActionResult Login([FromBody] DTOUsuario dtoUsuario)

@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotelCabaniasWebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.Get">
+            <summary>
+            Obtiene todas las cabanias.
+            </summary>
+            <response code="200">OK. Devuelve todas las cabanias.</response>        
+            <response code="404">NotFound. No se han encontrado las cabanias.</response>        
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.GetHabilitadas">
+            <summary>
+            Obtiene las cabanias que estan habilitadas.
+            </summary>
+            <response code="200">OK. Devuelve todas las cabanias que estan habilitadas.</response>        
+            <response code="404">NotFound. No se han encontrado las cabanias.</response>  
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.GetById(System.Int32)">
+            <summary>
+            Devuelve la cabania que tiene ese id..
+            </summary>
+            <param name="id">Id de la cabania.</param>
+            <response code="200">OK. Devuelve la cabania que tiene ese id.</response>        
+            <response code="404">NotFound. No se ha encontrado la cabania.</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.GetByName(System.String)">
+            <summary>
+            Devuelve la cabania que tiene ese nombre.
+            </summary>
+            <param name="name">Nombre de la cabania.</param>
+            <response code="200">OK. Devuelve la cabania que tiene ese nombre.</response>        
+            <response code="404">NotFound. No se ha encontrado la cabania.</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.GetByTipo(System.Int32)">
+            <summary>
+            Obtiene las cabanias de un tipo en especifico.
+            </summary>
+            <param name="tipoId">Id del tipo de la cabania.</param>
+            <response code="200">OK. Devuelve las cabanias de ese tipo.</response>        
+            <response code="404">NotFound. No se han encontrado la scabanias.</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.GetByMaxPeople(System.Int32)">
+            <summary>
+            Obtiene las cabanias que permiten alojar a esta cantidad de personas.
+            </summary>
+            <param name="maxPeople">Cantidad de personas a alojar</param>
+            <response code="200">OK. Devuelve las cabanias que permiten esa o una mayor cantidad de personas.</response>        
+            <response code="404">NotFound. No se han encontrado las cabanias.</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.CabaniaController.Post(DTOs.DTOCabania)">
+            <summary>
+            Permite ingresar una Cabania.
+            </summary>
+            <response code="200">OK. Devuelve la cabania ingresada.</response>        
+            <response code="500">Error interno. No se pudo dar de alta la Cabania</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.ConsultaController.ConsultaA(System.Int32,System.Int32)">
+             <summary>
+            Dados el identificador de un tipo y un monto obtener el nombre y capacidad (cantidad de huéspedes que puede alojar) de las cabañas de ese tipo que tengan un costo diario menor a ese monto, que tengan jacuzzi y estén habilitadas para reserva.
+             </summary>
+            <response code="200">OK. Devuelve los resultados esperados.</response>     
+            <response code="204">No Content. Si la consulta no tiene resultados.</response>        
+            <response code="500">Error interno. No se pudo ejecutar la consulta correctamente</response> 
+        </member>
+        <member name="M:HotelCabaniasWebAPI.Controllers.ConsultaController.ConsultaB(System.Int32,System.Int32)">
+             <summary>
+            Dados el identificador de un tipo y un monto obtener el nombre y capacidad (cantidad de huéspedes que puede alojar) de las cabañas de ese tipo que tengan un costo diario menor a ese monto, que tengan jacuzzi y estén habilitadas para reserva.
+             Dados dos valores, obtener los mantenimientos realizados a las cabañas con una capacidad que esté comprendida(topes inclusive) entre ambos valores.El resultado se agrupará por nombre de la persona que realizó el mantenimiento, e incluirá el nombre de la persona y el monto total de mantenimientos que realizó.
+             </summary>
+            <response code="200">OK. Devuelve los resultados esperados.</response>     
+            <response code="204">No Content. Si la consulta no tiene resultados.</response>        
+            <response code="500">Error interno. No se pudo ejecutar la consulta correctamente</response> 
+        </member>
+        <member name="M:HotelMantenimientosWebAPI.Controllers.MantenimientoController.Get(System.Int32)">
+            <summary>
+            Devuelve el mantenimiento que tiene ese id.
+            </summary>
+            <param name="id">Id de el mantenimiento.</param>
+            <response code="200">OK. Devuelve el mantenimiento que tiene ese id.</response>        
+            <response code="404">NotFound. No se ha encontrado el mantenimiento.</response> 
+        </member>
+        <member name="M:HotelMantenimientosWebAPI.Controllers.MantenimientoController.Get(System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Devuelve los mantenimientos que estan en ese rango de fechas.
+            </summary>
+            <param name="cabaniaId">Id de la cabania asociada al mantenimiento.</param>
+            <param name="fechaDesde">Fecha desde para mostrar mantenimientos.</param>
+            <param name="fechaHasta">Fecha hasta para mostrar mantenimientos.</param>
+            <response code="200">OK. Devuelve la cabania que tiene ese id.</response>        
+            <response code="404">NotFound. No se ha encontrado la cabania.</response> 
+        </member>
+        <member name="M:HotelMantenimientosWebAPI.Controllers.MantenimientoController.Post(DTOs.DTOMantenimiento)">
+            <summary>
+            Permite ingresar un mantenimiento
+            </summary>
+            <response code="200">OK. Devuelve el mantenimientoq ue se dio de alta</response>        
+            <response code="500">Error interno. No se pudo dar de alta el mantenimiento</response> 
+        </member>
+        <member name="M:HotelMantenimientosWebAPI.Controllers.MantenimientoController.Delete(System.Int32)">
+            <summary>
+            Permite borrar un mantenimiento
+            </summary>
+            <param name="id">Id del mantenimiento</param>
+            <response code="200">OK. El mantenimiento se elimino con exito</response>        
+            <response code="404">NotFound. No se ha encontrado el mantenimiento a borrar.</response> 
+        </member>
+        <member name="M:HotelTipoCabaniasWebAPI.Controllers.TipoCabaniaController.Get">
+            <summary>
+            Devuelve todos los tipos de cabania
+            </summary>
+            <response code="200">OK. Devuelve todos los tipos de cabania exitosamente.</response>        
+            <response code="404">NotFound. No se han encontrado los tipos de cabania.</response>
+        </member>
+        <member name="M:HotelTipoCabaniasWebAPI.Controllers.TipoCabaniaController.Get(System.Int32)">
+            <summary>
+            Devuelve el tipo de cabania que tiene ese Id.
+            </summary>
+            <param name="id">Id del tipo de cabania.</param>
+            <response code="200">OK. Devuelve el tipo de cabania que tiene ese id.</response>        
+            <response code="404">NotFound. No se ha encontrado el tipo de cabania.</response> 
+        </member>
+        <member name="M:HotelTipoCabaniasWebAPI.Controllers.TipoCabaniaController.GetByName(System.String)">
+            <summary>
+            Devuelve el tipo de cabania que tiene ese nombre.
+            </summary>
+            <param name="name">Nombre del tipo de cabania.</param>
+            <response code="200">OK. Devuelve el tipo de cabania que tiene ese nombre.</response>        
+            <response code="404">NotFound. No se ha encontrado el tipo de cabania.</response> 
+        </member>
+        <member name="M:HotelTipoCabaniasWebAPI.Controllers.TipoCabaniaController.Post(DTOs.DTOTipoCabania)">
+            <summary>
+            Permite ingresar un Tipo de Cabania.
+            </summary>
+            <response code="200">OK. Devuelve el tipo de cabania ingresada.</response>        
+            <response code="500">Error interno. No se pudo dar de alta el tipo de cabania</response> 
+        </member>
+        <member name="M:HotelTipoCabaniasWebAPI.Controllers.TipoCabaniaController.Delete(System.Int32)">
+            <summary>
+            Permite borrar un tipo de cabania
+            </summary>
+            <param name="id">Id del tipo de cabania</param>
+            <response code="200">OK. El tipo de cabania se elimino con exito</response>        
+            <response code="404">NotFound. No se ha encontrado el tipo de cabania a borrar o este tipo cuenta con cabanias creadas</response> 
+        </member>
+        <member name="M:HotelUsuariosWebAPI.Controllers.UsuarioController.Post(DTOs.DTOUsuario)">
+            <summary>
+            Permite ingresar un usuario
+            </summary>
+            <response code="200">OK. Devuelve el usuario que se dio de alta</response>        
+            <response code="500">Error interno. No se pudo dar de alta el usuario</response> 
+        </member>
+        <member name="M:HotelUsuariosWebAPI.Controllers.UsuarioController.Login(DTOs.DTOUsuario)">
+            <summary>
+            Permite loguear un usuario
+            </summary>
+            <response code="200">OK.Usuario Logueado exitosamente</response>   
+            <response code="401">Usuario no autorizado</response>        
+            
+            <response code="500">Error interno. No se pudo dar de alta el mantenimiento</response> 
+        </member>
+    </members>
+</doc>
