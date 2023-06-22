@@ -10,10 +10,12 @@ namespace LogicaAplicacion.CasosDeUso
     {
     
         public IRepositorioMantenimiento RepoMantenimiento { get; set; }
+        public IRepositorioCabania RepoCabania{ get; set; }
 
-        public CUAltaMantenimiento(IRepositorioMantenimiento repoMantenimiento)
+        public CUAltaMantenimiento(IRepositorioMantenimiento repoMantenimiento, IRepositorioCabania repoCabania)
         {
             RepoMantenimiento = repoMantenimiento;
+            RepoCabania = repoCabania;
         }
 
         public DTOMantenimiento AltaMantenimiento(DTOMantenimiento dtoMantenimiento)
@@ -28,8 +30,10 @@ namespace LogicaAplicacion.CasosDeUso
                     CabaniaId = dtoMantenimiento.CabaniaId
                 };
 
+                mantenimiento.Cabania = RepoCabania.FindById(mantenimiento.CabaniaId);
                 RepoMantenimiento.Add(mantenimiento);
                 dtoMantenimiento.Id = mantenimiento.Id;
+
             }
             catch
             {

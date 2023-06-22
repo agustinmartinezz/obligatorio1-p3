@@ -9,7 +9,6 @@ namespace LogicaNegocio.InterfacesRepositorios
 {
     public interface IRepositorioCabania: IRepositorio<Cabania>
     {
-        string AddPicture(int cabaniaId, string name);
         IEnumerable<Cabania> FindByName(string nombre);
         IEnumerable<Cabania> FindByTipo(int tipoId);
         IEnumerable<Cabania> FindByMaxPeople(int maxPeople);

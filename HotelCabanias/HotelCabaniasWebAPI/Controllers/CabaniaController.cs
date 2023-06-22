@@ -21,10 +21,10 @@ namespace HotelCabaniasWebAPI.Controllers
         public ICUFindAllCabania CUFindAllCabania {get; set;}
         public ICUDeleteCabania CUDeleteCabania {get; set;}
         public ICUAltaCabania CUAltaCabania {get; set;}
-        public ICUAddPictureCabania CUAddPictureCabania { get; set; }
 
 
-        public CabaniaController(ICUUpdateCabania cUUpdateCabania, ICUFindHabilitadasCabania cUFindHabilitadasCabania, ICUFindByTipoCabania cUFindByTipoCabania, ICUFindByNameCabania cUFindByNameCabania, ICUFindByMaxPeopleCabania cUFindByMaxPeopleCabania, ICUFindByIdCabania cUFindByIdCabania, ICUFindAllCabania cUFindAllCabania, ICUDeleteCabania cUDeleteCabania, ICUAltaCabania cUAltaCabania, ICUAddPictureCabania cUAddPictureCabania)
+
+        public CabaniaController(ICUUpdateCabania cUUpdateCabania, ICUFindHabilitadasCabania cUFindHabilitadasCabania, ICUFindByTipoCabania cUFindByTipoCabania, ICUFindByNameCabania cUFindByNameCabania, ICUFindByMaxPeopleCabania cUFindByMaxPeopleCabania, ICUFindByIdCabania cUFindByIdCabania, ICUFindAllCabania cUFindAllCabania, ICUDeleteCabania cUDeleteCabania, ICUAltaCabania cUAltaCabania)
         {
             CUUpdateCabania = cUUpdateCabania;
             CUFindHabilitadasCabania = cUFindHabilitadasCabania;
@@ -35,7 +35,6 @@ namespace HotelCabaniasWebAPI.Controllers
             CUFindAllCabania = cUFindAllCabania;
             CUDeleteCabania = cUDeleteCabania;
             CUAltaCabania = cUAltaCabania;
-            CUAddPictureCabania = cUAddPictureCabania;
         }
 
 
@@ -134,22 +133,7 @@ namespace HotelCabaniasWebAPI.Controllers
             }
         }
 
-        [HttpGet()]
-        [Route("{id}/Foto/{fotoString}")]
-
-        public IActionResult AddPicture(int id,string fotoString)
-        {
-            try
-            {
-                string name = CUAddPictureCabania.AddPicture(id,fotoString);
-                return Ok(name);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(404, ex.Message);
-            }
-        }
-
+       
         // POST api/<CabaniaController>
         [HttpPost]
         public IActionResult Post([FromBody] DTOCabania dtoCabania)
@@ -163,7 +147,7 @@ namespace HotelCabaniasWebAPI.Controllers
                 dtoCabania = CUAltaCabania.AltaCabania(dtoCabania);
                 //return CreatedAtRoute("FindById", new { id = dtoCabania.Id}, dtoCabania);
                 //return RedirectToAction("Id", new { id = dtoCabania.Id });
-                return Ok();
+                return Ok(dtoCabania);
             }
 
             catch (Exception ex)

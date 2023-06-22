@@ -12,19 +12,25 @@ namespace LogicaAplicacion.CasosDeUso
 {
     public class CUFindByIdCabania: ICUFindByIdCabania
     {
-    
-        public IRepositorioCabania RepoCabania { get; set; }
 
-        public CUFindByIdCabania(IRepositorioCabania repoCabania)
+        public IRepositorioCabania RepoCabania { get; set; }
+        public IRepositorioTipoCabania RepoTipoCabania { get; set; }
+
+
+        public CUFindByIdCabania(IRepositorioCabania repoCabania, IRepositorioTipoCabania repoTipoCabania)
         {
             RepoCabania = repoCabania;
+            RepoTipoCabania = repoTipoCabania;
+
         }
+
 
         public DTOCabania FindByIdCabania(int cabaniaId)
         {
             try
             {
                 Cabania c = RepoCabania.FindById(cabaniaId);
+                c.Tipo = RepoTipoCabania.FindById(c.TipoId);
 
                 return new DTOCabania() {
                     Id = c.Id,

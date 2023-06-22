@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using HotelCabañas.Filters;
 using System.Net.Http.Headers;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HotelCabañas.Controllers
 {
@@ -100,27 +101,23 @@ namespace HotelCabañas.Controllers
                         if (string.IsNullOrWhiteSpace(VMIndexCabania.Busqueda.SearchText))
                         {
                             httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania");
-                            //VMIndexCabania.Cabanias = repositorioCabania.FindAll();
+                            
                         } else
                         {
                             httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Name/" + VMIndexCabania.Busqueda.SearchText);
-                            //VMIndexCabania.Cabanias = repositorioCabania.FindByName(vmCabania.SearchText);
+                            
                         }
                         break;
                     case 2:
-                        //int intSearch = Int32.Parse(searchText);
-                        //VMIndexCabania.Cabanias = repositorioCabania.FindByTipo(vmCabania.SearchType);
                         httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Type/" + VMIndexCabania.Busqueda.SearchType);
 
                         break;
                     case 3:
-                        //int intSearch2 = Int32.Parse(searchText);
-                        // VMIndexCabania.Cabanias = repositorioCabania.FindByMaxPeople(vmCabania.SearchNumber);
                         httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Cupos/" + VMIndexCabania.Busqueda.SearchNumber);
 
                         break;
                     case 4:
-                        //VMIndexCabania.Cabanias = repositorioCabania.FindHabilitadas();
+                        
                         httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania/Habilitadas");
 
                         break;
@@ -236,6 +233,9 @@ namespace HotelCabañas.Controllers
         {
             try
             {
+                string nombreFoto = vmIndexCabania.Foto.FileName;
+                vmIndexCabania.Cabania.Foto = nombreFoto;
+
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
 
@@ -249,8 +249,21 @@ namespace HotelCabañas.Controllers
                 {
                     TempData["Message"] = "Cabaña ingresada con exito.";
 
-                   // vmIndexCabania = new VMIndexCabania();
+                    HttpContent contenido = postCabania.Result.Content;
+                    Task<string> tareaCab = contenido.ReadAsStringAsync();
+                    tareaCab.Wait();
+                    vmIndexCabania.Cabania = JsonConvert.DeserializeObject<VMCabania>(tareaCab.Result);
+
+                    string nombreImagen = vmIndexCabania.Cabania.Foto;
+
+                    string ruta = Path.Combine(WebHost.WebRootPath, "Imagenes");
+                    string rutaArchivo = Path.Combine(ruta, nombreImagen);
+
+                    FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
+                    vmIndexCabania.Foto.CopyTo(foto);
+
                     return RedirectToAction("Index", vmIndexCabania);
+
                 }
                 else
                 {
@@ -287,26 +300,13 @@ namespace HotelCabañas.Controllers
                     }
                 }
 
-                        return View(vmIndexCabania);
+
+                
+             
+
+                return View(vmIndexCabania);
 
 
-                //string nombreImagen = cab.GetNombreFoto() + Path.GetExtension(vmCabania.Foto.FileName);
-
-                //string ruta = Path.Combine(WebHost.WebRootPath, "Imagenes");
-                //string rutaArchivo = Path.Combine(ruta, nombreImagen);
-
-                //FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
-
-                ////nombreImagen = "Imagenes/" + nombreImagen;
-
-                //cab.Tipo = repositorioTipoCabania.FindById(cab.TipoId);
-                ////cab.Foto = nombreImagen;
-
-                //repositorioCabania.Add(cab, nombreImagen);
-
-                //vmCabania.Foto.CopyTo(foto);
-
-                //ViewData["Message"] = "Cabaña ingresada correctamente.";
             }
 
             catch (Exception e)
