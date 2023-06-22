@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HotelCabañas.Controllers
 {
@@ -50,6 +51,57 @@ namespace HotelCabañas.Controllers
 
                 return View();
             }
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Register(VMLogin vmRegistro)
+        {
+            if (vmRegistro != null) {
+                if (vmRegistro.Nombre == null || vmRegistro.Mail == null  || vmRegistro.Contrasenia == null) {
+                    ViewBag.Error = "Debe ingresar todos los datos.";
+                } else
+                {
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri(baseURL + "/Usuario");
+
+                    Task<HttpResponseMessage> postRegister = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmRegistro);
+                    postRegister.Wait();
+
+                    if (postRegister.Result.IsSuccessStatusCode)
+                    {
+                        HttpContent contenido = postRegister.Result.Content;
+                        Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                        deseralize.Wait();
+
+                        vmRegistro = JsonConvert.DeserializeObject<VMLogin>(deseralize.Result);
+
+                        if (vmRegistro.Token != null)
+                        {
+                            HttpContext.Session.SetString("token", vmRegistro.Token);
+                        }
+
+                        return View("~/Views/Home/Index.cshtml");
+
+                    } else
+                    {
+                        HttpContent contenido = postRegister.Result.Content;
+                        Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                        ViewBag.Error = deseralize.Result;
+                    }
+                }
+            } else
+            {
+                ViewBag.Error = "Debe ingresar todos los datos.";
+            }
+
+            return View(vmRegistro);
         }
 
         public ActionResult Logout()
