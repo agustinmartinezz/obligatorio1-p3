@@ -19,7 +19,7 @@ namespace LogicaAccesoDatos.Repositorios
             Contexto = contexto;
         }
 
-        IEnumerable<object> IRepositorioConsulta.ConsultaA(int idTipo, int monto)
+        public IEnumerable<object> ConsultaA(int idTipo, int monto)
         {
             IEnumerable<object> lista =
             Contexto.Cabanias
@@ -33,7 +33,7 @@ namespace LogicaAccesoDatos.Repositorios
             return lista;
         }
 
-        IEnumerable<object> IRepositorioConsulta.ConsultaB(int desde, int hasta)
+        public IEnumerable<object> ConsultaB(int desde, int hasta)
         {
             IEnumerable<int> cabanias = Contexto.Cabanias
                 .Where(c => c.MaxPersonas >= desde)
