@@ -43,7 +43,7 @@ namespace HotelCabañas.Controllers
             {
                 HttpContent contenido = getCabania.Result.Content;
                 Task<string> deseralize = contenido.ReadAsStringAsync();
-                ViewBag.Mensaje = deseralize.Result;
+                ViewBag.Error = deseralize.Result;
             }
 
 
@@ -93,6 +93,9 @@ namespace HotelCabañas.Controllers
                         HttpClient httpClientDates = new HttpClient();
 
                         httpClientDates.BaseAddress = new Uri(baseURL + "/Mantenimiento/Dates/" + URLParams);
+
+                        httpClientDates.DefaultRequestHeaders.Authorization =
+                           new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                         Task<HttpResponseMessage> getMantenimientos = httpClientDates.GetAsync(httpClientDates.BaseAddress);
 
                         getMantenimientos.Wait();
@@ -107,7 +110,7 @@ namespace HotelCabañas.Controllers
                         {
                             HttpContent contenido2 = getMantenimientos.Result.Content;
                             Task<string> deseralize2 = contenido2.ReadAsStringAsync();
-                            ViewBag.Mensaje = deseralize.Result;
+                            ViewBag.Error = deseralize.Result;
                         }
 
                     }
@@ -115,7 +118,7 @@ namespace HotelCabañas.Controllers
                     {
                         HttpContent contenido = getCabania.Result.Content;
                         Task<string> deseralize = contenido.ReadAsStringAsync();
-                        ViewBag.Mensaje = deseralize.Result;
+                        ViewBag.Error = deseralize.Result;
                     }
 
                     if (!vmIndexMantenimiento.Mantenimientos.Any())
@@ -140,6 +143,7 @@ namespace HotelCabañas.Controllers
         public ActionResult Create(int idCabania)
         {
             VMIndexMantenimiento vmMantenimiento = new VMIndexMantenimiento();
+            vmMantenimiento.Mantenimiento.Fecha = new DateTime();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + idCabania);
@@ -164,7 +168,7 @@ namespace HotelCabañas.Controllers
             {
                 HttpContent contenido = getCabania.Result.Content;
                 Task<string> deseralize = contenido.ReadAsStringAsync();
-                ViewBag.Mensaje = deseralize.Result;
+                ViewBag.Error = deseralize.Result;
             }
 
             return View(vmMantenimiento);

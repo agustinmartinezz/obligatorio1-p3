@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using LogicaNegocio.InterfacesEntidades;
 using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.ValueObjects;
+using System.Xml.Linq;
 
 namespace LogicaNegocio.EntidadesNegocio
 {
@@ -67,10 +68,29 @@ namespace LogicaNegocio.EntidadesNegocio
             }
         }
 
-        public string GetNombreFoto()
+        public string GetNombreFoto(string name) 
         {
-            string nombre = Nombre.TextoNombre.Trim().Replace(" ", "_") + "_001";
-            return nombre;
+            int length = Fotos.Count();
+            int lastNumber = 0;
+            string lastNumberStr = "";
+
+            if (length > 0)
+            {
+                string lastName = Fotos[length - 1].Split('.')[0];
+                lastNumber = Int32.Parse(lastName.Substring(length - 3, length - 1));
+            }
+            lastNumber++;
+            lastNumberStr = string.Format("int", lastNumber);
+            if (lastNumber < 100)
+            {
+                lastNumberStr = "00" + lastNumber;
+                if (lastNumber < 10)
+                {
+                    lastNumberStr = lastNumberStr.Substring(1, 2);
+                }
+            }
+            name = "Imagenes/" + name + "_" + lastNumberStr;
+            return name;
         }
     }
 }

@@ -77,7 +77,6 @@ builder.Services.AddScoped<ICUFindByIdCabania, CUFindByIdCabania>();
 builder.Services.AddScoped<ICUFindAllCabania, CUFindAllCabania>();
 builder.Services.AddScoped<ICUDeleteCabania, CUDeleteCabania>();
 builder.Services.AddScoped<ICUAltaCabania, CUAltaCabania>();
-builder.Services.AddScoped<ICUAddPictureCabania, CUAddPictureCabania>();
 builder.Services.AddScoped<ICUFindByMaxPeopleCabania, CUFindByMaxPeopleCabania>();
 builder.Services.AddScoped<ICUFindByNameCabania, CUFindByNameCabania>();
 builder.Services.AddScoped<ICUFindByTipoCabania, CUFindByTipoCabania>();

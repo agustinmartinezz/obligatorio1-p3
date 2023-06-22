@@ -3,6 +3,7 @@ using LogicaAplicacion.InterfacesCasoDeUso;
 using DTOs;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.ValueObjects;
+using LogicaAccesoDatos.Repositorios;
 
 namespace LogicaAplicacion.CasosDeUso
 {
@@ -10,10 +11,14 @@ namespace LogicaAplicacion.CasosDeUso
     {
     
         public IRepositorioCabania RepoCabania { get; set; }
+        public IRepositorioTipoCabania RepoTipoCabania { get; set; }
 
-        public CUAltaCabania(IRepositorioCabania repoCabania)
+
+        public CUAltaCabania(IRepositorioCabania repoCabania, IRepositorioTipoCabania repoTipoCabania)
         {
             RepoCabania = repoCabania;
+            RepoTipoCabania = repoTipoCabania;
+
         }
 
         public DTOCabania AltaCabania(DTOCabania dtoCabania)
@@ -31,7 +36,7 @@ namespace LogicaAplicacion.CasosDeUso
                     Descripcion = dtoCabania.Descripcion,
                     TieneJacuzzi = dtoCabania.TieneJacuzzi,
                     HabilitadaReservas = dtoCabania.HabilitadaReservas,
-                    NumeroHabitacion = dtoCabania.NumeroHabitacion,
+                    //NumeroHabitacion = dtoCabania.NumeroHabitacion,
                     MaxPersonas = dtoCabania.MaxPersonas,
                     Foto = dtoCabania.Foto,
                     Fotos = Fotos,
@@ -39,6 +44,15 @@ namespace LogicaAplicacion.CasosDeUso
 
                 RepoCabania.Add(cabania);
                 dtoCabania.Id = cabania.Id;
+
+                TipoCabania tipoCab = RepoTipoCabania.FindById(cabania.TipoId);
+                dtoCabania.TipoCabania = new ()
+                {
+                    Id = tipoCab.Id,
+                    Nombre = tipoCab.Nombre.TextoNombre,
+                    Descripcion = tipoCab.Descripcion,
+                    CostoxHuesped = tipoCab.CostoxHuesped.ValorCosto
+                };
             }
             catch
             {

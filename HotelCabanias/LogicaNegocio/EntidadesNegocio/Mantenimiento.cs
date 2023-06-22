@@ -14,7 +14,7 @@ namespace LogicaNegocio.EntidadesNegocio
         [Required]
         public string Descripcion { get; set; }
         [Required]
-        public Costo Costo { get; set; }
+        public Costo? Costo { get; set; }
         [Required]
         public string NombreRealizo { get; set; }
         [ForeignKey(nameof(Cabania))]
@@ -23,7 +23,7 @@ namespace LogicaNegocio.EntidadesNegocio
         
         public Mantenimiento() {
             Descripcion = "";
-            Costo = new Costo(0);
+            //Costo = new Costo(0);
             NombreRealizo = string.Empty;
             Cabania = new Cabania();
         }

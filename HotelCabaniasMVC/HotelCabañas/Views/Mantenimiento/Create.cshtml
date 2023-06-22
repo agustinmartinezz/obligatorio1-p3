@@ -49,7 +49,7 @@
 
                                 <div class="form-outline form-white mb-4">
                                     <label asp-for="Mantenimiento.Fecha" class="form-label">Fecha</label>
-                                    <input asp-for="Mantenimiento.Fecha" type="date" class="form-control form-control-lg" />
+                                    <input asp-for="Mantenimiento.Fecha" value=@Model.Mantenimiento.Fecha type="date" class="form-control form-control-lg" />
                                     <span asp-validation-for="Mantenimiento.Fecha" class="text-danger"></span>
                                 </div>
 
