@@ -29,8 +29,12 @@ namespace HotelCabañas.Controllers
             HttpClient httpClientCabania = new HttpClient();
 
             httpClientCabania.BaseAddress = new Uri(baseURL + "/Cabania" );
+
+            httpClientCabania.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getCabanias = httpClientCabania.GetAsync(httpClientCabania.BaseAddress);
-            getCabanias.Wait();          
+            getCabanias.Wait();
+
 
             if (getCabanias.Result.IsSuccessStatusCode)
             {
@@ -51,11 +55,13 @@ namespace HotelCabañas.Controllers
 
             HttpClient httpClientTipoCabania = new HttpClient();
 
-
             httpClientTipoCabania.BaseAddress = new Uri(baseURL + "/TipoCabania");
-            Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
-            getTiposCabania.Wait();
 
+            httpClientTipoCabania.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+            Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
+            
+            getTiposCabania.Wait();
 
             if (getTiposCabania.Result.IsSuccessStatusCode)
             {
@@ -87,6 +93,7 @@ namespace HotelCabañas.Controllers
             HttpClient httpClientTipoCabania = new HttpClient();
 
             httpClientTipoCabania.BaseAddress = new Uri(baseURL + "/TipoCabania");
+
             httpClientTipoCabania.DefaultRequestHeaders.Authorization =
                new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
             Task<HttpResponseMessage> getTiposCabania = httpClientTipoCabania.GetAsync(httpClientTipoCabania.BaseAddress);
@@ -220,8 +227,6 @@ namespace HotelCabañas.Controllers
                 ViewBag.Mensaje = deseralize.Result;
             }
 
-
-            //vmCabania.Tipos = repositorioTipoCabania.FindAll();
             return View(vmIndexCabania);
         }
 
@@ -233,93 +238,84 @@ namespace HotelCabañas.Controllers
         {
             try
             {
-                string nombreFoto = vmIndexCabania.Foto.FileName;
-                vmIndexCabania.Cabania.Foto = nombreFoto;
-
-                HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
-
-                httpClient.DefaultRequestHeaders.Authorization =
-               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
-                Task<HttpResponseMessage> postCabania = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmIndexCabania.Cabania);
-                
-                postCabania.Wait();
-
-                if (postCabania.Result.IsSuccessStatusCode)
+                if (ModelState.IsValid)
                 {
-                    TempData["Message"] = "Cabaña ingresada con exito.";
+                    string nombreFoto = vmIndexCabania.Foto.FileName;
+                    vmIndexCabania.Cabania.Foto = nombreFoto;
 
-                    HttpContent contenido = postCabania.Result.Content;
-                    Task<string> tareaCab = contenido.ReadAsStringAsync();
-                    tareaCab.Wait();
-                    vmIndexCabania.Cabania = JsonConvert.DeserializeObject<VMCabania>(tareaCab.Result);
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri(baseURL + "/Cabania");
 
-                    string nombreImagen = vmIndexCabania.Cabania.Foto;
+                    httpClient.DefaultRequestHeaders.Authorization =
+                   new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    Task<HttpResponseMessage> postCabania = httpClient.PostAsJsonAsync(httpClient.BaseAddress, vmIndexCabania.Cabania);
 
-                    string ruta = Path.Combine(WebHost.WebRootPath, "Imagenes");
-                    string rutaArchivo = Path.Combine(ruta, nombreImagen);
+                    postCabania.Wait();
 
-                    FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
-                    vmIndexCabania.Foto.CopyTo(foto);
-
-                    return RedirectToAction("Index", vmIndexCabania);
-                }
-                else
-                {
-                    HttpContent contenido = postCabania.Result.Content;
-                    Task<string> tarea2 = contenido.ReadAsStringAsync();
-                    tarea2.Wait();
-
-                    ViewBag.Error = tarea2.Result.ToString();
-
-                    HttpClient httpClientTipo = new HttpClient();
-
-                    httpClientTipo.BaseAddress = new Uri(baseURL + "/TipoCabania");
-
-                    httpClientTipo.DefaultRequestHeaders.Authorization =
-               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
-                    Task<HttpResponseMessage> getTiposCabania = httpClientTipo.GetAsync(httpClientTipo.BaseAddress);
-                    
-                    getTiposCabania.Wait();
-
-                    if (getTiposCabania.Result.IsSuccessStatusCode)
+                    if (postCabania.Result.IsSuccessStatusCode)
                     {
-                        HttpContent contenido2 = getTiposCabania.Result.Content;
-                        Task<string> deseralize = contenido2.ReadAsStringAsync();
+                        TempData["Message"] = "Cabaña ingresada con exito.";
 
-                        deseralize.Wait();
+                        HttpContent contenido = postCabania.Result.Content;
+                        Task<string> tareaCab = contenido.ReadAsStringAsync();
+                        tareaCab.Wait();
+                        vmIndexCabania.Cabania = JsonConvert.DeserializeObject<VMCabania>(tareaCab.Result);
 
-                        vmIndexCabania.TiposCabania = JsonConvert.DeserializeObject<IEnumerable<VMTipoCabania>>(deseralize.Result);
+                        string nombreImagen = vmIndexCabania.Cabania.Foto;
+
+                        string ruta = Path.Combine(WebHost.WebRootPath, "Imagenes");
+                        string rutaArchivo = Path.Combine(ruta, nombreImagen);
+
+                        FileStream foto = new FileStream(rutaArchivo, FileMode.Create);
+                        vmIndexCabania.Foto.CopyTo(foto);
+
+                        return RedirectToAction("Index", vmIndexCabania);
                     }
                     else
                     {
-                        HttpContent contenido2 = getTiposCabania.Result.Content;
-                        Task<string> deseralize = contenido2.ReadAsStringAsync();
-                        ViewBag.Mensaje = deseralize.Result;
+                        HttpContent contenido = postCabania.Result.Content;
+                        Task<string> tarea2 = contenido.ReadAsStringAsync();
+                        tarea2.Wait();
+
+                        ViewBag.Error = tarea2.Result.ToString();
                     }
+                } else {
+                    ViewBag.Error = "Ingrese todos los datos.";
                 }
 
+                HttpClient httpClientTipo = new HttpClient();
 
-                
-             
+                httpClientTipo.BaseAddress = new Uri(baseURL + "/TipoCabania");
 
-                return View(vmIndexCabania);
+                httpClientTipo.DefaultRequestHeaders.Authorization =
+           new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                Task<HttpResponseMessage> getTiposCabania = httpClientTipo.GetAsync(httpClientTipo.BaseAddress);
 
+                getTiposCabania.Wait();
 
+                if (getTiposCabania.Result.IsSuccessStatusCode)
+                {
+                    HttpContent contenido2 = getTiposCabania.Result.Content;
+                    Task<string> deseralize = contenido2.ReadAsStringAsync();
+
+                    deseralize.Wait();
+
+                    vmIndexCabania.TiposCabania = JsonConvert.DeserializeObject<IEnumerable<VMTipoCabania>>(deseralize.Result);
+                }
+                else
+                {
+                    HttpContent contenido2 = getTiposCabania.Result.Content;
+                    Task<string> deseralize = contenido2.ReadAsStringAsync();
+                    ViewBag.Error = deseralize.Result;
+                }
             }
-
             catch (Exception e)
             {
-                //ViewBag.Error = e.Message;
-                //vmCabania.Tipos = repositorioTipoCabania.FindAll();
-                //return View(vmCabania);
+                ViewBag.Error = e.Message;
                 return View(vmIndexCabania);
-
             }
 
-
-
-
+            return View(vmIndexCabania);
         }
 
         // GET: CabaniaController/Edit/5

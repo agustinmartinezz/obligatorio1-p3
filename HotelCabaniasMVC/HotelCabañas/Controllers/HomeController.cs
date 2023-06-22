@@ -48,7 +48,6 @@ namespace HotelCabañas.Controllers
                 Task<string> deseralize = contenido.ReadAsStringAsync();
 
                 ViewBag.Error = deseralize.Result;
-
                 return View();
             }
         }

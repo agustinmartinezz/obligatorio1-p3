@@ -15,7 +15,6 @@ namespace HotelCabañas.Controllers
         // GET: MantenimientoController
         [Logueado]
         public ActionResult Index(int idCabania)
-        
         {
             VMIndexMantenimiento vmIndexMantenimiento = new();
 
@@ -181,37 +180,72 @@ namespace HotelCabañas.Controllers
         public ActionResult Create(VMIndexMantenimiento vmIndexMantenimiento)
         {
             try
-            {               
-                VMMantenimiento mantenimiento = new ()
-                {
-                    CabaniaId = vmIndexMantenimiento.Cabania.Id,
-                    Fecha = vmIndexMantenimiento.Mantenimiento.Fecha,
-                    Descripcion = vmIndexMantenimiento.Mantenimiento.Descripcion,
-                    NombreRealizo = vmIndexMantenimiento.Mantenimiento.NombreRealizo,
-                    Costo = vmIndexMantenimiento.Mantenimiento.Costo
-                };
+            {
+                if (ModelState.IsValid) {
+                    VMMantenimiento mantenimiento = new()
+                    {
+                        CabaniaId = vmIndexMantenimiento.Cabania.Id,
+                        Fecha = vmIndexMantenimiento.Mantenimiento.Fecha,
+                        Descripcion = vmIndexMantenimiento.Mantenimiento.Descripcion,
+                        NombreRealizo = vmIndexMantenimiento.Mantenimiento.NombreRealizo,
+                        Costo = vmIndexMantenimiento.Mantenimiento.Costo
+                    };
 
-                HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento");
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri(baseURL + "/Mantenimiento");
 
-                httpClient.DefaultRequestHeaders.Authorization =
-               new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
-                Task<HttpResponseMessage> postMantenimiento = httpClient.PostAsJsonAsync(httpClient.BaseAddress, mantenimiento);
+                    httpClient.DefaultRequestHeaders.Authorization =
+                   new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    Task<HttpResponseMessage> postMantenimiento = httpClient.PostAsJsonAsync(httpClient.BaseAddress, mantenimiento);
 
-                postMantenimiento.Wait();
+                    postMantenimiento.Wait();
 
-                if (postMantenimiento.Result.IsSuccessStatusCode)
-                {
-                    TempData["Message"] = "Mantenimiento ingresado con exito.";
-                    return RedirectToAction("Index", "Cabania");
+                    if (postMantenimiento.Result.IsSuccessStatusCode)
+                    {
+                        TempData["Message"] = "Mantenimiento ingresado con exito.";
+                        return RedirectToAction("Index", "Cabania");
+                    }
+                    else
+                    {
+                        HttpContent contenido = postMantenimiento.Result.Content;
+                        Task<string> tarea2 = contenido.ReadAsStringAsync();
+
+                        ViewBag.Error = tarea2.Result;
+                    }
                 } else
                 {
-                    HttpContent contenido = postMantenimiento.Result.Content;
-                    Task<string> tarea2 = contenido.ReadAsStringAsync();
+                    ViewBag.Error = "Ingrese todos los datos.";
+                }
 
-                    ViewBag.Error = tarea2.Result;
-                    return View(vmIndexMantenimiento);
-                }               
+                HttpClient httpClientAux = new HttpClient();
+                httpClientAux.BaseAddress = new Uri(baseURL + "/Cabania/Id/" + vmIndexMantenimiento.Cabania.Id);
+
+                httpClientAux.DefaultRequestHeaders.Authorization =
+                   new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                Task<HttpResponseMessage> getCabania = httpClientAux.GetAsync(httpClientAux.BaseAddress);
+
+                getCabania.Wait();
+
+                if (getCabania.Result.IsSuccessStatusCode)
+                {
+                    HttpContent contenido = getCabania.Result.Content;
+                    Task<string> deseralize = contenido.ReadAsStringAsync();
+
+                    deseralize.Wait();
+
+                    vmIndexMantenimiento.Cabania = JsonConvert.DeserializeObject<VMCabania>(deseralize.Result);
+                }
+                else
+                {
+                    HttpContent contenido = getCabania.Result.Content;
+                    Task<string> deseralize = contenido.ReadAsStringAsync();
+                    ViewBag.Error = deseralize.Result;
+
+                    //Error no controlado, mando a index.
+                    return View("~/Views/Home/Index.cshtml");
+                }
+
+                return View(vmIndexMantenimiento);
             }
             catch (Exception e)
             {
