@@ -45,6 +45,13 @@ namespace HotelMantenimientosWebAPI.Controllers
         //}
 
         // GET api/<MantenimientoController>/5
+
+        /// <summary>
+        /// Devuelve el mantenimiento que tiene ese id.
+        /// </summary>
+        /// <param name="id">Id de el mantenimiento.</param>
+        /// <response code="200">OK. Devuelve el mantenimiento que tiene ese id.</response>        
+        /// <response code="404">NotFound. No se ha encontrado el mantenimiento.</response> 
         [HttpGet("{id}")]
         [Authorize]
         public IActionResult Get(int id)
@@ -60,6 +67,14 @@ namespace HotelMantenimientosWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Devuelve los mantenimientos que estan en ese rango de fechas.
+        /// </summary>
+        /// <param name="cabaniaId">Id de la cabania asociada al mantenimiento.</param>
+        /// <param name="fechaDesde">Fecha desde para mostrar mantenimientos.</param>
+        /// <param name="fechaHasta">Fecha hasta para mostrar mantenimientos.</param>
+        /// <response code="200">OK. Devuelve la cabania que tiene ese id.</response>        
+        /// <response code="404">NotFound. No se ha encontrado la cabania.</response> 
         [HttpGet()]
         [Route("Dates/cabaniaId={cabaniaId}&fechaDesde={fechaDesde}&fechaHasta={fechaHasta}")]
         [Authorize]
@@ -75,6 +90,13 @@ namespace HotelMantenimientosWebAPI.Controllers
                 return StatusCode(404, ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Permite ingresar un mantenimiento
+        /// </summary>
+        /// <response code="200">OK. Devuelve el mantenimientoq ue se dio de alta</response>        
+        /// <response code="500">Error interno. No se pudo dar de alta el mantenimiento</response> 
 
         // POST api/<MantenimientoController>
         [HttpPost]
@@ -121,7 +143,16 @@ namespace HotelMantenimientosWebAPI.Controllers
         //    }
         //}
 
+
+
+
         // DELETE api/<MantenimientoController>/5
+        /// <summary>
+        /// Permite borrar un mantenimiento
+        /// </summary>
+        /// <param name="id">Id del mantenimiento</param>
+        /// <response code="200">OK. El mantenimiento se elimino con exito</response>        
+        /// <response code="404">NotFound. No se ha encontrado el mantenimiento a borrar.</response> 
         [HttpDelete("{id}")]
         [Authorize]
         public IActionResult Delete(int id)

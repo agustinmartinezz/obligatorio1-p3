@@ -41,7 +41,10 @@ Parametros.MaxDescMantenimiento = builder.Configuration.GetValue<int>("MaxDescMa
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.IncludeXmlComments("HotelCabaniasWebApi.xml");
+});
 
 ////Comienza JWT////
 var claveSecreta = "ZWRpw6fDo28gZW0gY29tcHV0YWRvcmE="; //PUEDE SER OTRA CLAVE, SI ES FUERTE

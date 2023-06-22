@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>HotelCabaniasWebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,18 @@
     <ProjectReference Include="..\LogicaAccesoDatos\LogicaAccesoDatos.csproj" />
     <ProjectReference Include="..\LogicaAplicacion\LogicaAplicacion.csproj" />
     <ProjectReference Include="..\LogicaNegocio\LogicaNegocio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DocFileItem Remove="HotelCabaniasWebApi.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="HotelCabaniasWebApi.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="HotelCabaniasWebApi.xml" />
   </ItemGroup>
 
 </Project>

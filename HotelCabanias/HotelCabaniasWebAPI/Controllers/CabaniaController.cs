@@ -39,6 +39,12 @@ namespace HotelCabaniasWebAPI.Controllers
 
 
         // GET: api/<CabaniaController>
+        /// <summary>
+        /// Obtiene todas las cabanias.
+        /// </summary>
+        /// <response code="200">OK. Devuelve todas las cabanias.</response>        
+        /// <response code="404">NotFound. No se han encontrado las cabanias.</response>        
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -48,11 +54,17 @@ namespace HotelCabaniasWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204, ex.Message);
+                return StatusCode(404, ex.Message);
             }
         }
 
         // GET: api/<CabaniaController>/Habilitadas
+
+        /// <summary>
+        /// Obtiene las cabanias que estan habilitadas.
+        /// </summary>
+        /// <response code="200">OK. Devuelve todas las cabanias que estan habilitadas.</response>        
+        /// <response code="404">NotFound. No se han encontrado las cabanias.</response>  
         [HttpGet]
         [Route("Habilitadas")]
         public IActionResult GetHabilitadas()
@@ -63,11 +75,18 @@ namespace HotelCabaniasWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(204, ex.Message);
+                return StatusCode(404, ex.Message);
             }
         }
 
         // GET api/<CabaniaController>/5
+
+        /// <summary>
+        /// Devuelve la cabania que tiene ese id..
+        /// </summary>
+        /// <param name="id">Id de la cabania.</param>
+        /// <response code="200">OK. Devuelve la cabania que tiene ese id.</response>        
+        /// <response code="404">NotFound. No se ha encontrado la cabania.</response> 
         [HttpGet()]
         [Route("Id/{id}")]
 
@@ -85,6 +104,12 @@ namespace HotelCabaniasWebAPI.Controllers
         }
 
         // GET api/<CabaniaController>/Nombre/"Nombre"
+        /// <summary>
+        /// Devuelve la cabania que tiene ese nombre.
+        /// </summary>
+        /// <param name="name">Nombre de la cabania.</param>
+        /// <response code="200">OK. Devuelve la cabania que tiene ese nombre.</response>        
+        /// <response code="404">NotFound. No se ha encontrado la cabania.</response> 
         [HttpGet()]
         [Route("Name/{name}")]
         public IActionResult GetByName(string name)
@@ -101,6 +126,12 @@ namespace HotelCabaniasWebAPI.Controllers
         }
 
         // GET api/<CabaniaController>/Tipo/5
+        /// <summary>
+        /// Obtiene las cabanias de un tipo en especifico.
+        /// </summary>
+        /// <param name="tipoId">Id del tipo de la cabania.</param>
+        /// <response code="200">OK. Devuelve las cabanias de ese tipo.</response>        
+        /// <response code="404">NotFound. No se han encontrado la scabanias.</response> 
         [HttpGet()]
         [Route("Type/{tipoId}")]
         public IActionResult GetByTipo(int tipoId)
@@ -117,6 +148,12 @@ namespace HotelCabaniasWebAPI.Controllers
         }
 
         // GET api/<CabaniaController>/MaxPeople/5
+        /// <summary>
+        /// Obtiene las cabanias que permiten alojar a esta cantidad de personas.
+        /// </summary>
+        /// <param name="maxPeople">Cantidad de personas a alojar</param>
+        /// <response code="200">OK. Devuelve las cabanias que permiten esa o una mayor cantidad de personas.</response>        
+        /// <response code="404">NotFound. No se han encontrado las cabanias.</response> 
         [HttpGet()]
         [Route("Cupos/{maxPeople}")]
 
@@ -135,6 +172,12 @@ namespace HotelCabaniasWebAPI.Controllers
 
        
         // POST api/<CabaniaController>
+        /// <summary>
+        /// Permite ingresar una Cabania.
+        /// </summary>
+      
+        /// <response code="200">OK. Devuelve la cabania ingresada.</response>        
+        /// <response code="500">Error interno. No se pudo dar de alta la Cabania</response> 
         [HttpPost]
         public IActionResult Post([FromBody] DTOCabania dtoCabania)
         {

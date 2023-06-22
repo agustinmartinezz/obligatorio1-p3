@@ -32,6 +32,12 @@ namespace HotelTipoCabaniasWebAPI.Controllers
 
 
         // GET: api/<TipoCabaniaController>
+
+        /// <summary>
+        /// Devuelve todos los tipos de cabania
+        /// </summary>
+        /// <response code="200">OK. Devuelve todos los tipos de cabania exitosamente.</response>        
+        /// <response code="404">NotFound. No se han encontrado los tipos de cabania.</response>
         [HttpGet]
         [Authorize]
         public IActionResult Get()
@@ -47,6 +53,12 @@ namespace HotelTipoCabaniasWebAPI.Controllers
         }
 
         // GET api/<TipoCabaniaController>/5
+        /// <summary>
+        /// Devuelve el tipo de cabania que tiene ese Id.
+        /// </summary>
+        /// <param name="id">Id del tipo de cabania.</param>
+        /// <response code="200">OK. Devuelve el tipo de cabania que tiene ese id.</response>        
+        /// <response code="404">NotFound. No se ha encontrado el tipo de cabania.</response> 
         [HttpGet("{id}")]
         [Authorize]
         public IActionResult Get(int id)
@@ -63,6 +75,12 @@ namespace HotelTipoCabaniasWebAPI.Controllers
         }
 
         // GET api/<TipoCabaniaController>/Nombre
+        /// <summary>
+        /// Devuelve el tipo de cabania que tiene ese nombre.
+        /// </summary>
+        /// <param name="name">Nombre del tipo de cabania.</param>
+        /// <response code="200">OK. Devuelve el tipo de cabania que tiene ese nombre.</response>        
+        /// <response code="404">NotFound. No se ha encontrado el tipo de cabania.</response> 
         [HttpGet()]
         [Route("Name/{name}")]
         [Authorize]
@@ -80,6 +98,12 @@ namespace HotelTipoCabaniasWebAPI.Controllers
         }
 
         // POST api/<TipoCabaniaController>
+        /// <summary>
+        /// Permite ingresar un Tipo de Cabania.
+        /// </summary>
+
+        /// <response code="200">OK. Devuelve el tipo de cabania ingresada.</response>        
+        /// <response code="500">Error interno. No se pudo dar de alta el tipo de cabania</response> 
         [HttpPost]
         [Authorize]
         public IActionResult Post([FromBody] DTOTipoCabania dtoTipoCabania)
@@ -124,6 +148,12 @@ namespace HotelTipoCabaniasWebAPI.Controllers
         }
 
         // DELETE api/<TipoCabaniaController>/5
+        /// <summary>
+        /// Permite borrar un tipo de cabania
+        /// </summary>
+        /// <param name="id">Id del tipo de cabania</param>
+        /// <response code="200">OK. El tipo de cabania se elimino con exito</response>        
+        /// <response code="404">NotFound. No se ha encontrado el tipo de cabania a borrar o este tipo cuenta con cabanias creadas</response> 
         [HttpDelete("{id}")]
         [Authorize]
         public IActionResult Delete(int id)
