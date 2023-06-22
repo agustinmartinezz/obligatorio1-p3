@@ -263,7 +263,6 @@ namespace HotelCabañas.Controllers
                     vmIndexCabania.Foto.CopyTo(foto);
 
                     return RedirectToAction("Index", vmIndexCabania);
-
                 }
                 else
                 {

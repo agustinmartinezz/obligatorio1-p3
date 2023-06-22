@@ -42,8 +42,11 @@ namespace LogicaAplicacion.CasosDeUso
                     Fotos = Fotos,
                 };
 
+                cabania.Foto = cabania.GetNombreFoto() + Path.GetExtension(dtoCabania.Foto);
                 RepoCabania.Add(cabania);
+
                 dtoCabania.Id = cabania.Id;
+                dtoCabania.Foto = cabania.Foto;
 
                 TipoCabania tipoCab = RepoTipoCabania.FindById(cabania.TipoId);
                 dtoCabania.TipoCabania = new ()

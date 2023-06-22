@@ -62,36 +62,45 @@ namespace LogicaNegocio.EntidadesNegocio
             {
                 throw new DescripcionException("La descripcion debe estar entre " + Parametros.MinDescCabania + " y " + Parametros.MaxDescCabania + " caracteres.");
             }
-            if (Fotos.Count <= 0 || Fotos == null)
+            //if (Fotos.Count <= 0 || Fotos == null)
+            if (Foto == null || String.IsNullOrEmpty(Foto))
             {
                 throw new FotoException("La Cabaña debe tener al menos una foto.");
             }
         }
 
-        public string GetNombreFoto(string name) 
+        public string GetNombreFoto()
         {
-            int length = Fotos.Count();
-            int lastNumber = 0;
-            string lastNumberStr = "";
+            string name = this.Nombre.TextoNombre.ToLower().Replace(" ", "_") + "_001";
 
-            if (length > 0)
-            {
-                string lastName = Fotos[length - 1].Split('.')[0];
-                lastNumber = Int32.Parse(lastName.Substring(length - 3, length - 1));
-            }
-            lastNumber++;
-            lastNumberStr = string.Format("int", lastNumber);
-            if (lastNumber < 100)
-            {
-                lastNumberStr = "00" + lastNumber;
-                if (lastNumber < 10)
-                {
-                    lastNumberStr = lastNumberStr.Substring(1, 2);
-                }
-            }
-            name = "Imagenes/" + name + "_" + lastNumberStr;
             return name;
         }
+
+        //public string GetNombreFoto(string name) 
+        //{
+        //    int length = Fotos.Count();
+        //    int lastNumber = 0;
+        //    string lastNumberStr = "";
+
+        //    if (length > 0)
+        //    {
+        //        string lastName = Fotos[length - 1].Split('.')[0];
+        //        lastNumber = Int32.Parse(lastName.Substring(length - 3, length - 1));
+        //    }
+        //    lastNumber++;
+        //    lastNumberStr = string.Format("int", lastNumber);
+        //    if (lastNumber < 100)
+        //    {
+        //        lastNumberStr = "00" + lastNumber;
+        //        if (lastNumber < 10)
+        //        {
+        //            lastNumberStr = lastNumberStr.Substring(1, 2);
+        //        }
+        //    }
+
+        //    name = "Imagenes/" + name + "_" + lastNumberStr;
+        //    return name;
+        //}
     }
 }
 

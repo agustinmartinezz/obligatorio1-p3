@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LogicaAccesoDatos.BaseDatos;
-using LogicaNegocio;
+﻿using LogicaAccesoDatos.BaseDatos;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.InterfacesRepositorios;
-using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogicaAccesoDatos.Repositorios
@@ -27,9 +19,8 @@ namespace LogicaAccesoDatos.Repositorios
         {
             try
             {
-                string foto = cabania.GetNombreFoto(cabania.Foto);
-                cabania.Fotos.Add(foto);
                 cabania.ValidarDatos();
+
                 Contexto.Cabanias.Add(cabania);
                 Contexto.SaveChanges();
             }
